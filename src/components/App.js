@@ -7,9 +7,9 @@ import './App.css'
 
 const provider = new firebase.auth.GithubAuthProvider()
 const dummyHtml = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
-const dummyApiJSON = {
+const dummyApiJSON = JSON.stringify({
   'name': 'Ruby on Rails',
-  'description': 'A template for getting started with the popular Ruby framework.'}.toString()
+  'description': 'A template for getting started with the popular Ruby framework.'})
 
 const indexHTMLFileCreator = function (content) {
   let contentObj = {
@@ -123,15 +123,35 @@ class App extends Component {
         <button className='button is-info' onClick={this.signOut}>
           Sign Out
         </button>
-        <form className='create-repo' onSubmit={this.createRepo}>
-          <input
-            type='text'
-            name='GitHub Repo Name'
-            onChange={this.handleRepoName}
-            placeholder='no-spaces'
-          />
-          <input type='submit' value='Create Your GitHub Repo' />
-        </form>
+
+        <div
+          className='field'
+          onSubmit={this.createRepo}
+          style={{ width: '400px', margin: '0 auto' }}
+        >
+          <label className='label'>Repo Name</label>
+          <div className='control'>
+            <input
+              className='input'
+              type='text'
+              name='GitHub Repo Name'
+              onChange={this.handleRepoName}
+              placeholder='Text input'
+            />
+          </div>
+          <p className='help'>no-spaces</p>
+          <button className='button' onClick={this.createRepo}>
+            Create Repo
+          </button>
+        </div>
+        {/* Eventually link to actual repo will go here */}
+        <a
+          className='button is-link'
+          style={{ padding: '5px' }}
+          href={`https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started`}
+        >
+          <span>Deploy to Heroku</span>
+        </a>
       </div>
     )
   }
