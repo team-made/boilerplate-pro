@@ -69,8 +69,12 @@ class App extends Component {
           <h1 className='App-title'>Welcome to Boilerplate Pro</h1>
         </header>
         <p className='App-intro'>Login or Signup</p>
-        <button onClick={this.signIn}>Sign In</button>
-        <button onClick={this.signOut}>Sign Out</button>
+        <button className='button is-primary' onClick={this.signIn}>
+          Sign In
+        </button>
+        <button className='button is-info' onClick={this.signOut}>
+          Sign Out
+        </button>
         <form className='create-repo'>
           <input type='text' name='GitHub Repo Name' onChange={this.handleRepoName} placeholder='no-spaces' />
           <input type='submit' value='Create Your GitHub Repo' onSubmit={this.createRepo} />
