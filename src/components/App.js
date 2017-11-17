@@ -13,8 +13,14 @@ class App extends Component {
 
     this.state = {
       repoName: '',
-      username: ''
+      gitHubUsername: '',
+      email: '',
+      gitHubToken: '',
+      gitHubUrl: ''
     }
+    this.handleRepoName = this.handleRepoName.bind(this)
+    this.createRepo = this.createRepo.bind(this)
+    this.signIn = this.signIn.bind(this)
   }
 
   signIn () {
@@ -23,6 +29,12 @@ class App extends Component {
       .signInWithPopup(provider.addScope('public_repo'))
       .then(result => {
         console.log(result)
+        this.setState({
+          gitHubUsername: result.additionalUserInfo.username,
+          email: result.user.email,
+          gitHubToken: result.credential.accessToken,
+          gitHubUrl: result.additionalUserInfo.profile.repos_url
+        })
       })
       .catch(err => {
         console.log('Sign in error:', err)
@@ -41,24 +53,26 @@ class App extends Component {
       })
   }
 
-  createRepo () {
+  createRepo (event) {
+    event.preventDefault()
     let repoName = this.state.repoName
     let data = {
-      'name': {repoName},
-      'description': 'Test for boilerplate-pro',
-      'homepage': 'https://github.com',
-      'private': false,
-      'has_issues': true,
-      'has_projects': true,
-      'has_wiki': true
+      name: repoName,
+      description: 'Test for boilerplate-pro',
+      homepage: 'https://github.com',
+      private: false,
+      has_issues: true,
+      has_projects: true,
+      has_wiki: true
     }
-    axios.post(`https://api.github.com/users/${this.state.username}/repos`, data)
-      .then(value => console.log(value))
+    axios
+      .post(`https://api.github.com/user/repos?access_token=${this.state.gitHubToken}`, data)
+      .then((value) => console.log(value))
       .catch(err => console.error(err))
   }
 
   handleRepoName (event) {
-    this.setState({repoName: event.target.value})
+    this.setState({ repoName: event.target.value })
   }
 
   render () {
@@ -75,9 +89,14 @@ class App extends Component {
         <button className='button is-info' onClick={this.signOut}>
           Sign Out
         </button>
-        <form className='create-repo'>
-          <input type='text' name='GitHub Repo Name' onChange={this.handleRepoName} placeholder='no-spaces' />
-          <input type='submit' value='Create Your GitHub Repo' onSubmit={this.createRepo} />
+        <form className='create-repo' onSubmit={this.createRepo}>
+          <input
+            type='text'
+            name='GitHub Repo Name'
+            onChange={this.handleRepoName}
+            placeholder='no-spaces'
+          />
+          <input type='submit' value='Create Your GitHub Repo' />
         </form>
       </div>
     )
