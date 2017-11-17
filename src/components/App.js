@@ -66,8 +66,12 @@ class App extends Component {
       has_wiki: true
     }
     axios
-      .post(`https://api.github.com/user/repos?access_token=${this.state.gitHubToken}`, data)
-      .then((value) => console.log(value))
+      .post(
+        `https://api.github.com/user/repos?access_token=${this.state
+          .gitHubToken}`,
+        data
+      )
+      .then(value => console.log(value))
       .catch(err => console.error(err))
   }
 
@@ -89,15 +93,35 @@ class App extends Component {
         <button className='button is-info' onClick={this.signOut}>
           Sign Out
         </button>
-        <form className='create-repo' onSubmit={this.createRepo}>
-          <input
-            type='text'
-            name='GitHub Repo Name'
-            onChange={this.handleRepoName}
-            placeholder='no-spaces'
-          />
-          <input type='submit' value='Create Your GitHub Repo' />
-        </form>
+
+        <div
+          className='field'
+          onSubmit={this.createRepo}
+          style={{ width: '400px', margin: '0 auto' }}
+        >
+          <label className='label'>Repo Name</label>
+          <div className='control'>
+            <input
+              className='input'
+              type='text'
+              name='GitHub Repo Name'
+              onChange={this.handleRepoName}
+              placeholder='Text input'
+            />
+          </div>
+          <p className='help'>no-spaces</p>
+          <button className='button' onClick={this.createRepo}>
+            Create Repo
+          </button>
+        </div>
+        {/* Eventually link to actual repo will go here */}
+        <a
+          className='button is-link'
+          style={{ padding: '5px' }}
+          href={`https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started`}
+        >
+          <span>Deploy to Heroku</span>
+        </a>
       </div>
     )
   }
