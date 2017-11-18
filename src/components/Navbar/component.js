@@ -6,24 +6,34 @@ import reduxHelper from '../../utils/reduxHelper.js'
 const reduxUtil = reduxHelper('Navbar')
 
 // Action Definitions
-const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
+const SIGN_IN = reduxUtil.defineAction('SIGN_IN')
+const SIGN_OUT = reduxUtil.defineAction('SIGN_OUT')
 
 // Initial State
 const initialState = {
-  dummyState: false
+  isLoggedIn: false,
+  name: '',
+  email: '',
+  gitHubUrl: '',
+  gitHubToken: '',
+  gitHubUsername: ''
 }
 
 // Make Actions
 const actions = {
-  dummyAction: reduxUtil.createAction(DUMMY_ACTION)
+  signIn: reduxUtil.createAction(SIGN_IN),
+  signOut: reduxUtil.createAction(SIGN_OUT)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [DUMMY_ACTION]: function (state, action) {
+    [SIGN_IN]: (state, action) => {
       let newState = { ...state, ...action.payload }
-      newState.dummyState = true
+      return newState
+    },
+    [SIGN_OUT]: (state, action) => {
+      let newState = { isLoggedIn: false }
       return newState
     }
   },
