@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 
 import { history } from '../components.js'
-import { actions } from './component.js'
+import { actions } from './index.js'
 
 const provider = new firebase.auth.GithubAuthProvider()
 
@@ -21,12 +21,9 @@ const mapDispatchToProps = dispatch => {
         .then(result => {
           dispatch(
             actions.signIn({
-              name: result.user.name,
-              email: result.user.email,
-              gitHubToken: result.credential.accessToken,
-              gitHubUsername: result.additionalUserInfo.username,
-              gitHubUrl: result.additionalUserInfo.profile.repos_url,
-              isLoggedIn: true
+              user: result.user,
+              credential: result.credential,
+              additionalUserInfo: result.additionalUserInfo
             })
           )
         })
@@ -48,6 +45,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
+
 const Navbar = props => {
   return (
     <nav

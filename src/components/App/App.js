@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
+import firebase from 'firebase'
 
 import './App.css'
 
@@ -51,8 +52,10 @@ class App extends Component {
 
   createRepo () {
     const repoName = this.state.repoName
-    const { gitHubToken, gitHubUsername } = store.getState().Navbar
-    let data = {
+    const { username } = store.getState().Navbar.additionalUserInfo
+    const { accessToken } = store.getState().Navbar.credential
+    const config = { headers: { Authorization: `token ${accessToken}` } }
+    const data = {
       name: repoName,
       description: 'Test for boilerplate-pro',
       homepage: 'https://github.com',
@@ -61,19 +64,19 @@ class App extends Component {
       has_projects: true,
       has_wiki: true
     }
+
     axios
-      .post(
-        `https://api.github.com/user/repos?access_token=${gitHubToken}`,
-        data
-      )
+      .post(`https://api.github.com/user/repos`, data, config)
       .then(() => {
         axios.put(
-          `https://api.github.com/repos/${gitHubUsername}/${repoName}/contents/index.html?access_token=${gitHubToken}`,
-          indexHTMLFileCreator()
+          `https://api.github.com/repos/${username}/${repoName}/contents/index.html`,
+          indexHTMLFileCreator(),
+          config
         )
         axios.put(
-          `https://api.github.com/repos/${gitHubUsername}/${repoName}/contents/api.json?access_token=${gitHubToken}`,
-          apiJSONFileCreator()
+          `https://api.github.com/repos/${username}/${repoName}/contents/api.json`,
+          apiJSONFileCreator(),
+          config
         )
       })
       .catch(err => console.error(err))
@@ -81,6 +84,14 @@ class App extends Component {
 
   handleRepoName (event) {
     this.setState({ repoName: event.target.value })
+  }
+
+  getCurrentUser () {
+    console.log(
+      'currentUser:',
+      'token: ' + store.getState().Navbar.credential.accessToken,
+      firebase.auth().currentUser
+    )
   }
 
   render () {
@@ -117,6 +128,7 @@ class App extends Component {
             >
               <span>Deploy to Heroku</span>
             </a>
+            <button onClick={this.getCurrentUser}>Get Current user</button>
           </div>
         </ConnectedRouter>
       </Provider>
