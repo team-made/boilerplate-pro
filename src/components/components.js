@@ -2,6 +2,7 @@ import createHistory from 'history/createBrowserHistory'
 import createMemoryHistory from 'history/createMemoryHistory'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
@@ -38,7 +39,7 @@ let middlewares = [routerMiddleware(history), thunkMiddleware]
 // Development adds logging, must be last
 if (process.env.NODE_ENV !== 'production') {
   middlewares.push(
-    require('redux-logger')({
+    createLogger({
       // Change this configuration to your liking
       duration: true,
       collapsed: true

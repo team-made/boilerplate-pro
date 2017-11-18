@@ -1,9 +1,9 @@
+// Include component
+import component from './Example.js'
+
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
 const reduxUtil = reduxHelper('Example')
-
-// Include component
-import component from './Example.js'
 
 // Action Definitions
 const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
