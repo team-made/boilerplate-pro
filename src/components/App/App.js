@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import firebase from 'firebase'
 import axios from 'axios'
+import { ConnectedRouter } from 'connected-react-router'
+import { Provider } from 'react-redux'
 
-import logo from '../../assets/logo.svg'
 import './App.css'
 
-const provider = new firebase.auth.GithubAuthProvider()
+import { components, history, store } from '../components.js'
+
 const dummyHtml =
   '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
 const dummyApiJSON = JSON.stringify({
@@ -41,54 +42,16 @@ const apiJSONFileCreator = function () {
 class App extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
-      repoName: '',
-      gitHubUsername: '',
-      name: '',
-      email: '',
-      gitHubToken: '',
-      gitHubUrl: ''
+      repoName: ''
     }
     this.handleRepoName = this.handleRepoName.bind(this)
     this.createRepo = this.createRepo.bind(this)
-    this.signIn = this.signIn.bind(this)
   }
 
-  signIn () {
-    firebase
-      .auth()
-      .signInWithPopup(provider.addScope('public_repo'))
-      .then(result => {
-        console.log(result)
-        this.setState({
-          gitHubUsername: result.additionalUserInfo.username,
-          email: result.user.email,
-          name: result.user.name,
-          gitHubToken: result.credential.accessToken,
-          gitHubUrl: result.additionalUserInfo.profile.repos_url
-        })
-      })
-      .catch(err => {
-        console.log('Sign in error:', err)
-      })
-  }
-
-  signOut () {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log('signed out')
-      })
-      .catch(err => {
-        console.log('error with signout', err)
-      })
-  }
-
-  createRepo (event) {
-    event.preventDefault()
-    let repoName = this.state.repoName
+  createRepo () {
+    const repoName = this.state.repoName
+    const { gitHubToken, gitHubUsername } = store.getState().Navbar
     let data = {
       name: repoName,
       description: 'Test for boilerplate-pro',
@@ -100,21 +63,16 @@ class App extends Component {
     }
     axios
       .post(
-        `https://api.github.com/user/repos?access_token=${this.state
-          .gitHubToken}`,
+        `https://api.github.com/user/repos?access_token=${gitHubToken}`,
         data
       )
       .then(() => {
         axios.put(
-          `https://api.github.com/repos/${this.state.gitHubUsername}/${this
-            .state.repoName}/contents/index.html?access_token=${this.state
-            .gitHubToken}`,
+          `https://api.github.com/repos/${gitHubUsername}/${repoName}/contents/index.html?access_token=${gitHubToken}`,
           indexHTMLFileCreator()
         )
         axios.put(
-          `https://api.github.com/repos/${this.state.gitHubUsername}/${this
-            .state.repoName}/contents/api.json?access_token=${this.state
-            .gitHubToken}`,
+          `https://api.github.com/repos/${gitHubUsername}/${repoName}/contents/api.json?access_token=${gitHubToken}`,
           apiJSONFileCreator()
         )
       })
@@ -127,48 +85,41 @@ class App extends Component {
 
   render () {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to Boilerplate Pro</h1>
-        </header>
-        <p className='App-intro'>Login or Signup</p>
-        <button className='button is-primary' onClick={this.signIn}>
-          Sign In
-        </button>
-        <button className='button is-info' onClick={this.signOut}>
-          Sign Out
-        </button>
-
-        <div
-          className='field'
-          onSubmit={this.createRepo}
-          style={{ width: '400px', margin: '0 auto' }}
-        >
-          <label className='label'>Repo Name</label>
-          <div className='control'>
-            <input
-              className='input'
-              type='text'
-              name='GitHub Repo Name'
-              onChange={this.handleRepoName}
-              placeholder='Text input'
-            />
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <div className='App'>
+            <components.Navbar />
+            <div
+              className='field'
+              onSubmit={this.createRepo}
+              style={{ width: '400px', margin: '0 auto' }}
+            >
+              <label className='label'>Repo Name</label>
+              <div className='control'>
+                <input
+                  className='input'
+                  type='text'
+                  name='GitHub Repo Name'
+                  onChange={this.handleRepoName}
+                  placeholder='Text input'
+                />
+              </div>
+              <p className='help'>no-spaces</p>
+              <button className='button' onClick={this.createRepo}>
+                Create Repo
+              </button>
+            </div>
+            {/* Eventually link to actual repo will go here */}
+            <a
+              className='button is-link'
+              style={{ padding: '5px' }}
+              href={`https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started`}
+            >
+              <span>Deploy to Heroku</span>
+            </a>
           </div>
-          <p className='help'>no-spaces</p>
-          <button className='button' onClick={this.createRepo}>
-            Create Repo
-          </button>
-        </div>
-        {/* Eventually link to actual repo will go here */}
-        <a
-          className='button is-link'
-          style={{ padding: '5px' }}
-          href={`https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started`}
-        >
-          <span>Deploy to Heroku</span>
-        </a>
-      </div>
+        </ConnectedRouter>
+      </Provider>
     )
   }
 }
