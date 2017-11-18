@@ -1,7 +1,7 @@
 // Include component
-import component from './{{ComponentName}}.js';
+import component from './{{ComponentName}}.js'
 
 // Export
 export {
   component
-};
+}

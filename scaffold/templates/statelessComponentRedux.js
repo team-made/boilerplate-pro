@@ -17,6 +17,6 @@ const {{ComponentName}} = () => {
   );
 }
 
-const connected_{{ComponentName}} = connect(mapStateToProps, mapDispatchToProps)({{ComponentName}});
+const connected{{ComponentName}} = connect(mapStateToProps, mapDispatchToProps)({{ComponentName}});
 
-export default connected_{{ComponentName}};
+export default connected{{ComponentName}};
