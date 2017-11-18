@@ -4,7 +4,9 @@ import firebase from 'firebase'
 import 'bulma/css/bulma.css'
 
 import './index.css'
-import App from './components/App'
+
+// Grab all components dynamically
+import { components } from './components/components.js'
 import registerServiceWorker from './utils/registerServiceWorker'
 
 const config = {
@@ -21,5 +23,5 @@ const config = {
 
 firebase.initializeApp(config)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<components.App />, document.getElementById('root'))
 registerServiceWorker()
