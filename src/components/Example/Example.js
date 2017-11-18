@@ -19,6 +19,6 @@ const Example = () => {
   return <div>Example -- Stateless w/ Redux</div>
 }
 
-const connected_Example = connect(mapStateToProps, mapDispatchToProps)(Example)
+const connectedExample = connect(mapStateToProps, mapDispatchToProps)(Example)
 
-export default connected_Example
+export default connectedExample

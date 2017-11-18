@@ -21,7 +21,7 @@ const actions = {
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [DUMMY_ACTION]: function (state, action) {
+    [DUMMY_ACTION]: (state, action) => {
       let newState = { ...state, ...action.payload }
       newState.dummyState = true
       return newState
