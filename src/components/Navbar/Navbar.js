@@ -5,7 +5,7 @@ import { actions } from './component.js'
 
 const mapStateToProps = state => {
   return {
-    ...state.Example
+    ...state.Navbar
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -15,10 +15,10 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-const Example = () => {
-  return <div>Example -- Stateless w/ Redux</div>
+const Navbar = () => {
+  return <div>Navbar -- Stateless w/ Redux</div>
 }
 
-const connectedExample = connect(mapStateToProps, mapDispatchToProps)(Example)
+const connectedNavbar = connect(mapStateToProps, mapDispatchToProps)(Navbar)
 
-export default connectedExample
+export default connectedNavbar

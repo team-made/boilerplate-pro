@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import { actions } from './component.js';
+import { actions } from './component.js'
 
 const mapStateToProps = (state) => { return {
   ...state.{{ComponentName}}
 } }
 const mapDispatchToProps = (dispatch) => { return {
   dummyAction: () => {
-    dispatch( actions.dummyAction() );
+    dispatch( actions.dummyAction() )
   }
 } }
 class {{ComponentName}} extends Component {
   constructor( props ) {
-    super( props );
+    super( props )
   }
   render() {
     return (
       <div>{{ComponentName}} -- Stateful w/ Redux</div>
-    );
+    )
   }
 }
 
-{{ComponentName}} = connect(mapStateToProps, mapDispatchToProps)({{ComponentName}});
+{{ComponentName}} = connect(mapStateToProps, mapDispatchToProps)({{ComponentName}})
 
-export default {{ComponentName}};
+export default {{ComponentName}}
