@@ -2,23 +2,25 @@ import React, { Component } from 'react'
 import firebase from 'firebase'
 import axios from 'axios'
 
-import logo from '../assets/logo.svg'
+import logo from '../../assets/logo.svg'
 import './App.css'
 
 const provider = new firebase.auth.GithubAuthProvider()
-const dummyHtml = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
+const dummyHtml =
+  '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
 const dummyApiJSON = JSON.stringify({
-  'name': 'Ruby on Rails',
-  'description': 'A template for getting started with the popular Ruby framework.'})
+  name: 'Ruby on Rails',
+  description: 'A template for getting started with the popular Ruby framework.'
+})
 
 const indexHTMLFileCreator = function (content) {
   let contentObj = {
-    'message': 'feat(HTML):testing github api file creation',
-    'committer': {
-      'name': 'Mitchell Stewart',
-      'email': 'mitchellwstewart@gmail.com'
+    message: 'feat(HTML):testing github api file creation',
+    committer: {
+      name: 'Mitchell Stewart',
+      email: 'mitchellwstewart@gmail.com'
     },
-    'content': `${window.btoa(dummyHtml)}`
+    content: `${window.btoa(dummyHtml)}`
   }
   return contentObj
 }
@@ -26,12 +28,12 @@ const indexHTMLFileCreator = function (content) {
 const apiJSONFileCreator = function () {
   console.log('here', dummyApiJSON)
   let contentObj = {
-    'message': 'f(apiJSON):testing github api file creation',
-    'committer': {
-      'name': 'Mitchell Stewart',
-      'email': 'mitchellwstewart@gmail.com'
+    message: 'f(apiJSON):testing github api file creation',
+    committer: {
+      name: 'Mitchell Stewart',
+      email: 'mitchellwstewart@gmail.com'
     },
-    'content': `${window.btoa(dummyApiJSON)}`
+    content: `${window.btoa(dummyApiJSON)}`
   }
   return contentObj
 }
@@ -97,10 +99,24 @@ class App extends Component {
       has_wiki: true
     }
     axios
-      .post(`https://api.github.com/user/repos?access_token=${this.state.gitHubToken}`, data)
+      .post(
+        `https://api.github.com/user/repos?access_token=${this.state
+          .gitHubToken}`,
+        data
+      )
       .then(() => {
-        axios.put(`https://api.github.com/repos/${this.state.gitHubUsername}/${this.state.repoName}/contents/index.html?access_token=${this.state.gitHubToken}`, indexHTMLFileCreator())
-        axios.put(`https://api.github.com/repos/${this.state.gitHubUsername}/${this.state.repoName}/contents/api.json?access_token=${this.state.gitHubToken}`, apiJSONFileCreator())
+        axios.put(
+          `https://api.github.com/repos/${this.state.gitHubUsername}/${this
+            .state.repoName}/contents/index.html?access_token=${this.state
+            .gitHubToken}`,
+          indexHTMLFileCreator()
+        )
+        axios.put(
+          `https://api.github.com/repos/${this.state.gitHubUsername}/${this
+            .state.repoName}/contents/api.json?access_token=${this.state
+            .gitHubToken}`,
+          apiJSONFileCreator()
+        )
       })
       .catch(err => console.error(err))
   }
