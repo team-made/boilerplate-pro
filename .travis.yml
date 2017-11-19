@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - node
 cache:
-directories:
+  directories:
     - node_modules
 install:
 - yarn
