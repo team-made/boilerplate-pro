@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => {
 const dummyHtml =
   '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
 const dummyApiJSON = JSON.stringify({
-  name: 'Ruby on Rails',
-  description: 'A template for getting started with the popular Ruby framework.'
+  name: 'Rubils',
+  description: 'A template.'
 })
 
 const indexHTMLFileCreator = function (content) {
@@ -39,7 +39,6 @@ const indexHTMLFileCreator = function (content) {
 }
 
 const apiJSONFileCreator = function () {
-  console.log('here', dummyApiJSON)
   let contentObj = {
     message: 'f(apiJSON):testing github api file creation',
     committer: {
@@ -48,6 +47,7 @@ const apiJSONFileCreator = function () {
     },
     content: `${window.btoa(dummyApiJSON)}`
   }
+  console.log('here', contentObj)
   return contentObj
 }
 class Builder extends React.Component {
@@ -60,7 +60,7 @@ class Builder extends React.Component {
     this.createRepo = this.createRepo.bind(this)
   }
 
-  createRepo () {
+  async createRepo () {
     const repoName = this.state.repoName
     const { username } = store.getState().Navbar.additionalUserInfo
     const { accessToken } = store.getState().Navbar.credential
@@ -74,24 +74,21 @@ class Builder extends React.Component {
       has_projects: true,
       has_wiki: true
     }
-
-    axios
+    await axios
       .post(`https://api.github.com/user/repos`, data, config)
-      .then(() => {
-        axios.put(
-          `https://api.github.com/repos/${username}/${repoName}/contents/index.html`,
-          indexHTMLFileCreator(),
-          config
-        )
-        axios.put(
-          `https://api.github.com/repos/${username}/${repoName}/contents/api.json`,
-          apiJSONFileCreator(),
-          config
-        )
-      })
+
+    await axios.put(
+      `https://api.github.com/repos/${username}/${repoName}/contents/index.html`,
+      indexHTMLFileCreator(),
+      config
+    )
+    await axios.put(
+      `https://api.github.com/repos/${username}/${repoName}/contents/api.json`,
+      apiJSONFileCreator(),
+      config
+    )
       .catch(err => console.error(err))
   }
-
   handleRepoName (event) {
     this.setState({ repoName: event.target.value })
   }
