@@ -10,7 +10,9 @@ import thunkMiddleware from 'redux-thunk'
 import * as Example from './Example'
 import * as App from './App'
 import * as Navbar from './Navbar'
-const containers = { Example, App, Navbar }
+import * as Panel from './Panel'
+import * as Builder from './Builder'
+const containers = { Example, App, Navbar, Panel, Builder }
 
 // Grab the reducer and component from each container
 let reducers = {}
