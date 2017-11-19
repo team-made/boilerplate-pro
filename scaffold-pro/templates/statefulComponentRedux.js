@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from './component.js'
+import { actions } from './index.js'
 
 const mapStateToProps = (state) => { return {
   ...state.{{ComponentName}}

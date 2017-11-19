@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
-
 import { history } from '../components.js'
 import { actions } from './index.js'
 
