@@ -6,7 +6,7 @@ import { actions } from './index.js'
 
 const mapStateToProps = state => {
   return {
-    ...state.Panel
+    ...state.List
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-const Panel = () => {
+const List = () => {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 3]
   return (
     <div className='container'>
@@ -33,10 +33,13 @@ const Panel = () => {
         </div>
         <p className='panel-tabs'>
           <a className='is-active'>all</a>
-          <a>public</a>
-          <a>private</a>
-          <a>sources</a>
-          <a>forks</a>
+          <a>Javascript</a>
+          <a>CSS</a>
+          <a>PHP</a>
+          <a>HTML</a>
+          <a>Python</a>
+          <a>TypeScript</a>
+          <a>Ruby</a>
         </p>
         <Link to='/builder' className='panel-block is-active'>
           <span className='panel-icon'>
@@ -87,6 +90,6 @@ const Panel = () => {
   )
 }
 
-const connectedPanel = connect(mapStateToProps, mapDispatchToProps)(Panel)
+const connectedList = connect(mapStateToProps, mapDispatchToProps)(List)
 
-export default connectedPanel
+export default connectedList

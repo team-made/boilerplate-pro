@@ -10,20 +10,16 @@ import thunkMiddleware from 'redux-thunk'
 import * as Example from './Example'
 import * as App from './App'
 import * as Navbar from './Navbar'
-import * as Panel from './Panel'
+import * as List from './List'
 import * as Builder from './Builder'
-const containers = { Example, App, Navbar, Panel, Builder }
+const containers = { Example, App, Navbar, List, Builder }
 
 // Grab the reducer and component from each container
 let reducers = {}
 const components = {}
 Object.keys(containers).forEach(key => {
-  if (!containers[key].component) {
-    console.warn(`Problem loading ${key} component.`)
-  } else {
-    components[key] = containers[key].component
-    if (containers[key].reducer) reducers[key] = containers[key].reducer
-  }
+  components[key] = containers[key].component
+  if (containers[key].reducer) reducers[key] = containers[key].reducer
 })
 
 // Compile reducers

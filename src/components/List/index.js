@@ -1,9 +1,9 @@
 // Include component
-import component from './Panel.js'
+import component from './List.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('Panel')
+const reduxUtil = reduxHelper('List')
 
 // Action Definitions
 const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
