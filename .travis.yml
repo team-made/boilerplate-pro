@@ -1,10 +1,13 @@
 language: node_js
 node_js:
 - node
-cache: yarn
+cache:
+directories:
+    - node_modules
 install:
 - yarn
 script:
+- yarn build
 - yarn test
 notifications:
   slack:
