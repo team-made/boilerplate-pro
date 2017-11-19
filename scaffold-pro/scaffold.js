@@ -53,6 +53,12 @@ inquirer
       type: 'confirm',
       default: false,
       message: 'Bundle component with Redux?'
+    },
+    {
+      name: 'tests',
+      type: 'confirm',
+      default: true,
+      message: 'Create test file for component?'
     }
   ])
   .then(args => {

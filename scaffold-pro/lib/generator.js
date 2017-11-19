@@ -55,6 +55,13 @@ const writeTemplates = (newComponentPath, args) => {
         files.push({ in: 'statefulComponent.js', out: `${args.name}.js` })
       }
     }
+    if (args.tests) {
+      if (args.redux) {
+        files.push({ in: 'testsRedux.js', out: `${args.name}.test.js` })
+      } else {
+        files.push({ in: 'tests.js', out: `${args.name}.test.js` })
+      }
+    }
 
     let promises = []
     files.forEach(file => {
