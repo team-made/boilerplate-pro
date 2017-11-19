@@ -1,28 +1,26 @@
-import createHistory from 'history/createBrowserHistory'
-import createMemoryHistory from 'history/createMemoryHistory'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import createMemoryHistory from 'history/createMemoryHistory'
+import createHistory from 'history/createBrowserHistory'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
-// This grabs all 'component.js' files in subdirectories under /components/
-const allComponents = require.context('./', true, /component\.js$/)
+// Import everything from each container (component, action, reducer)
+import * as Example from './Example'
+import * as App from './App'
+import * as Navbar from './Navbar'
+const containers = { Example, App, Navbar }
 
-// Grab the redux reducer function from the components's 'component' file, as well as the component itself
+// Grab the reducer and component from each container
 let reducers = {}
-let components = {}
-allComponents.keys().forEach(path => {
-  let name = path.split('/')[1]
-  let thisComponent = allComponents(path)
-  if (!thisComponent.component) {
-    console.warn(
-      `Component "${name}" is in an invalid format, ignoring. Found at: "${path}"`
-    )
-  }
-  components[name] = thisComponent.component
-  if (thisComponent.reducer) {
-    reducers[name] = thisComponent.reducer
+const components = {}
+Object.keys(containers).forEach(key => {
+  if (!containers[key].component) {
+    console.warn(`Problem loading ${key} component.`)
+  } else {
+    components[key] = containers[key].component
+    if (containers[key].reducer) reducers[key] = containers[key].reducer
   }
 })
 

@@ -11,12 +11,7 @@ const SIGN_OUT = reduxUtil.defineAction('SIGN_OUT')
 
 // Initial State
 const initialState = {
-  isLoggedIn: false,
-  name: '',
-  email: '',
-  gitHubUrl: '',
-  gitHubToken: '',
-  gitHubUsername: ''
+  user: {}
 }
 
 // Make Actions
@@ -33,7 +28,7 @@ const reducer = reduxUtil.createReducer(
       return newState
     },
     [SIGN_OUT]: (state, action) => {
-      let newState = { isLoggedIn: false }
+      let newState = {}
       return newState
     }
   },
