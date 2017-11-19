@@ -18,12 +18,8 @@ const containers = { Example, App, Navbar, List, Builder }
 let reducers = {}
 const components = {}
 Object.keys(containers).forEach(key => {
-  if (!containers[key].component) {
-    console.warn(`Problem loading ${key} component.`)
-  } else {
-    components[key] = containers[key].component
-    if (containers[key].reducer) reducers[key] = containers[key].reducer
-  }
+  components[key] = containers[key].component
+  if (containers[key].reducer) reducers[key] = containers[key].reducer
 })
 
 // Compile reducers
