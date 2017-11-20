@@ -4,12 +4,12 @@ import firebase from 'firebase'
 import axios from 'axios'
 import { apiJSONFileCreator, indexHTMLFileCreator } from './FileGen.js'
 import { actions } from './index.js'
-import { store } from '../components.js'
 import { NavLink } from 'react-router-dom'
 
 const mapStateToProps = state => {
   return {
-    ...state.Builder
+    ...state.Builder,
+    ...state.App
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -34,10 +34,9 @@ class Builder extends React.Component {
   }
 
   async createRepo () {
-    const repoName = await store.getState().Builder.repoName
-    const { username } = store.getState().Navbar.additionalUserInfo
-    const { accessToken } = store.getState().Navbar.credential
-    const config = { headers: { Authorization: `token ${accessToken}` } }
+    const repoName = this.props.repoName
+    const { githubUsername, githubToken } = this.props.user
+    const config = { headers: { Authorization: `token ${githubToken}` } }
     const data = {
       name: repoName,
       description: 'Test for boilerplate-pro',
@@ -50,13 +49,13 @@ class Builder extends React.Component {
     await axios.post(`https://api.github.com/user/repos`, data, config)
 
     await axios.put(
-      `https://api.github.com/repos/${username}/${repoName}/contents/index.html`,
+      `https://api.github.com/repos/${githubUsername}/${repoName}/contents/index.html`,
       indexHTMLFileCreator(),
       config
     )
     await axios
       .put(
-        `https://api.github.com/repos/${username}/${repoName}/contents/api.json`,
+        `https://api.github.com/repos/${githubUsername}/${repoName}/contents/api.json`,
         apiJSONFileCreator(),
         config
       )
@@ -64,11 +63,7 @@ class Builder extends React.Component {
   }
 
   getCurrentUser () {
-    console.log(
-      'currentUser:',
-      'token: ' + store.getState().Navbar.credential.accessToken,
-      firebase.auth().currentUser
-    )
+    console.log('currentUser:', firebase.auth().currentUser)
   }
 
   render () {
