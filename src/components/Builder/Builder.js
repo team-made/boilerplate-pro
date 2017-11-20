@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
-import {apiJSONFileCreator, indexHTMLFileCreator, yamlFileCreator} from './FileGen.js'
+import {
+  apiJSONFileCreator,
+  indexHTMLFileCreator,
+  yamlFileCreator
+} from './FileGen.js'
 import { actions } from './index.js'
 import { NavLink } from 'react-router-dom'
 
@@ -59,11 +63,12 @@ class Builder extends React.Component {
       apiJSONFileCreator(),
       config
     )
-    await axios.put(
-      `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
-      yamlFileCreator(),
-      config
-    )
+    await axios
+      .put(
+        `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
+        yamlFileCreator(),
+        config
+      )
       .catch(err => console.error(err))
   }
 
@@ -72,6 +77,7 @@ class Builder extends React.Component {
   }
 
   render () {
+    console.log('props on builder:', this.props)
     return (
       <div>
         <div className='field' style={{ width: '400px', margin: '0 auto' }}>
@@ -82,6 +88,7 @@ class Builder extends React.Component {
             <input
               className='input'
               type='text'
+              value={`${this.props.match.params.reponame}`}
               name='GitHub Repo Name'
               onChange={this.props.handleRepoName}
               placeholder='Text input'
