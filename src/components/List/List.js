@@ -72,7 +72,7 @@ class List extends React.Component {
             this.props.allBoilerplates.map(boilerplate => {
               return (
                 <Link
-                  to='/builder'
+                  to={`/builder/${boilerplate.full_name}`}
                   className='panel-block is-active'
                   onClick={this.props.handleSelect}
                   key={boilerplate.id}
@@ -80,7 +80,8 @@ class List extends React.Component {
                   <span className='panel-icon'>
                     <i className='fa fa-book' />
                   </span>
-                  {boilerplate.name}
+                  {boilerplate.name} (by {boilerplate.owner.login}) [{boilerplate.watchers_count}
+                  watchers] [{boilerplate.stargazers_count} star gazers]
                 </Link>
               )
             })}
