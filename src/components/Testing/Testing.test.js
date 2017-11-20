@@ -1,20 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Builder from './Builder'
-import 'firebase'
+import Testing from './Testing'
 
 import { Provider } from 'react-redux'
-import { store, history } from '../components.js'
-import { ConnectedRouter } from 'connected-react-router'
+import { store } from '../components.js'
 
 // eslint-disable-next-line
 it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Builder />
-      </ConnectedRouter>
+      <Testing />
     </Provider>,
     div
   )
