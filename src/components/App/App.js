@@ -49,6 +49,10 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={components.List} />
           <Route path='/builder' component={components.Builder} />
+          <Route
+            path='/builder/:owner/:reponame'
+            component={components.Builder}
+          />
           <Route path='/repos/:id' component={components.UserRepo} />
         </Switch>
       </div>
