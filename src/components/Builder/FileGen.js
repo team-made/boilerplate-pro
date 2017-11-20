@@ -4,6 +4,23 @@ const dummyApiJSON = JSON.stringify({
   name: 'Rubils',
   description: 'A template.'
 })
+const dummyYaml = JSON.stringify({
+
+  'language': 'node_js',
+  'node_js': 'node',
+  'cache': {
+    'directories': [
+      'node_modules'
+    ]
+  },
+  'script': [
+    'npm build'
+  ],
+  'group': 'stable',
+  'dist': 'trusty',
+  'os': 'linux'
+
+})
 
 export const indexHTMLFileCreator = function (content) {
   let contentObj = {
@@ -24,6 +41,17 @@ export const apiJSONFileCreator = function () {
       email: 'mitchellwstewart@gmail.com'
     },
     content: `${window.btoa(dummyApiJSON)}`
+  }
+  return contentObj
+}
+export const yamlFileCreator = function (content) {
+  let contentObj = {
+    message: 'feat(Yml): testing github api file creation',
+    committer: {
+      name: 'Mitchell Stewart',
+      email: 'mitchellstewart@gmail.com'
+    },
+    content: `${window.btoa(dummyYaml)}`
   }
   return contentObj
 }
