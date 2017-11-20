@@ -88,7 +88,10 @@ class Builder extends React.Component {
             <input
               className='input'
               type='text'
-              value={`${this.props.match.params.reponame}`}
+              defaultValue={
+                this.props.match.params.reponame ||
+                'teach-me-how-to-boilerplate'
+              }
               name='GitHub Repo Name'
               onChange={this.props.handleRepoName}
               placeholder='Text input'
