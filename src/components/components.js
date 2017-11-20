@@ -13,7 +13,8 @@ import * as Navbar from './Navbar'
 import * as List from './List'
 import * as Builder from './Builder'
 import * as UserRepo from './UserRepo'
-const containers = { Example, App, Navbar, List, Builder, UserRepo }
+import * as Testing from './Testing'
+const containers = { Example, App, Navbar, List, Builder, UserRepo, Testing }
 
 // Grab the reducer and component from each container
 let reducers = {}

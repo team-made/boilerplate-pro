@@ -7,19 +7,18 @@ import axios from 'axios'
 
 const mapStateToProps = state => {
   return {
-    ...state.UserRepo
+    ...state.UserRepo,
+    ...state.App
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-
-    getUserRepo: () => {
+    getUserRepo: username => {
       const repoName = store.getState().Builder.repoName
-      const { username } = store.getState().Navbar.additionalUserInfo
       axios
         .get(`https://api.github.com/repos/${username}/${repoName}`)
         .then(repo => {
-          dispatch(actions.userRepoAction({repoData: repo}))
+          dispatch(actions.userRepoAction({ repoData: repo }))
         })
     }
   }
@@ -39,11 +38,15 @@ class UserRepo extends React.Component {
         <div className='user-title'>
           <h1 className='title is-3'> User Repository Info</h1>
           <div />
-          <button className='button' onClick={this.props.getUserRepo}>
-                  Show User Repo Data
+          <button
+            className='button'
+            onClick={() =>
+              this.props.getUserRepo(this.props.user.githubUsername)}
+          >
+            Show User Repo Data
           </button>
           <h4>REPO Data</h4>
-          <p>{JSON.stringify(this.props.repoData) }</p>
+          <p>{JSON.stringify(this.props.repoData)}</p>
           <a
             href='https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started'
             className='button is-link'
@@ -57,8 +60,6 @@ class UserRepo extends React.Component {
   }
 }
 
-const connectedUserRepo = connect(mapStateToProps, mapDispatchToProps)(
-  UserRepo
-)
+const connectedUserRepo = connect(mapStateToProps, mapDispatchToProps)(UserRepo)
 
 export default connectedUserRepo
