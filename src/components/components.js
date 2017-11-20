@@ -32,7 +32,7 @@ const history =
   process.env.NODE_ENV === 'test' ? createMemoryHistory() : createHistory()
 
 // Merge middlewares
-let middlewares = [routerMiddleware(history), thunkMiddleware]
+let middlewares = [thunkMiddleware, routerMiddleware(history)]
 
 // Development adds logging, must be last
 if (process.env.NODE_ENV !== 'production') {
