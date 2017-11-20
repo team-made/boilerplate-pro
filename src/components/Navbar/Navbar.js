@@ -86,7 +86,7 @@ const Navbar = props => {
           <div className='navbar-item'>
             <div className='field is-grouped'>
               <p className='control'>
-                {props.user ? (
+                {props.user.email ? (
                   <button className='button' onClick={props.signOut}>
                     Sign Out
                   </button>

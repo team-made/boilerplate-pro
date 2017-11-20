@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import { actions } from './index.js'
@@ -23,19 +23,22 @@ const mapDispatchToProps = dispatch => {
 class App extends Component {
   componentDidMount () {
     firebase.auth().onAuthStateChanged(user => {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(user.uid)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            this.props.setUser({ user: doc.data() })
-          } else {
-            console.warn('No such user')
-          }
-        })
-        .catch(err => console.error(err))
+      console.log(user)
+      if (user) {
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(user.uid)
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              this.props.setUser({ user: doc.data() })
+            } else {
+              console.warn('Error at App cdm, firestore user')
+            }
+          })
+          .catch(err => console.error(err))
+      }
     })
   }
   render () {
@@ -52,6 +55,8 @@ class App extends Component {
   }
 }
 
-const connectedApp = connect(mapStateToProps, mapDispatchToProps)(App)
+const connectedApp = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(App)
+)
 
 export default connectedApp
