@@ -29,7 +29,6 @@ class Builder extends React.Component {
       repoId: 1
     }
     this.createRepo = this.createRepo.bind(this)
-    this.getUserRepo = this.getUserRepo.bind(this)
   }
 
   async createRepo () {
@@ -69,15 +68,9 @@ class Builder extends React.Component {
       firebase.auth().currentUser
     )
   }
-  getUserRepo () {
-    const repoName = store.getState().Builder.repoName
-    const { username } = store.getState().Navbar.additionalUserInfo
-    const { accessToken } = store.getState().Navbar.credential
-    const config = { headers: { Authorization: `token ${accessToken}` } }
-    axios.get(`https://api.github.com/users/${username}/repos`).then(repos => console.log(repos.data.find(repo => repo.name === 'hellothere')))
-  }
 
   render () {
+    console.log('props', this.props)
     return (
       <div>
         <div
@@ -105,7 +98,7 @@ class Builder extends React.Component {
         </div>
         {/* Eventually link to actual repo will go here */}
 
-        <button onClick={this.getCurrentUser}>Get Current user</button>
+        <button className='button' onClick={this.getCurrentUser}>Get Current user</button>
         <button className='button' onClick={this.getUserRepo}>Show User Repos</button>
       </div>
     )
