@@ -1,28 +1,29 @@
 // Include component
-import component from './App.js'
+import component from './Testing.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('App')
+const reduxUtil = reduxHelper('Testing')
 
 // Action Definitions
-const SET_USER = reduxUtil.defineAction('SET_USER')
+const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
 
 // Initial State
 const initialState = {
-  user: {}
+  dummyState: false
 }
 
 // Make Actions
 const actions = {
-  setUser: reduxUtil.createAction(SET_USER)
+  dummyAction: reduxUtil.createAction(DUMMY_ACTION)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [SET_USER]: (state, action) => {
+    [DUMMY_ACTION]: (state, action) => {
       let newState = { ...state, ...action.payload }
+      newState.dummyState = true
       return newState
     }
   },
