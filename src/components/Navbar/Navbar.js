@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
+import 'firebase/firestore'
 import { history } from '../components.js'
 import { actions } from './index.js'
 
@@ -8,7 +9,8 @@ const provider = new firebase.auth.GithubAuthProvider()
 
 const mapStateToProps = state => {
   return {
-    ...state.Navbar
+    ...state.Navbar,
+    ...state.App
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -25,6 +27,17 @@ const mapDispatchToProps = dispatch => {
               additionalUserInfo: result.additionalUserInfo
             })
           )
+          firebase
+            .firestore()
+            .collection('users')
+            .doc(result.user.uid)
+            .set({
+              uid: result.user.uid,
+              email: result.user.email,
+              githubToken: result.credential.accessToken,
+              githubUsername: result.additionalUserInfo.username
+            })
+            .then(snap => console.log(snap))
         })
         .catch(err => {
           console.log('Sign in error: ', err)
@@ -73,7 +86,7 @@ const Navbar = props => {
           <div className='navbar-item'>
             <div className='field is-grouped'>
               <p className='control'>
-                {props.user && props.user.email ? (
+                {props.user ? (
                   <button className='button' onClick={props.signOut}>
                     Sign Out
                   </button>
