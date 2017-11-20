@@ -47,6 +47,7 @@ class App extends Component {
         <components.Navbar />
         <Switch>
           <Route exact path='/' component={components.List} />
+          <Route path='/builder' component={components.Builder} />
           <Route
             path='/builder/:owner/:reponame'
             component={components.Builder}
