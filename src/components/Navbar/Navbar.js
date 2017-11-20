@@ -1,61 +1,37 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import { history } from '../components.js'
-import { actions } from './index.js'
 
 const provider = new firebase.auth.GithubAuthProvider()
 
-const mapStateToProps = state => {
-  return {
-    ...state.Navbar,
-    ...state.App
-  }
+const signIn = () => {
+  firebase
+    .auth()
+    .signInWithPopup(provider.addScope('public_repo'))
+    .then(result => {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(result.user.uid)
+        .set({
+          uid: result.user.uid,
+          email: result.user.email,
+          githubToken: result.credential.accessToken,
+          githubUsername: result.additionalUserInfo.username
+        })
+    })
+    .catch(err => {
+      console.error('Sign in error: ', err)
+    })
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    signIn: () => {
-      firebase
-        .auth()
-        .signInWithPopup(provider.addScope('public_repo'))
-        .then(result => {
-          dispatch(
-            actions.signIn({
-              user: result.user,
-              credential: result.credential,
-              additionalUserInfo: result.additionalUserInfo
-            })
-          )
-          firebase
-            .firestore()
-            .collection('users')
-            .doc(result.user.uid)
-            .set({
-              uid: result.user.uid,
-              email: result.user.email,
-              githubToken: result.credential.accessToken,
-              githubUsername: result.additionalUserInfo.username
-            })
-            .then(snap => console.log(snap))
-        })
-        .catch(err => {
-          console.log('Sign in error: ', err)
-        })
-    },
-    signOut: () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          console.log('signed out')
-          dispatch(actions.signOut())
-        })
-        .catch(err => {
-          console.log('Sign out error:', err)
-        })
-    }
-  }
+const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .catch(err => {
+      console.error('Sign out error:', err)
+    })
 }
 
 const Navbar = props => {
@@ -87,18 +63,18 @@ const Navbar = props => {
             <div className='field is-grouped'>
               <p className='control'>
                 {props.user.email ? (
-                  <button className='button' onClick={props.signOut}>
+                  <button className='button' onClick={signOut}>
                     Sign Out
                   </button>
                 ) : (
                   [
-                    <button key='1' className='button' onClick={props.signIn}>
+                    <button key='1' className='button' onClick={signIn}>
                       Sign In
                     </button>,
                     <button
                       key='2'
                       className='button is-primary'
-                      onClick={props.signIn}
+                      onClick={signIn}
                     >
                       Sign Up
                     </button>
@@ -113,6 +89,4 @@ const Navbar = props => {
   )
 }
 
-const connectedNavbar = connect(mapStateToProps, mapDispatchToProps)(Navbar)
-
-export default connectedNavbar
+export default Navbar
