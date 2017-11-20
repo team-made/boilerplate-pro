@@ -2,9 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import axios from 'axios'
-
+import {apiJSONFileCreator, indexHTMLFileCreator} from './FileGen.js'
 import { actions } from './index.js'
 import { store } from '../components.js'
+import {NavLink} from 'react-router-dom'
 
 const mapStateToProps = state => {
   return {
@@ -13,55 +14,25 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    dummyAction: () => {
-      dispatch(actions.dummyAction())
+    handleRepoName: (event) => {
+      dispatch(actions.repoNameAction({
+        repoName: event.target.value
+      }))
     }
   }
 }
 
-const dummyHtml =
-  '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
-const dummyApiJSON = JSON.stringify({
-  name: 'Rubils',
-  description: 'A template.'
-})
-
-const indexHTMLFileCreator = function (content) {
-  let contentObj = {
-    message: 'feat(HTML):testing github api file creation',
-    committer: {
-      name: 'Mitchell Stewart',
-      email: 'mitchellwstewart@gmail.com'
-    },
-    content: `${window.btoa(dummyHtml)}`
-  }
-  return contentObj
-}
-
-const apiJSONFileCreator = function () {
-  let contentObj = {
-    message: 'f(apiJSON):testing github api file creation',
-    committer: {
-      name: 'Mitchell Stewart',
-      email: 'mitchellwstewart@gmail.com'
-    },
-    content: `${window.btoa(dummyApiJSON)}`
-  }
-  console.log('here', contentObj)
-  return contentObj
-}
 class Builder extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      repoName: ''
+      repoId: 1
     }
-    this.handleRepoName = this.handleRepoName.bind(this)
     this.createRepo = this.createRepo.bind(this)
   }
 
   async createRepo () {
-    const repoName = this.state.repoName
+    const repoName = await store.getState().Builder.repoName
     const { username } = store.getState().Navbar.additionalUserInfo
     const { accessToken } = store.getState().Navbar.credential
     const config = { headers: { Authorization: `token ${accessToken}` } }
@@ -89,9 +60,6 @@ class Builder extends React.Component {
     )
       .catch(err => console.error(err))
   }
-  handleRepoName (event) {
-    this.setState({ repoName: event.target.value })
-  }
 
   getCurrentUser () {
     console.log(
@@ -100,7 +68,9 @@ class Builder extends React.Component {
       firebase.auth().currentUser
     )
   }
+
   render () {
+    console.log('props', this.props)
     return (
       <div>
         <div
@@ -114,24 +84,22 @@ class Builder extends React.Component {
               className='input'
               type='text'
               name='GitHub Repo Name'
-              onChange={this.handleRepoName}
+              onChange={this.props.handleRepoName}
               placeholder='Text input'
             />
           </div>
           <p className='help'>no-spaces</p>
-          <button className='button' onClick={this.createRepo}>
+
+          <NavLink to={`/repos/${this.state.repoId}`}>
+            <button className='button' onClick={this.createRepo}>
             Create Repo
-          </button>
+            </button>
+          </NavLink>
         </div>
         {/* Eventually link to actual repo will go here */}
-        <a
-          className='button is-link'
-          style={{ padding: '5px' }}
-          href={`https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started`}
-        >
-          <span>Deploy to Heroku</span>
-        </a>
-        <button onClick={this.getCurrentUser}>Get Current user</button>
+
+        <button className='button' onClick={this.getCurrentUser}>Get Current user</button>
+        <button className='button' onClick={this.getUserRepo}>Show User Repos</button>
       </div>
     )
   }

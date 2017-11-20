@@ -1,16 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Navbar from './Navbar'
+import UserRepo from './UserRepo'
+
 import { Provider } from 'react-redux'
-import { store } from '../components.js'
+import { store, history } from '../components.js'
+import { ConnectedRouter } from 'connected-react-router'
 
 // eslint-disable-next-line
 it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-
-      <Navbar />
+      <ConnectedRouter history={history}>
+        <UserRepo />
+      </ConnectedRouter>
     </Provider>,
     div
   )
