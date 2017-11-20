@@ -2,11 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import axios from 'axios'
-<<<<<<< HEAD
 import {apiJSONFileCreator, indexHTMLFileCreator, yamlFileCreator} from './FileGen.js'
-=======
-import { apiJSONFileCreator, indexHTMLFileCreator } from './FileGen.js'
->>>>>>> 5639294f2ef2e1213eceb759710ed1f113c4be1c
 import { actions } from './index.js'
 import { NavLink } from 'react-router-dom'
 
