@@ -12,6 +12,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
+
     getUserRepo: () => {
       const repoName = store.getState().Builder.repoName
       const { username } = store.getState().Navbar.additionalUserInfo
@@ -19,8 +20,7 @@ const mapDispatchToProps = dispatch => {
         .get(`https://api.github.com/repos/${username}/${repoName}`)
         .then(repo => {
           dispatch(actions.userRepoAction({repoData: repo}))
-        }
-        )
+        })
     }
   }
 }

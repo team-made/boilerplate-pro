@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
+import 'firebase/firestore'
 import axios from 'axios'
 import {apiJSONFileCreator, indexHTMLFileCreator} from './FileGen.js'
 import { actions } from './index.js'
@@ -70,7 +71,6 @@ class Builder extends React.Component {
   }
 
   render () {
-    console.log('props', this.props)
     return (
       <div>
         <div
