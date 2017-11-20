@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import axios from 'axios'
-import {apiJSONFileCreator, indexHTMLFileCreator} from './FileGen.js'
+import {apiJSONFileCreator, indexHTMLFileCreator, yamlFileCreator} from './FileGen.js'
 import { actions } from './index.js'
 import { store } from '../components.js'
 import {NavLink} from 'react-router-dom'
@@ -56,6 +56,11 @@ class Builder extends React.Component {
     await axios.put(
       `https://api.github.com/repos/${username}/${repoName}/contents/api.json`,
       apiJSONFileCreator(),
+      config
+    )
+    await axios.put(
+      `https://api.github.com/repos/${username}/${repoName}/contents/.travis.yml`,
+      yamlFileCreator(),
       config
     )
       .catch(err => console.error(err))
