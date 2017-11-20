@@ -23,7 +23,6 @@ const mapDispatchToProps = dispatch => {
 class App extends Component {
   componentDidMount () {
     firebase.auth().onAuthStateChanged(user => {
-      console.log(user)
       if (user) {
         firebase
           .firestore()
@@ -38,13 +37,15 @@ class App extends Component {
             }
           })
           .catch(err => console.error(err))
+      } else {
+        this.props.setUser({ user: {} })
       }
     })
   }
   render () {
     return (
       <div className='App'>
-        <components.Navbar />
+        <components.Navbar user={this.props.user} />
         <Switch>
           <Route exact path='/' component={components.List} />
           <Route path='/builder' component={components.Builder} />
