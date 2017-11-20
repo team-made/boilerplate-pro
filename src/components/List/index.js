@@ -1,31 +1,35 @@
 // Include component
 import component from './List.js'
+// import firebase from 'firebase'
+// import 'firebase/firestore'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
 const reduxUtil = reduxHelper('List')
 
 // Action Definitions
-const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
+const ALL_BOILERPLATES = reduxUtil.defineAction('ALL_BOILERPLATES')
 
 // Initial State
 const initialState = {
-  dummyState: false
+  allBoilerplates: [],
+  selectedBoilerplate: {}
 }
 
 // Make Actions
 const actions = {
-  dummyAction: reduxUtil.createAction(DUMMY_ACTION)
+  allBoilerplatesAction: reduxUtil.createAction(ALL_BOILERPLATES)
+
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [DUMMY_ACTION]: (state, action) => {
+    [ALL_BOILERPLATES]: (state, action) => {
       let newState = { ...state, ...action.payload }
-      newState.dummyState = true
       return newState
     }
+
   },
   initialState
 )
