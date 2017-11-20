@@ -49,7 +49,7 @@ export const yamlFileCreator = function (content) {
     message: 'feat(Yml): testing github api file creation',
     committer: {
       name: 'Mitchell Stewart',
-      email: 'mitchellstewart@gmail.com'
+      email: 'mitchellwstewart@gmail.com'
     },
     content: `${window.btoa(dummyYaml)}`
   }
