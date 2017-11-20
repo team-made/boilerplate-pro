@@ -12,14 +12,21 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    handleSelect: (event) => {
+    handleSelect: event => {
       console.log('event', event.target.value)
     },
     getAllBoilerplates: () => {
-      firebase.firestore().collection('boilerplates').get().then(results => {
-        let boilerplates = Array.from(results.docs).map(doc => doc.data())
-        dispatch(actions.allBoilerplatesAction({allBoilerplates: boilerplates}))
-      })
+      firebase
+        .firestore()
+        .collection('boilerplates')
+        .limit(25)
+        .get()
+        .then(results => {
+          let boilerplates = Array.from(results.docs).map(doc => doc.data())
+          dispatch(
+            actions.allBoilerplatesAction({ allBoilerplates: boilerplates })
+          )
+        })
     }
   }
 }
@@ -61,17 +68,22 @@ class List extends React.Component {
             test: CLICK THIS ONE
           </Link>
 
-          {this.props.allBoilerplates && this.props.allBoilerplates.map(boilerplate => {
-            return (
-              <Link to='/builder' className='panel-block is-active' onClick={this.props.handleSelect} key={boilerplate.id}>
-                <span className='panel-icon' >
-                  <i className='fa fa-book' />
-                </span>
-                {boilerplate.name}
-              </Link>
-            )
-          }
-          )}
+          {this.props.allBoilerplates &&
+            this.props.allBoilerplates.map(boilerplate => {
+              return (
+                <Link
+                  to='/builder'
+                  className='panel-block is-active'
+                  onClick={this.props.handleSelect}
+                  key={boilerplate.id}
+                >
+                  <span className='panel-icon'>
+                    <i className='fa fa-book' />
+                  </span>
+                  {boilerplate.name}
+                </Link>
+              )
+            })}
         </nav>
       </div>
     )
