@@ -2,11 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import firebase from 'firebase'
 import 'bulma/css/bulma.css'
-
+import 'firebase/firestore'
 import './index.css'
+import { ConnectedRouter } from 'connected-react-router'
+import { Provider } from 'react-redux'
 
 // Grab all components dynamically
-import { components } from './components/components.js'
+import { components, history, store } from './components/components.js'
 import registerServiceWorker from './utils/registerServiceWorker'
 
 const config = {
@@ -23,5 +25,12 @@ const config = {
 
 firebase.initializeApp(config)
 
-ReactDOM.render(<components.App />, document.getElementById('root'))
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <components.App />
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById('root')
+)
 registerServiceWorker()

@@ -1,3 +1,5 @@
+import 'firebase/firestore'
+
 // Include component
 import component from './Navbar.js'
 
@@ -11,7 +13,7 @@ const SIGN_OUT = reduxUtil.defineAction('SIGN_OUT')
 
 // Initial State
 const initialState = {
-  user: {}
+  currentUser: null
 }
 
 // Make Actions
