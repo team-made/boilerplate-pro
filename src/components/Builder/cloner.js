@@ -31,12 +31,12 @@ export default class GHCloner {
   }
   async putGit (path, data) {
     console.log('inside of putGit')
-    const config = {
-      headers: {
-        Authorization: `token ${this.userToken}`,
-        'User-Agent': 'BoilerPlatePro'
-      }
-    }
+    // const config = {
+    //   headers: {
+    //     Authorization: `token ${this.userToken}`,
+    //     'User-Agent': 'BoilerPlatePro'
+    //   }
+    // }
     try {
     } catch (err) {
       console.log(`error in putGit: ${err}`)

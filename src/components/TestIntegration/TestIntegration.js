@@ -28,20 +28,21 @@ class TestIntegration extends React.Component {
   }
 
   async handleTestInit () {
-    const repoName = this.props.repoName
-    const { githubUsername, githubToken } = this.props.user
+    const { githubToken } = this.props.user
     const config = {
       headers: {
-        'Accept': 'application/vnd.travis-ci.2+json',
+        Accept: 'application/vnd.travis-ci.2+json',
         'User-Agent': 'MyClient/1.0.0',
-        'Host': 'api.travis-ci.org',
+        Host: 'api.travis-ci.org',
         'Content-Type': 'application/json'
       }
     }
     const data = {
       github_token: { githubToken }
     }
-    await axios.post(`https://api.travis-ci.org/auth/github`, data, config).then(data => console.log('token data: ', data))
+    await axios
+      .post(`https://api.travis-ci.org/auth/github`, data, config)
+      .then(data => console.log('token data: ', data))
   }
 
   render () {
