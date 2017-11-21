@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Testing from './Testing'
+import TestIntegration from './TestIntegration'
 
 import { Provider } from 'react-redux'
 import { store } from '../components.js'
@@ -10,7 +10,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-      <Testing />
+      <TestIntegration />
     </Provider>,
     div
   )

@@ -1,9 +1,9 @@
 // Include component
-import component from './Testing.js'
+import component from './TestIntegration.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('Testing')
+const reduxUtil = reduxHelper('TestIntegration')
 
 // Action Definitions
 const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
