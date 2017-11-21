@@ -61,7 +61,7 @@ class List extends React.Component {
             <a>TypeScript</a>
             <a>Ruby</a>
           </p>
-          <Link to='/builder' className='panel-block is-active'>
+          <Link to='/builder/test/test' className='panel-block is-active'>
             <span className='panel-icon'>
               <i className='fa fa-book' />
             </span>
