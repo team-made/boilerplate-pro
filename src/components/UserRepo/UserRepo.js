@@ -1,11 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { NavLink, Link } from 'react-router-dom'
-import { store } from '../components.js'
-import { actions } from './index.js'
 import { Link } from 'react-router-dom'
 
-import axios from 'axios'
 import TestIntegration from '../TestIntegration/TestIntegration.js'
 
 const mapStateToProps = state => {

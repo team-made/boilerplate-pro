@@ -9,8 +9,7 @@ import {
   yamlFileCreator
 } from './FileGen.js'
 import { actions } from './index.js'
-import { NavLink } from 'react-router-dom'
-import { history, components } from '../components.js'
+import { history } from '../components.js'
 import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
