@@ -43,15 +43,15 @@ inquirer
       }
     },
     {
-      name: 'stateless',
+      name: 'state',
       type: 'confirm',
-      default: true,
-      message: 'Stateless component?'
+      default: false,
+      message: 'Should component have local state?'
     },
     {
       name: 'redux',
       type: 'confirm',
-      default: false,
+      default: true,
       message: 'Bundle component with Redux?'
     },
     {
@@ -73,7 +73,9 @@ inquirer
         'scaffolded successfully'
       )
     )
-    console.log(chalk.red('REMEMBER TO ADD COMPONENT TO COMPONENTS.JS'))
+    console.log(
+      chalk.red('------ REMEMBER TO ADD COMPONENT TO COMPONENTS.JS ------')
+    )
   })
   .catch(e => {
     console.log(chalk.red('Error'), e)

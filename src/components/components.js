@@ -14,7 +14,17 @@ import * as List from './List'
 import * as Builder from './Builder'
 import * as UserRepo from './UserRepo'
 import * as TestIntegration from './TestIntegration'
-const containers = { Example, App, Navbar, List, Builder, UserRepo, TestIntegration }
+import * as Deploy from './Deploy'
+const containers = {
+  Example,
+  App,
+  Navbar,
+  List,
+  Builder,
+  UserRepo,
+  TestIntegration,
+  Deploy
+}
 
 // Grab the reducer and component from each container
 let reducers = {}
