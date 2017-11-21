@@ -10,6 +10,7 @@ import {
 } from './FileGen.js'
 import { actions } from './index.js'
 import { NavLink } from 'react-router-dom'
+import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
   return {
@@ -33,9 +34,20 @@ class Builder extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      repoId: 1
+      repoId: 1,
+      repoName: this.props.match.params.name || 'teach-me-how-to-boilerplate',
+      working: false,
+      status: 'waiting to start',
+      progress: '',
+      content: ''
     }
     this.createRepo = this.createRepo.bind(this)
+    this.changeRepoName = this.changeRepoName.bind(this)
+    this.startCloner = this.startCloner.bind(this)
+  }
+
+  changeRepoName (e) {
+    this.setState({ repoName: e.target.value })
   }
 
   async createRepo () {
@@ -76,6 +88,25 @@ class Builder extends React.Component {
     console.log('currentUser:', firebase.auth().currentUser)
   }
 
+  async startCloner (e) {
+    e.preventDefault()
+    const { githubUsername, githubToken } = this.props.user
+    const { name, owner } = this.props.match.params
+    this.setState({ working: true })
+    const clone = new GHCloner(
+      this.state.repoName,
+      githubUsername,
+      githubToken,
+      name,
+      owner
+    )
+    this.setState({ status: `${clone.status}` })
+    const dirContent = await clone.getContents()
+    this.setState({ status: `${clone.status}` })
+    console.log(dirContent)
+    this.setState({ content: dirContent })
+  }
+
   render () {
     console.log('props on builder:', this.props)
     return (
@@ -85,26 +116,37 @@ class Builder extends React.Component {
           <h1 className='title'>Builder</h1>
           <label className='label'>Repo Name</label>
           <div className='control'>
-            <input
-              className='input'
-              type='text'
-              defaultValue={
-                (this.props.match && this.props.match.params.name) ||
-                'teach-me-how-to-boilerplate'
-              }
-              name='GitHub Repo Name'
-              onChange={this.props.handleRepoName}
-              placeholder='Text input'
-            />
+            <form>
+              <input
+                className='input'
+                type='text'
+                defaultValue={this.state.repoName}
+                name='GitHub Repo Name'
+                onChange={this.changeRepoName}
+                placeholder='what is your project called?'
+              />
+              <p className='help'>no-spaces</p>
+              <button type='submit' onClick={this.startCloner}>
+                Start Hyper Clone
+              </button>
+            </form>
           </div>
-          <p className='help'>no-spaces</p>
-
-          <NavLink to={`/repos/${this.state.repoId}`}>
-            <button className='button' onClick={this.createRepo}>
-              Create Repo
-            </button>
-          </NavLink>
         </div>
+        {this.state.working && (
+          <div style={{ border: 'solid 1px black', padding: '10px' }}>
+            status: {this.state.status}
+            <br />
+            progress: {this.state.progress}
+            <br />
+            content: {JSON.stringify(this.state.content)}
+            <br />
+          </div>
+        )}
+        <NavLink to={`/repos/${this.state.repoId}`}>
+          <button className='button' onClick={this.createRepo}>
+            Create Repo
+          </button>
+        </NavLink>
         {/* Eventually link to actual repo will go here */}
 
         <button className='button' onClick={this.getCurrentUser}>
