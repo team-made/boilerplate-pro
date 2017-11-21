@@ -113,11 +113,12 @@ class Builder extends React.Component {
       name,
       owner
     )
-    this.setState({ status: `${clone.status}` })
-    const dirContent = await clone.getContents()
-    this.setState({ status: `${clone.status}` })
+    // this.setState({ status: `${clone.status}` })
+    // const newRepo = await clone.createRepo()
+    // const dirContent = await clone.readAndWriteFile('Gemfile')
+    // this.setState({ status: `${clone.status}` })
     console.log(dirContent)
-    this.setState({ content: dirContent })
+    // this.setState({ content: dirContent })
   }
 
   render () {
