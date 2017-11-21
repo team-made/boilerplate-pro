@@ -11,6 +11,7 @@ import {
 import { actions } from './index.js'
 import { NavLink } from 'react-router-dom'
 import { history, components } from '../components.js'
+import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
   return {
@@ -34,15 +35,21 @@ class Builder extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      repoId: 1,
       warningText: '',
-      building: false
+      building: false,
+      working: false,
+      status: 'waiting to start',
+      progress: '',
+      content: ''
     }
-    this.createRepo = this.createRepo.bind(this)
+
     const name =
       (this.props.match && this.props.match.params.name) ||
       'teach-me-how-to-boilerplate'
     props.handleRepoName(name)
+
+    this.createRepo = this.createRepo.bind(this)
+    this.startCloner = this.startCloner.bind(this)
   }
 
   createRepo () {
@@ -95,6 +102,25 @@ class Builder extends React.Component {
       )
   }
 
+  async startCloner (e) {
+    e.preventDefault()
+    const { githubUsername, githubToken } = this.props.user
+    const { name, owner } = this.props.match.params
+    this.setState({ working: true })
+    const clone = new GHCloner(
+      this.props.repoName,
+      githubUsername,
+      githubToken,
+      name,
+      owner
+    )
+    this.setState({ status: `${clone.status}` })
+    const dirContent = await clone.getContents()
+    this.setState({ status: `${clone.status}` })
+    console.log(dirContent)
+    this.setState({ content: dirContent })
+  }
+
   render () {
     return (
       <div>
@@ -113,6 +139,10 @@ class Builder extends React.Component {
             />
           </div>
           <p className='help'>name must contain no-spaces</p>
+          <button type='submit' onClick={this.startCloner}>
+            Start Hyper Clone
+          </button>
+
           {this.state.building ? (
             <div className='spinner'>
               <div className='bounce1' />
@@ -126,8 +156,20 @@ class Builder extends React.Component {
           ) : (
             <button className='button'>Sign in to build!</button>
           )}
+
           {this.state.warningText && (
             <p className='help'>{this.state.warningText}</p>
+          )}
+
+          {this.state.working && (
+            <div style={{ border: 'solid 1px black', padding: '10px' }}>
+              status: {this.state.status}
+              <br />
+              progress: {this.state.progress}
+              <br />
+              content: {JSON.stringify(this.state.content)}
+              <br />
+            </div>
           )}
         </div>
       </div>
