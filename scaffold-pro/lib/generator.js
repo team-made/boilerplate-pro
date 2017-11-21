@@ -38,7 +38,7 @@ const writeTemplates = (newComponentPath, args) => {
     console.log(chalk.grey(' - Writing Templates'))
 
     let files = []
-    if (args.stateless) {
+    if (!args.state) {
       if (args.redux) {
         files.push({ in: 'componentRedux.js', out: 'index.js' })
         files.push({ in: 'statelessComponentRedux.js', out: `${args.name}.js` })
