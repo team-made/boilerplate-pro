@@ -48,11 +48,7 @@ class App extends Component {
         <components.Navbar user={this.props.user} />
         <Switch>
           <Route exact path='/' component={components.List} />
-          <Route exact path='/builder' component={components.Builder} />
-          <Route
-            path='/builder/:owner/:reponame'
-            component={components.Builder}
-          />
+          <Route path='/builder/:owner/:name' component={components.Builder} />
           <Route path='/repos/:id' component={components.UserRepo} />
           <Route path='/deploy' component={components.Deploy} />
         </Switch>
