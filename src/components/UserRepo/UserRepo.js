@@ -49,6 +49,7 @@ class UserRepo extends React.Component {
           <h4>REPO Data</h4>
           <p>{JSON.stringify(this.props.repoData)}</p>
           <button className='button'>To Continuous Integration!</button>
+          <TestIntegration />
         </div>
       </div>
     )

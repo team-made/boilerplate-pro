@@ -77,7 +77,6 @@ class Builder extends React.Component {
   }
 
   render () {
-    console.log('props on builder:', this.props)
     return (
       <div>
         <div className='field' style={{ width: '400px', margin: '0 auto' }}>
