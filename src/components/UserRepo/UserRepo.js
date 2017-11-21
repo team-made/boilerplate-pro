@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { store } from '../components.js'
 import { actions } from './index.js'
 import axios from 'axios'
+import TestIntegration from '../TestIntegration/TestIntegration.js'
 
 const mapStateToProps = state => {
   return {

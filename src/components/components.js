@@ -13,7 +13,7 @@ import * as Navbar from './Navbar'
 import * as List from './List'
 import * as Builder from './Builder'
 import * as UserRepo from './UserRepo'
-import * as Testing from './Testing'
+import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
 const containers = {
   Example,
@@ -22,7 +22,7 @@ const containers = {
   List,
   Builder,
   UserRepo,
-  Testing,
+  TestIntegration,
   Deploy
 }
 
