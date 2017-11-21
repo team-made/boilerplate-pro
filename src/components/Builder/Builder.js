@@ -10,6 +10,7 @@ import {
 } from './FileGen.js'
 import { actions } from './index.js'
 import { NavLink } from 'react-router-dom'
+import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
@@ -19,10 +20,10 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    handleRepoName: event => {
+    handleRepoName: value => {
       dispatch(
         actions.repoNameAction({
-          repoName: event.target.value
+          repoName: value
         })
       )
     }
@@ -33,12 +34,18 @@ class Builder extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      repoId: 1
+      repoId: 1,
+      warningText: '',
+      building: false
     }
     this.createRepo = this.createRepo.bind(this)
+    const name =
+      (this.props.match && this.props.match.params.name) ||
+      'teach-me-how-to-boilerplate'
+    props.handleRepoName(name)
   }
 
-  async createRepo () {
+  createRepo () {
     const repoName = this.props.repoName
     const { githubUsername, githubToken } = this.props.user
     const config = { headers: { Authorization: `token ${githubToken}` } }
@@ -51,68 +58,78 @@ class Builder extends React.Component {
       has_projects: true,
       has_wiki: true
     }
-    await axios.post(`https://api.github.com/user/repos`, data, config)
-
-    await axios.put(
-      `https://api.github.com/repos/${githubUsername}/${repoName}/contents/index.html`,
-      indexHTMLFileCreator(),
-      config
-    )
-    await axios.put(
-      `https://api.github.com/repos/${githubUsername}/${repoName}/contents/api.json`,
-      apiJSONFileCreator(),
-      config
-    )
-    await axios
-      .put(
-        `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
-        yamlFileCreator(),
-        config
+    this.setState({ building: true })
+    axios
+      .post(`https://api.github.com/user/repos`, data, config)
+      .then(() => {
+        return axios
+          .put(
+            `https://api.github.com/repos/${githubUsername}/${repoName}/contents/index.html`,
+            indexHTMLFileCreator(),
+            config
+          )
+          .then(() =>
+            axios.put(
+              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/api.json`,
+              apiJSONFileCreator(),
+              config
+            )
+          )
+          .then(() =>
+            axios.put(
+              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
+              yamlFileCreator(),
+              config
+            )
+          )
+      })
+      .then(() => history.push(`/repos/${this.state.repoId}`))
+      .catch(
+        err =>
+          console.error(err) ||
+          this.setState({
+            building: false,
+            warningText: `${err.response.data.message}
+              ${err.response.data.errors[0].message}`
+          })
       )
-      .catch(err => console.error(err))
-  }
-
-  getCurrentUser () {
-    console.log('currentUser:', firebase.auth().currentUser)
   }
 
   render () {
-    console.log('props on builder:', this.props)
     return (
       <div>
         <div className='field' style={{ width: '400px', margin: '0 auto' }}>
           <br />
-          <h1 className='title'>Builder</h1>
+          <h1 className='subtitle is-2'>Builder</h1>
           <label className='label'>Repo Name</label>
           <div className='control'>
             <input
               className='input'
               type='text'
-              defaultValue={
-                (this.props.match && this.props.match.params.name) ||
-                'teach-me-how-to-boilerplate'
-              }
               name='GitHub Repo Name'
-              onChange={this.props.handleRepoName}
+              value={this.props.repoName}
+              onChange={evt => this.props.handleRepoName(evt.target.value)}
               placeholder='Text input'
             />
           </div>
-          <p className='help'>no-spaces</p>
-
-          <NavLink to={`/repos/${this.state.repoId}`}>
+          <p className='help'>name must contain no-spaces</p>
+          {this.state.building ? (
+            <div className='spinner'>
+              <div className='bounce1' />
+              <div className='bounce2' />
+              <div className='bounce3' />
+            </div>
+          ) : firebase.auth().currentUser ? (
             <button className='button' onClick={this.createRepo}>
               Create Repo
             </button>
-          </NavLink>
+          ) : (
+            <button className='button'>Sign in to build!</button>
+          )}
+          {this.state.warningText && (
+            <p className='help'>{this.state.warningText}</p>
+          )}
         </div>
-        {/* Eventually link to actual repo will go here */}
-
-        <button className='button' onClick={this.getCurrentUser}>
-          Get Current user
-        </button>
-        <button className='button' onClick={this.getUserRepo}>
-          Show User Repos
-        </button>
       </div>
     )
   }

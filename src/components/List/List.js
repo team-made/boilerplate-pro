@@ -5,6 +5,8 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import { actions } from './index.js'
 
+import './List.css'
+
 const mapStateToProps = state => {
   return {
     ...state.List
@@ -67,8 +69,7 @@ class List extends React.Component {
             </span>
             test: CLICK THIS ONE
           </Link>
-
-          {this.props.allBoilerplates &&
+          {this.props.allBoilerplates.length ? (
             this.props.allBoilerplates.map(boilerplate => {
               return (
                 <Link
@@ -84,7 +85,14 @@ class List extends React.Component {
                   watchers] [{boilerplate.stargazers_count} star gazers]
                 </Link>
               )
-            })}
+            })
+          ) : (
+            <div className='spinner'>
+              <div className='bounce1' />
+              <div className='bounce2' />
+              <div className='bounce3' />
+            </div>
+          )}
         </nav>
       </div>
     )
