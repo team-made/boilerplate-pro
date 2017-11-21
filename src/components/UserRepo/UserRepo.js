@@ -47,13 +47,7 @@ class UserRepo extends React.Component {
           </button>
           <h4>REPO Data</h4>
           <p>{JSON.stringify(this.props.repoData)}</p>
-          <a
-            href='https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started'
-            className='button is-link'
-            style={{ padding: '5px' }}
-          >
-            <span>Deploy to Heroku</span>
-          </a>
+          <button className='button'>To Continuous Integration!</button>
         </div>
       </div>
     )
