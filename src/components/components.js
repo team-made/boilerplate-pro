@@ -7,7 +7,6 @@ import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 
 // Import everything from each container (component, action, reducer)
-import * as Example from './Example'
 import * as App from './App'
 import * as Navbar from './Navbar'
 import * as List from './List'
@@ -16,7 +15,6 @@ import * as UserRepo from './UserRepo'
 import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
 const containers = {
-  Example,
   App,
   Navbar,
   List,
