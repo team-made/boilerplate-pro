@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { store } from '../components.js'
 import { actions } from './index.js'
 import axios from 'axios'
+import TestIntegration from '../TestIntegration/TestIntegration.js'
 
 const mapStateToProps = state => {
   return {
@@ -47,11 +48,13 @@ class UserRepo extends React.Component {
           </button>
           <h4>REPO Data</h4>
           <p>{JSON.stringify(this.props.repoData)}</p>
+          <TestIntegration />
           <a
             href='https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-getting-started'
             className='button is-link'
             style={{ padding: '5px' }}
           >
+
             <span>Deploy to Heroku</span>
           </a>
         </div>
