@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-// import TestIntegration from '../TestIntegration/TestIntegration.js'
+import TestIntegration from '../TestIntegration/TestIntegration.js'
 
 const mapStateToProps = state => {
   return {
@@ -40,6 +40,7 @@ class UserRepo extends React.Component {
             <Link to='/deploy' className='button'>
               To Deploy Page!
             </Link>
+            <TestIntegration />
           </div>
         </div>
       </div>
