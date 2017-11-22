@@ -106,19 +106,22 @@ class Builder extends React.Component {
     const { githubUsername, githubToken } = this.props.user
     const { name, owner } = this.props.match.params
     this.setState({ working: true })
-    const clone = new GHCloner(
-      this.props.repoName,
-      githubUsername,
-      githubToken,
-      name,
-      owner
-    )
+    // const clone = new GHCloner(
+    //   this.props.repoName,
+    //   githubUsername,
+    //   githubToken,
+    //   name,
+    //   owner
+    // )
     // console.log(clone.progress)
     // this.setState({ status: `${clone.status}` })
+
     // const newRepo = await clone.createRepo()
-    // const dirContent = await clone.readAndWriteFile('Gemfile')
+    // console.log("create repo",newRepo)
+    // const dirContent = await clone.readAndWriteFile('gradlew')
+    // console.log("clone file",dirContent)
+
     // this.setState({ status: `${clone.status}` })
-    // console.log(dirContent)
     // this.setState({ content: dirContent })
   }
 
