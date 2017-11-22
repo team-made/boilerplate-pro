@@ -10,7 +10,7 @@ import {
 } from './FileGen.js'
 import { actions } from './index.js'
 import { history } from '../components.js'
-import GHCloner from './cloner.js'
+// import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
   return {
@@ -101,26 +101,26 @@ class Builder extends React.Component {
       )
   }
 
-  async startCloner (e) {
-    e.preventDefault()
-    const { githubUsername, githubToken } = this.props.user
-    const { name, owner } = this.props.match.params
-    this.setState({ working: true })
-    const clone = new GHCloner(
-      this.props.repoName,
-      githubUsername,
-      githubToken,
-      name,
-      owner
-    )
-    // console.log(clone.progress)
-    // this.setState({ status: `${clone.status}` })
-    // const newRepo = await clone.createRepo()
-    // const dirContent = await clone.readAndWriteFile('Gemfile')
-    // this.setState({ status: `${clone.status}` })
-    // console.log(dirContent)
-    // this.setState({ content: dirContent })
-  }
+  // async startCloner (e) {
+  //   e.preventDefault()
+  //   const { githubUsername, githubToken } = this.props.user
+  //   const { name, owner } = this.props.match.params
+  //   this.setState({ working: true })
+  //   const clone = new GHCloner(
+  //     this.props.repoName,
+  //     githubUsername,
+  //     githubToken,
+  //     name,
+  //     owner
+  //   )
+  //   // console.log(clone.progress)
+  //   // this.setState({ status: `${clone.status}` })
+  //   // const newRepo = await clone.createRepo()
+  //   // const dirContent = await clone.readAndWriteFile('Gemfile')
+  //   // this.setState({ status: `${clone.status}` })
+  //   // console.log(dirContent)
+  //   // this.setState({ content: dirContent })
+  // }
 
   render () {
     return (
