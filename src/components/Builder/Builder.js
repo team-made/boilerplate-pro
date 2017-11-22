@@ -4,7 +4,7 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
 import {
-  apiJSONFileCreator,
+  appJSONFileCreator,
   indexHTMLFileCreator,
   yamlFileCreator
 } from './FileGen.js'
@@ -76,8 +76,8 @@ class Builder extends React.Component {
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/api.json`,
-              apiJSONFileCreator(),
+              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/app.json`,
+              appJSONFileCreator(),
               config
             )
           )
