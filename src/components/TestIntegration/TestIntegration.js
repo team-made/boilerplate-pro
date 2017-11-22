@@ -1,3 +1,5 @@
+/* eslint-disable*/ 
+
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -28,21 +30,15 @@ class TestIntegration extends React.Component {
   }
 
   async handleTestInit () {
-    const { githubToken } = this.props.user
-    const config = {
-      headers: {
-        Accept: 'application/vnd.travis-ci.2+json',
-        'User-Agent': 'MyClient/1.0.0',
-        Host: 'api.travis-ci.org',
-        'Content-Type': 'application/json'
-      }
-    }
-    const data = {
-      github_token: { githubToken }
-    }
+    const { githubUsername, githubToken } = this.props.user
+    const repoName = this.props.repoName
+   
+    const data = {token: githubToken, repo: repoName, username: githubUsername}
+    console.log('github', githubToken)
     await axios
-      .post(`https://api.travis-ci.org/auth/github`, data, config)
-      .then(data => console.log('token data: ', data))
+      .post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
+      .then(travis => console.log('token data: ', JSON.stringify(travis)))
+      .catch(err => console.error(err))
   }
 
   render () {
