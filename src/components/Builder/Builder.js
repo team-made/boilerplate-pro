@@ -10,7 +10,7 @@ import {
 } from './FileGen.js'
 import { actions } from './index.js'
 import { history } from '../components.js'
-import GHCloner from './cloner.js'
+// import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
   return {
