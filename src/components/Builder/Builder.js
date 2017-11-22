@@ -48,7 +48,7 @@ class Builder extends React.Component {
     props.handleRepoName(name)
 
     this.createRepo = this.createRepo.bind(this)
-    this.startCloner = this.startCloner.bind(this)
+    // this.startCloner = this.startCloner.bind(this)
   }
 
   createRepo () {
@@ -92,12 +92,13 @@ class Builder extends React.Component {
       .then(() => history.push(`/repos/${this.state.repoId}`))
       .catch(
         err =>
-          console.error(err) ||
-          this.setState({
-            building: false,
-            warningText: `${err.response.data.message}
-              ${err.response.data.errors[0].message}`
-          })
+          console.error(err)
+          // ||
+          // this.setState({
+          //   building: false,
+          //   warningText: `${err.response.data.message}
+          //     ${err.response.data.errors[0].message}`
+          // })
       )
   }
 
