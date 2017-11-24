@@ -4,7 +4,7 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
 import {
-  apiJSONFileCreator,
+  appJSONFileCreator,
   indexHTMLFileCreator,
   yamlFileCreator
 } from './FileGen.js'
@@ -48,7 +48,7 @@ class Builder extends React.Component {
     props.handleRepoName(name)
 
     this.createRepo = this.createRepo.bind(this)
-    this.startCloner = this.startCloner.bind(this)
+    // this.startCloner = this.startCloner.bind(this)
   }
 
   createRepo () {
@@ -76,8 +76,8 @@ class Builder extends React.Component {
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/api.json`,
-              apiJSONFileCreator(),
+              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/app.json`,
+              appJSONFileCreator(),
               config
             )
           )
@@ -92,12 +92,13 @@ class Builder extends React.Component {
       .then(() => history.push(`/repos/${this.state.repoId}`))
       .catch(
         err =>
-          console.error(err) ||
-          this.setState({
-            building: false,
-            warningText: `${err.response.data.message}
-              ${err.response.data.errors[0].message}`
-          })
+          console.error(err)
+          // ||
+          // this.setState({
+          //   building: false,
+          //   warningText: `${err.response.data.message}
+          //     ${err.response.data.errors[0].message}`
+          // })
       )
   }
 
