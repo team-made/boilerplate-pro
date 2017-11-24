@@ -37,8 +37,8 @@ exports.hyperClone = functions.http.onRequest((request, response) => {
 // })
 
 exports.authTravis = functions.https.onRequest((request, response) => {
-  const body = JSON.parse(request.body)
-  console.log('DATA token:', body.token)
+  console.log('type: ', typeof request.body, 'req:', request.body, 'DATA token:', Object.keys(request.body)[0])
+  const token = Object.keys(request.body)[0]
   const config = {
     headers: {
       Accept: 'application/vnd.travis-ci.2+json',
@@ -50,13 +50,12 @@ exports.authTravis = functions.https.onRequest((request, response) => {
   axios
     .post(
       'https://api.travis-ci.org/auth/github',
-      { github_token: body.token },
+      { github_token: token },
       config
     )
     .then(res => {
-      console.log(res.data)
-      return res.data
+      console.log('res', res)
+      response.status(200).send(res)
     })
-    .then(data => response.send(data))
-    .catch(err => response.send('ERROR', err))
+    .catch(err => response.status(500).send('ERROR', err))
 })

@@ -1,6 +1,6 @@
 const dummyHtml =
 '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><h1>MY USER APP</h1></body><footer></footer></html>'
-const dummyApiJSON = JSON.stringify({
+const dummyAppJSON = JSON.stringify({
   name: 'Rubils',
   description: 'A template.'
 })
@@ -33,14 +33,14 @@ export const indexHTMLFileCreator = function (content) {
   }
   return contentObj
 }
-export const apiJSONFileCreator = function () {
+export const appJSONFileCreator = function () {
   let contentObj = {
-    message: 'f(apiJSON):testing github api file creation',
+    message: 'f(appJSON):testing github app file creation',
     committer: {
       name: 'Mitchell Stewart',
       email: 'mitchellwstewart@gmail.com'
     },
-    content: `${window.btoa(dummyApiJSON)}`
+    content: `${window.btoa(dummyAppJSON)}`
   }
   return contentObj
 }
