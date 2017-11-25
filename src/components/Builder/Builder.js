@@ -9,7 +9,7 @@ import {
   yamlFileCreator
 } from './FileGen.js'
 import { actions } from './index.js'
-import { history } from '../components.js'
+import { components, history } from '../components.js'
 // import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
@@ -70,20 +70,26 @@ class Builder extends React.Component {
       .then(() => {
         return axios
           .put(
-            `https://api.github.com/repos/${githubUsername}/${repoName}/contents/index.html`,
+            `https://api.github.com/repos/${githubUsername}/${
+              repoName
+            }/contents/index.html`,
             indexHTMLFileCreator(),
             config
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/app.json`,
+              `https://api.github.com/repos/${githubUsername}/${
+                repoName
+              }/contents/app.json`,
               appJSONFileCreator(),
               config
             )
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
+              `https://api.github.com/repos/${githubUsername}/${
+                repoName
+              }/contents/.travis.yml`,
               yamlFileCreator(),
               config
             )
@@ -91,14 +97,13 @@ class Builder extends React.Component {
       })
       .then(() => history.push(`/repos/${this.state.repoId}`))
       .catch(
-        err =>
-          console.error(err)
-          // ||
-          // this.setState({
-          //   building: false,
-          //   warningText: `${err.response.data.message}
-          //     ${err.response.data.errors[0].message}`
-          // })
+        err => console.error(err)
+        // ||
+        // this.setState({
+        //   building: false,
+        //   warningText: `${err.response.data.message}
+        //     ${err.response.data.errors[0].message}`
+        // })
       )
   }
 
@@ -126,53 +131,51 @@ class Builder extends React.Component {
   render () {
     return (
       <div>
-        <div className='field' style={{ width: '400px', margin: '0 auto' }}>
+        <div className='container'>
           <br />
           <h1 className='subtitle is-2'>Builder</h1>
           <label className='label'>Repo Name</label>
-          <div className='control'>
-            <input
-              className='input'
-              type='text'
-              name='GitHub Repo Name'
-              value={this.props.repoName}
-              onChange={evt => this.props.handleRepoName(evt.target.value)}
-              placeholder='Text input'
-            />
-          </div>
-          <p className='help'>name must contain no-spaces</p>
-          <button type='submit' onClick={this.startCloner}>
-            Start Hyper Clone
-          </button>
-
-          {this.state.building ? (
-            <div className='spinner'>
-              <div className='bounce1' />
-              <div className='bounce2' />
-              <div className='bounce3' />
+          <div className='field'>
+            <div className='control'>
+              <input
+                className='input'
+                type='text'
+                name='GitHub Repo Name'
+                value={this.props.repoName}
+                onChange={evt => this.props.handleRepoName(evt.target.value)}
+                placeholder='Text input'
+              />
             </div>
-          ) : firebase.auth().currentUser ? (
-            <button className='button' onClick={this.createRepo}>
-              Create Repo
+            <p className='help'>name must contain no-spaces</p>
+            <button type='submit' onClick={this.startCloner}>
+              Start Hyper Clone
             </button>
-          ) : (
-            <button className='button'>Sign in to build!</button>
-          )}
 
-          {this.state.warningText && (
-            <p className='help'>{this.state.warningText}</p>
-          )}
+            {this.state.building ? (
+              <components.Spinner />
+            ) : firebase.auth().currentUser ? (
+              <button className='button' onClick={this.createRepo}>
+                Create Repo
+              </button>
+            ) : (
+              <button className='button'>Sign in to build!</button>
+            )}
 
-          {this.state.working && (
-            <div style={{ border: 'solid 1px black', padding: '10px' }}>
-              status: {this.state.status}
-              <br />
-              progress: {this.state.progress}
-              <br />
-              content: {JSON.stringify(this.state.content)}
-              <br />
-            </div>
-          )}
+            {this.state.warningText && (
+              <p className='help'>{this.state.warningText}</p>
+            )}
+
+            {this.state.working && (
+              <div style={{ border: 'solid 1px black', padding: '10px' }}>
+                status: {this.state.status}
+                <br />
+                progress: {this.state.progress}
+                <br />
+                content: {JSON.stringify(this.state.content)}
+                <br />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )
