@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Navbar from './Navbar'
 import { Provider } from 'react-redux'
-import { store } from '../components.js'
+import { ConnectedRouter } from 'connected-react-router'
+import { store, history } from '../components.js'
 import firebase from 'firebase'
 
 const config = {
@@ -25,7 +26,9 @@ it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-      <Navbar user={userInfo} />
+      <ConnectedRouter history={history}>
+        <Navbar user={userInfo} />
+      </ConnectedRouter>
     </Provider>,
     div
   )

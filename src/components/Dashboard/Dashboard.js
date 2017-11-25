@@ -19,13 +19,13 @@ const mapDispatchToProps = dispatch => {
 
 const Dashboard = () => {
   return (
-    <div class="container">
-      <div class="tabs is-centered">
+    <div className="container">
+      <div className="tabs is-centered">
         <ul>
           <li>
             <a>Account</a>
           </li>
-          <li class="is-active">
+          <li className="is-active">
             <a>Previous Builds</a>
           </li>
           <li>
@@ -36,11 +36,11 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
-      <div class="box">
-        <article class="media">
+      <div className="box">
+        <article className="media">
 
-          <div class="media-content">
-            <div class="content">
+          <div className="media-content">
+            <div className="content">
               <p>
                 <strong>Name of Project</strong> <small>date?</small>
                 <br />
@@ -49,21 +49,21 @@ const Dashboard = () => {
                 luctus turpis.
               </p>
             </div>
-            <nav class="level is-mobile">
-              <div class="level-left">
-                <a class="level-item">
-                  <span class="icon is-small">
-                    <i class="fa fa-github" />
+            <nav className="level is-mobile">
+              <div className="level-left">
+                <a className="level-item">
+                  <span className="icon is-small">
+                    <i className="fa fa-github" />
                   </span>
                 </a>
-                <a class="level-item">
-                  <span class="icon is-small">
-                    <i class="fa fa-retweet" />
+                <a className="level-item">
+                  <span className="icon is-small">
+                    <i className="fa fa-retweet" />
                   </span>
                 </a>
-                <a class="level-item">
-                  <span class="icon is-small">
-                    <i class="fa fa-heart" />
+                <a className="level-item">
+                  <span className="icon is-small">
+                    <i className="fa fa-heart" />
                   </span>
                 </a>
               </div>
