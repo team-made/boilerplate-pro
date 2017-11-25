@@ -1,6 +1,8 @@
 import React from 'react'
 import firebase from 'firebase'
 import 'firebase/firestore'
+import { NavLink } from 'react-router-dom'
+
 import { history } from '../components.js'
 
 const provider = new firebase.auth.GithubAuthProvider()
@@ -34,59 +36,61 @@ const signOut = () => {
     })
 }
 
-const Navbar = props => {
-  return (
-    <nav
-      className='navbar is-fixed-top'
-      style={{ height: '52px', boxShadow: '0px 0px 4px black' }}
-    >
-      <div className='navbar-brand'>
-        <div
-          className='navbar-item'
-          style={{ cursor: 'pointer' }}
-          onClick={() => history.push('/')}
-        >
-          <span>Boilerplate Pro</span>
-        </div>
-      </div>
-      <div className='navbar-menu'>
-        <div className='navbar-end'>
+class Navbar extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {activeDropdown: false}
+  }
+
+  render () {
+    const user = this.props.user
+    return (
+      <nav
+        className='navbar is-fixed-top'
+        style={{ height: '52px', boxShadow: '0px 0px 4px black' }}
+      >
+        <div className='navbar-brand'>
           <a
             className='navbar-item'
-            href='https://github.com/team-made/boilerplate-pro'
+            onClick={() => history.push('/')}
           >
-            <span className='icon'>
-              <i className='fa fa-lg fa-github' />
-            </span>
+            <h2>Boilerplate Pro</h2>
           </a>
-          <div className='navbar-item'>
-            <div className='field is-grouped'>
-              <p className='control'>
-                {props.user.email ? (
-                  <button className='button' onClick={signOut}>
+        </div>
+        <div className='navbar-menu'>
+          <div className='navbar-end'>
+            {user.email ? (
+              <div className={`navbar-item has-dropdown ${this.state.activeDropdown && 'is-active'}`} onClick={() => this.setState(state => ({activeDropdown: !state.activeDropdown}))}>
+                <a className='navbar-link'>Account</a>
+                <div className='navbar-dropdown is-right'>
+                  <NavLink to='/dashboard' className='navbar-item'>Dashboard</NavLink>
+                  <a className='navbar-item'>Starred Repos</a>
+                  <a className='navbar-item'>Past Builds</a>
+                  <hr className='navbar-divider' />
+                  <a className='navbar-item' onClick={signOut}>
                     Sign Out
-                  </button>
-                ) : (
-                  [
-                    <button key='1' className='button' onClick={signIn}>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div className='navbar-item'>
+                <div className='field is-grouped'>
+                  <p className='control'>
+                    <button className='button' onClick={signIn}>
                       Sign In
-                    </button>,
-                    <button
-                      key='2'
-                      className='button is-primary'
-                      onClick={signIn}
-                    >
+                    </button>
+                    <button className='button is-primary' onClick={signIn}>
                       Sign Up
                     </button>
-                  ]
-                )}
-              </p>
-            </div>
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </div>
-    </nav>
-  )
+      </nav>
+    )
+  }
 }
 
 export default Navbar

@@ -14,6 +14,7 @@ import * as Builder from './Builder'
 import * as UserRepo from './UserRepo'
 import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
+import * as Dashboard from './Dashboard'
 const containers = {
   App,
   Navbar,
@@ -21,7 +22,8 @@ const containers = {
   Builder,
   UserRepo,
   TestIntegration,
-  Deploy
+  Deploy,
+  Dashboard
 }
 
 // Grab the reducer and component from each container
