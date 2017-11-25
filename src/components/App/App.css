@@ -9,3 +9,7 @@
 .App-intro {
   font-size: large;
 }
+
+.main-content {
+  min-height: calc(100vh - 220px);
+}

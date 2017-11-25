@@ -42,7 +42,7 @@ class List extends React.Component {
     console.log('props', this.props)
     return (
       <div className='container'>
-        <nav className='panel'>
+        <div className='panel'>
           <p className='panel-heading'>repositories</p>
           <div className='panel-block'>
             <p className='control has-icons-left'>
@@ -74,15 +74,31 @@ class List extends React.Component {
               return (
                 <Link
                   to={`/builder/${boilerplate.full_name}`}
-                  className='panel-block is-active'
+                  className='panel-block'
                   onClick={this.props.handleSelect}
                   key={boilerplate.id}
                 >
                   <span className='panel-icon'>
                     <i className='fa fa-book' />
                   </span>
-                  {boilerplate.name} (by {boilerplate.owner.login}) [{boilerplate.watchers_count}
-                  watchers] [{boilerplate.stargazers_count} star gazers]
+                  <span style={{ textAlign: 'left' }}>
+                    <h5 className='title is-5'>{boilerplate.name}</h5>
+                    <h6 className='subtitle is-6'>
+                      {boilerplate.owner.login}
+                    </h6>
+                  </span>
+                  <span style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                    {boilerplate.stargazers_count}
+                    <span className='icon has-text-warning'>
+                      <i className='fa fa-star' />
+                    </span>
+                    <span className="tags">
+                      <span className="tag is-light">React</span>
+                      <span className="tag is-light">Redux</span>
+                      <span className="tag is-light">Other</span>
+                      <span className="tag is-light">Etc</span>
+                    </span>
+                  </span>
                 </Link>
               )
             })
@@ -93,7 +109,53 @@ class List extends React.Component {
               <div className='bounce3' />
             </div>
           )}
-        </nav>
+        </div>
+        <div
+          className='pagination is-centered'
+          role='navigation'
+          aria-label='pagination'
+        >
+          <a className='pagination-previous'>Previous</a>
+          <a className='pagination-next'>Next page</a>
+          <ul className='pagination-list'>
+            <li>
+              <a className='pagination-link' aria-label='Goto page 1'>
+                1
+              </a>
+            </li>
+            <li>
+              <span className='pagination-ellipsis'>&hellip;</span>
+            </li>
+            <li>
+              <a className='pagination-link' aria-label='Goto page 45'>
+                45
+              </a>
+            </li>
+            <li>
+              <a
+                className='pagination-link is-current'
+                aria-label='Page 46'
+                aria-current='page'
+              >
+                46
+              </a>
+            </li>
+            <li>
+              <a className='pagination-link' aria-label='Goto page 47'>
+                47
+              </a>
+            </li>
+            <li>
+              <span className='pagination-ellipsis'>&hellip;</span>
+            </li>
+            <li>
+              <a className='pagination-link' aria-label='Goto page 86'>
+                86
+              </a>
+            </li>
+          </ul>
+        </div>
+        <br />
       </div>
     )
   }
