@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import firebase from 'firebase'
-import { connect } from 'react-redux'
-import { actions } from './index.js'
 
 import './App.css'
 
+import { actions } from './index.js'
 import { components } from '../components.js'
 
-const mapStateToProps = state => {
-  return {
-    ...state.App
-  }
-}
+const mapStateToProps = state => ({ ...state.App })
+
 const mapDispatchToProps = dispatch => {
   return {
     setUser: user => {
@@ -36,7 +33,7 @@ class App extends Component {
               console.warn('Error at App cdm, firestore user')
             }
           })
-          .catch(err => console.error(err))
+          .catch(console.error)
       } else {
         this.props.setUser({ user: {} })
       }
@@ -49,26 +46,16 @@ class App extends Component {
         <div className='main-content'>
           <Switch>
             <Route exact path='/' component={components.List} />
-            <Route path='/builder/:owner/:name' component={components.Builder} />
+            <Route
+              path='/builder/:owner/:name'
+              component={components.Builder}
+            />
             <Route path='/repos/:id' component={components.UserRepo} />
             <Route path='/deploy' component={components.Deploy} />
             <Route path='/dashboard' component={components.Dashboard} />
           </Switch>
         </div>
-        <footer className='footer'>
-          <div className='container'>
-            <div className='content has-text-centered'>
-              <p>
-                <strong>Boilerplate Pro</strong> by{' '}
-                <a href='http://www.github.com/team-made'>Team-Made</a>. The source code
-                is licensed{' '}
-                <a href='http://opensource.org/licenses/mit-license.php'>
-                  MIT
-                </a>. 2017
-              </p>
-            </div>
-          </div>
-        </footer>
+        <components.Footer />
       </div>
     )
   }
