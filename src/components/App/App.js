@@ -46,12 +46,29 @@ class App extends Component {
     return (
       <div className='App'>
         <components.Navbar user={this.props.user} />
-        <Switch>
-          <Route exact path='/' component={components.List} />
-          <Route path='/builder/:owner/:name' component={components.Builder} />
-          <Route path='/repos/:id' component={components.UserRepo} />
-          <Route path='/deploy' component={components.Deploy} />
-        </Switch>
+        <div className='main-content'>
+          <Switch>
+            <Route exact path='/' component={components.List} />
+            <Route path='/builder/:owner/:name' component={components.Builder} />
+            <Route path='/repos/:id' component={components.UserRepo} />
+            <Route path='/deploy' component={components.Deploy} />
+            <Route path='/dashboard' component={components.Dashboard} />
+          </Switch>
+        </div>
+        <footer className='footer'>
+          <div className='container'>
+            <div className='content has-text-centered'>
+              <p>
+                <strong>Boilerplate Pro</strong> by{' '}
+                <a href='http://www.github.com/team-made'>Team-Made</a>. The source code
+                is licensed{' '}
+                <a href='http://opensource.org/licenses/mit-license.php'>
+                  MIT
+                </a>. 2017
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     )
   }
