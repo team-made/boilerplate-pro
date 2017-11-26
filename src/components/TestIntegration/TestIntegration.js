@@ -23,6 +23,10 @@ const mapDispatchToProps = dispatch => {
 
 class TestIntegration extends React.Component {
   componentDidMount () {
+    if(!this.props.repoName){
+      this.props.history.push("/")
+    }
+
     let travisLoad = setInterval(() => {
       this.setState({enableBtn: true, btnMessage: 'Integrate With Travis Testing'});
   }, 1000)
@@ -40,12 +44,10 @@ class TestIntegration extends React.Component {
       enableBtn: false
     };
     this.handleTestInit = this.handleTestInit.bind(this);
-    // this.repoNameTest = this.repoNameTest.bind(this)
+    
   }
 
-//   repoNameTest(){
-//     console.log('Repo NAme: ', this.props.repoName)
-// }
+
   async handleTestInit() {
     const { githubUsername, githubToken } = this.props.user;
     const repoName = this.props.repoName;
@@ -53,8 +55,8 @@ class TestIntegration extends React.Component {
     console.log('github', githubToken);
     this.setState({btnMessage:'Loading...', enableBtn: false, successMessage: ''})
     await axios
-      //.post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
-      .post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
+      .post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
+      //.post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
       .then(travis => {
         console.log('Success: ', JSON.stringify(travis))
         this.setState({successMessage:'Successful Integration!', btnMessage: 'Complete', enableBtn: false})
@@ -81,7 +83,6 @@ class TestIntegration extends React.Component {
         <Link to="/deploy" className="button">
           To Deploy Page!
         </Link>
-        {/* <button onClick={this.repoNameTest}>Check State Repo Name</button> */}
       </div>
     );
   }
