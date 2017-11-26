@@ -40,8 +40,15 @@ class SingleRepo extends Component {
   }
   render () {
     const repo = this.props.currentRepo
-    return !repo.name ? (
-      <components.Spinner />
+    const correctRepo = repo.name === this.props.match.params.name
+    return !correctRepo ? (
+      <section className='hero is-large'>
+        <div className='hero-body'>
+          <div className='container'>
+            <components.Spinner />
+          </div>
+        </div>
+      </section>
     ) : (
       <section className='section'>
         <div
