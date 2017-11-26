@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {{ComponentName}} from './{{ComponentName}}'
+import Dashboard from './Dashboard'
 
 import { Provider } from 'react-redux'
 import { store } from '../components.js'
@@ -10,7 +10,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-      <{{ComponentName}} />
+      <Dashboard />
     </Provider>,
     div
   )

@@ -14,6 +14,11 @@ import * as Builder from './Builder'
 import * as UserRepo from './UserRepo'
 import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
+import * as Dashboard from './Dashboard'
+import * as Footer from './Footer'
+import * as ListItem from './ListItem'
+import * as Spinner from './Spinner'
+import * as Pagination from './Pagination'
 const containers = {
   App,
   Navbar,
@@ -21,7 +26,12 @@ const containers = {
   Builder,
   UserRepo,
   TestIntegration,
-  Deploy
+  Deploy,
+  Dashboard,
+  Footer,
+  ListItem,
+  Spinner,
+  Pagination
 }
 
 // Grab the reducer and component from each container
@@ -32,7 +42,7 @@ Object.keys(containers).forEach(key => {
   if (containers[key].reducer) reducers[key] = containers[key].reducer
 })
 
-// Compile reducers
+// Combine reducers
 reducers = combineReducers(reducers)
 
 // Start history
