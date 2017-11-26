@@ -1,6 +1,6 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# dependencies
+# dependencies in sub folders
 /node_modules
 /functions/node_modules
 /scaffold-pro/node_modules
