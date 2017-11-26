@@ -9,7 +9,7 @@ button {
 
 /*  Loader Used Throughout Application */
 .spinner {
-  margin: 5px auto;
+  margin: 15px auto;
   width: 70px;
   text-align: center;
 }

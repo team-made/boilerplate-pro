@@ -19,6 +19,7 @@ import * as Footer from './Footer'
 import * as ListItem from './ListItem'
 import * as Spinner from './Spinner'
 import * as Pagination from './Pagination'
+import * as SingleRepo from './SingleRepo'
 const containers = {
   App,
   Navbar,
@@ -31,7 +32,8 @@ const containers = {
   Footer,
   ListItem,
   Spinner,
-  Pagination
+  Pagination,
+  SingleRepo
 }
 
 // Grab the reducer and component from each container

@@ -50,6 +50,10 @@ class App extends Component {
               path='/builder/:owner/:name'
               component={components.Builder}
             />
+            <Route
+              path='/repo/:owner/:name'
+              component={components.SingleRepo}
+            />
             <Route path='/repos/:id' component={components.UserRepo} />
             <Route path='/deploy' component={components.Deploy} />
             <Route path='/testintegration' component={components.TestIntegration} />
