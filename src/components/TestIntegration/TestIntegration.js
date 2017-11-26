@@ -49,8 +49,8 @@ class TestIntegration extends React.Component {
     console.log('github', githubToken);
     this.setState({btnMessage:'Loading...', enableBtn: false, successMessage: ''})
     await axios
-      //.post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
-      .post(`http://localhost:9090/travis`, data)
+      .post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
+      //.post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
       .then(travis => {
         console.log('Success: ', JSON.stringify(travis))
         this.setState({successMessage:'Successful Integration!', btnMessage: 'Complete', enableBtn: false})
