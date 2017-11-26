@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const ListItem = ({ boilerplate }) => {
   return (
     <Link
-      to={`/builder/${boilerplate.full_name}`}
+      to={`/repo/${boilerplate.full_name}`}
       className='panel-block'
       key={boilerplate.id}
     >
@@ -25,6 +25,9 @@ const ListItem = ({ boilerplate }) => {
           <span className='tag is-light'>Redux</span>
           <span className='tag is-light'>Other</span>
           <span className='tag is-light'>Etc</span>
+          {boilerplate.language && (
+            <span className='tag is-primary'>{boilerplate.language}</span>
+          )}
         </span>
       </span>
     </Link>

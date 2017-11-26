@@ -47,6 +47,9 @@ class List extends React.Component {
                 type='text'
                 placeholder='search'
               />
+              <span className='icon is-small is-left'>
+                <i className='fa fa-search' />
+              </span>
             </p>
           </div>
           <p className='panel-tabs'>
@@ -59,6 +62,14 @@ class List extends React.Component {
             <a>TypeScript</a>
             <a>Ruby</a>
           </p>
+          <div className='panel-block'>
+            <span>
+              Name <i className='fa fa-sort' />
+            </span>
+            <span style={{ marginLeft: 'auto' }}>
+              <i className='fa fa-sort' /> Stars
+            </span>
+          </div>
           {this.props.allBoilerplates.length ? (
             this.props.allBoilerplates.map(boilerplate => (
               <components.ListItem boilerplate={boilerplate} />
