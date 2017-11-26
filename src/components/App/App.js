@@ -51,6 +51,7 @@ class App extends Component {
           <Route path='/builder/:owner/:name' component={components.Builder} />
           <Route path='/repos/:id' component={components.UserRepo} />
           <Route path='/deploy' component={components.Deploy} />
+          <Route path='/testintegration' component={components.TestIntegration} />
         </Switch>
       </div>
     )
