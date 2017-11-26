@@ -44,12 +44,10 @@ class TestIntegration extends React.Component {
       enableBtn: false
     };
     this.handleTestInit = this.handleTestInit.bind(this);
-     this.repoNameTest = this.repoNameTest.bind(this)
+    
   }
 
-  repoNameTest(){
-    console.log('Repo NAme: ', this.props.repoName)
-}
+
   async handleTestInit() {
     const { githubUsername, githubToken } = this.props.user;
     const repoName = this.props.repoName;
@@ -85,7 +83,6 @@ class TestIntegration extends React.Component {
         <Link to="/deploy" className="button">
           To Deploy Page!
         </Link>
-        <button onClick={this.repoNameTest}>Check State Repo Name</button>
       </div>
     );
   }
