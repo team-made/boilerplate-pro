@@ -24,9 +24,9 @@ it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <UserRepo />
-      </ConnectedRouter>
+
+      <UserRepo />
+
     </Provider>,
     div
   )
