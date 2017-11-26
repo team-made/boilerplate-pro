@@ -39,7 +39,7 @@ const signOut = () => {
 class Navbar extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {activeDropdown: false}
+    this.state = { activeDropdown: false }
   }
 
   render () {
@@ -50,20 +50,27 @@ class Navbar extends React.Component {
         style={{ height: '52px', boxShadow: '0px 0px 4px black' }}
       >
         <div className='navbar-brand'>
-          <a
-            className='navbar-item'
-            onClick={() => history.push('/')}
-          >
+          <a className='navbar-item' onClick={() => history.push('/')}>
             <h2>Boilerplate Pro</h2>
           </a>
         </div>
         <div className='navbar-menu'>
           <div className='navbar-end'>
             {user.email ? (
-              <div className={`navbar-item has-dropdown ${this.state.activeDropdown && 'is-active'}`} onClick={() => this.setState(state => ({activeDropdown: !state.activeDropdown}))}>
+              <div
+                className={`navbar-item has-dropdown ${this.state
+                  .activeDropdown && 'is-active'}`}
+                onClick={() =>
+                  this.setState(state => ({
+                    activeDropdown: !state.activeDropdown
+                  }))
+                }
+              >
                 <a className='navbar-link'>Account</a>
                 <div className='navbar-dropdown is-right'>
-                  <NavLink to='/dashboard' className='navbar-item'>Dashboard</NavLink>
+                  <NavLink to='/dashboard' className='navbar-item'>
+                    Dashboard
+                  </NavLink>
                   <a className='navbar-item'>Starred Repos</a>
                   <a className='navbar-item'>Past Builds</a>
                   <hr className='navbar-divider' />
@@ -76,12 +83,12 @@ class Navbar extends React.Component {
               <div className='navbar-item'>
                 <div className='field is-grouped'>
                   <p className='control'>
-                    <button className='button' onClick={signIn}>
-                      Sign In
-                    </button>
-                    <button className='button is-primary' onClick={signIn}>
-                      Sign Up
-                    </button>
+                    <a className='button is-dark' onClick={signIn}>
+                      <span className='icon is-medium'>
+                        <i className='fa fa-github' />
+                      </span>
+                      <span>Sign In with Github</span>
+                    </a>
                   </p>
                 </div>
               </div>
