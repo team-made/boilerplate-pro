@@ -1,16 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import firebase from 'firebase'
-import 'bulma/css/bulma.css'
-import 'firebase/firestore'
-import './index.css'
-import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
+import firebase from 'firebase'
+import 'firebase/firestore'
+
+// Stylesheets
+import 'bulma/css/bulma.css'
+import './index.css'
 
 // Grab all components dynamically
 import { components, history, store } from './components/components.js'
 import registerServiceWorker from './utils/registerServiceWorker'
 
+// Initialize Firebase Application
 const config = {
   apiKey:
     process.env.FIREBASE_API_KEY || process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,7 +25,6 @@ const config = {
   authDomain: 'boilerplate-pro.firebaseapp.com',
   databaseURL: 'https://boilerplate-pro.firebaseio.com'
 }
-
 firebase.initializeApp(config)
 
 ReactDOM.render(
