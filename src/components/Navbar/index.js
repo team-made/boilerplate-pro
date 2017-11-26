@@ -1,48 +1,5 @@
-import 'firebase/firestore'
-
 // Include component
 import component from './Navbar.js'
 
-// Init reduxHelper
-import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('Navbar')
-
-// Action Definitions
-const SIGN_IN = reduxUtil.defineAction('SIGN_IN')
-const SIGN_OUT = reduxUtil.defineAction('SIGN_OUT')
-const TOGGLE_DROPDOWN = reduxUtil.defineAction('TOGGLE_DROPDOWN')
-
-// Initial State
-const initialState = {
-  currentUser: null,
-  activeDropdown: false
-}
-
-// Make Actions
-const actions = {
-  signIn: reduxUtil.createAction(SIGN_IN),
-  signOut: reduxUtil.createAction(SIGN_OUT),
-  toggleDropdown: reduxUtil.createAction(TOGGLE_DROPDOWN)
-}
-
-// Make reducer
-const reducer = reduxUtil.createReducer(
-  {
-    [SIGN_IN]: (state, action) => {
-      let newState = { ...state, ...action.payload }
-      return newState
-    },
-    [SIGN_OUT]: (state, action) => {
-      let newState = {...state, currentUser: null}
-      return newState
-    },
-    [TOGGLE_DROPDOWN]: (state, action) => {
-      let newState = {...state, activeDropdown: !state.activeDropdown}
-      return newState
-    }
-  },
-  initialState
-)
-
 // Export
-export { component, actions, reducer }
+export { component }
