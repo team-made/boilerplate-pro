@@ -4,10 +4,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "algoliasearch": "^3.24.6",
     "axios": "^0.17.1",
     "bulma": "^0.6.1",
     "connected-react-router": "^4.2.3",
     "firebase": "^4.6.2",
+    "github-markdown-css": "^2.9.0",
     "grpc": "^1.7.1",
     "history": "^4.7.2",
     "react": "^16.1.1",

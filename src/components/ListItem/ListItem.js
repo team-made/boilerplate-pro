@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ListItem = ({ boilerplate }) => {
   return (
-    <Link
-      to={`/repo/${boilerplate.full_name}`}
-      className='panel-block'
-      key={boilerplate.id}
-    >
+    <Link to={`/repo/${boilerplate.full_name}`} className='panel-block'>
       <span className='panel-icon'>
         <i className='fa fa-code-fork' />
       </span>

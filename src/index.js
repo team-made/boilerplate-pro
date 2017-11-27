@@ -7,6 +7,7 @@ import 'firebase/firestore'
 
 // Stylesheets
 import 'bulma/css/bulma.css'
+import 'github-markdown-css/github-markdown.css'
 import './index.css'
 
 // Grab all components dynamically
