@@ -20,6 +20,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "showdown": "^1.8.2",
     "travis-ci": "^2.1.1"
   },
   "scripts": {
