@@ -1,95 +1,117 @@
-/* eslint-disable*/
-
-import React from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import { actions } from './index.js';
-import {Link} from 'react-router-dom'
+import React from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import { actions } from './index.js'
+import { Link } from 'react-router-dom'
+import { history } from '../components.js'
 
 const mapStateToProps = state => {
   return {
     ...state.TestIntegration,
     ...state.App,
     ...state.Builder
-  };
-};
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     dummyAction: () => {
-      dispatch(actions.dummyAction());
+      dispatch(actions.dummyAction())
     }
-  };
-};
+  }
+}
 
 class TestIntegration extends React.Component {
   componentDidMount () {
-    if(!this.props.repoName){
-      this.props.history.push("/")
+    if (!this.props.repoName) {
+      history.push('/')
     }
 
     let travisLoad = setInterval(() => {
-      this.setState({enableBtn: true, btnMessage: 'Integrate With Travis Testing'});
-  }, 1000)
-  setTimeout(() => {
-    clearInterval(travisLoad);
-  }, 1100)
+      this.setState({
+        enableBtn: true,
+        btnMessage: 'Integrate With Travis Testing'
+      })
+    }, 1000)
+    setTimeout(() => {
+      clearInterval(travisLoad)
+    }, 1100)
   }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       repoId: 1,
       btnMessage: 'Loading...',
       successMessage: '',
       enableBtn: false
-    };
-    this.handleTestInit = this.handleTestInit.bind(this);
-    
+    }
+    this.handleTestInit = this.handleTestInit.bind(this)
   }
 
-
-  async handleTestInit() {
-    const { githubUsername, githubToken } = this.props.user;
-    const repoName = this.props.repoName;
-    const data = {token: githubToken,repo: repoName, username: githubUsername};
-    console.log('github', githubToken);
-    this.setState({btnMessage:'Loading...', enableBtn: false, successMessage: ''})
+  async handleTestInit () {
+    const { githubUsername, githubToken } = this.props.user
+    const repoName = this.props.repoName
+    const data = {
+      token: githubToken,
+      repo: repoName,
+      username: githubUsername
+    }
+    console.log('github', githubToken)
+    this.setState({
+      btnMessage: 'Loading...',
+      enableBtn: false,
+      successMessage: ''
+    })
     await axios
       .post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
-      //.post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
+      // .post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
       .then(travis => {
         console.log('Success: ', JSON.stringify(travis))
-        this.setState({successMessage:'Successful Integration!', btnMessage: 'Complete', enableBtn: false})
-    })
+        this.setState({
+          successMessage: 'Successful Integration!',
+          btnMessage: 'Complete',
+          enableBtn: false
+        })
+      })
       .catch(err => {
-        this.setState({successMessage:'Travis is still syncing, please try again!'})
+        this.setState({
+          successMessage: 'Travis is still syncing, please try again!'
+        })
         let travisLoad = setInterval(() => {
-          this.setState({enableBtn: true, btnMessage: 'Integrate With Travis Testing'});
+          this.setState({
+            enableBtn: true,
+            btnMessage: 'Integrate With Travis Testing'
+          })
         }, 3000)
         setTimeout(() => {
-          clearInterval(travisLoad);
+          clearInterval(travisLoad)
         }, 3100)
-        console.error('error caught: ', err) 
-      });
+        console.error('error caught: ', err)
+      })
   }
 
-  render() {
+  render () {
     return (
       <div>
-        <button type="button" disabled={!this.state.enableBtn} onClick={this.handleTestInit} className="button">
+        <button
+          type='button'
+          disabled={!this.state.enableBtn}
+          onClick={this.handleTestInit}
+          className='button'
+        >
           {this.state.btnMessage}
         </button>
         <div>{this.state.successMessage}</div>
-        <Link to="/deploy" className="button">
+        <Link to='/deploy' className='button'>
           To Deploy Page!
         </Link>
       </div>
-    );
+    )
   }
 }
 
 const connectedTestIntegration = connect(mapStateToProps, mapDispatchToProps)(
   TestIntegration
-);
+)
 
-export default connectedTestIntegration;
+export default connectedTestIntegration
