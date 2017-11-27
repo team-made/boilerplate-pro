@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
-
+import axios from 'axios'
+import showdown from 'showdown'
 import { actions } from './index.js'
 import { components } from '../components'
 
+const converter = new showdown.Converter()
 const mapStateToProps = state => {
   return {
     ...state.SingleRepo
@@ -32,6 +34,31 @@ const mapDispatchToProps = dispatch => {
 }
 
 class SingleRepo extends Component {
+<<<<<<< HEAD
+=======
+  constructor (props) {
+    super(props)
+    this.state = {
+      readMe: null
+    }
+    this.createMarkup = this.createMarkup.bind(this)
+    this.getReadMe = this.getReadMe.bind(this)
+  }
+  // make constructor and include a bound version of getReadMe?
+  createMarkup () {
+    return {__html: this.state.readMe}
+  }
+  getReadMe () {
+    const repo = this.props.currentRepo
+    if (repo.owner && !this.state.readMe) {
+      axios.get(
+        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/contents/README.md`
+      ).then(result => {
+        this.setState({readMe: converter.makeHtml(window.atob(result.data.content))})
+      }).catch(err => console.error(err))
+    }
+  }
+>>>>>>> b57079333a7505516043affb0ebee11878b30ba9
   componentDidMount () {
     this.props.setCurrentRepo(
       this.props.match.params.name,
@@ -39,6 +66,10 @@ class SingleRepo extends Component {
     )
   }
   render () {
+<<<<<<< HEAD
+=======
+    this.getReadMe()
+>>>>>>> b57079333a7505516043affb0ebee11878b30ba9
     const repo = this.props.currentRepo
     const correctRepo = repo.name === this.props.match.params.name
     return !correctRepo ? (
@@ -78,7 +109,13 @@ class SingleRepo extends Component {
             </div>
           </nav>
         </div>
+<<<<<<< HEAD
         <div className='container'>README GOES HERE</div>
+=======
+        <div className='content is-medium'>
+          <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>
+>>>>>>> b57079333a7505516043affb0ebee11878b30ba9
       </section>
     )
   }
