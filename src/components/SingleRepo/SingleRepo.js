@@ -45,7 +45,7 @@ class SingleRepo extends Component {
   }
   // make constructor and include a bound version of getReadMe?
   createMarkup () {
-    return {__html: this.state.readMe}
+    return { __html: this.state.readMe }
   }
   getReadMe () {
     const repo = this.props.currentRepo
@@ -107,7 +107,10 @@ class SingleRepo extends Component {
           </nav>
         </div>
         <div className='content is-medium'>
-          <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+          <div
+            className='container'
+            dangerouslySetInnerHTML={this.createMarkup()}
+          />
         </div>
       </section>
     )
