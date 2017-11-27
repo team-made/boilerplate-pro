@@ -1,28 +1,28 @@
 // Include component
-import component from './Dashboard.js'
+import component from './CreatedRepoView.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('Dashboard')
+const reduxUtil = reduxHelper('CreatedRepoView')
 
 // Action Definitions
-const USER_DATA = reduxUtil.defineAction('USER_DATA')
+const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
 
 // Initial State
 const initialState = {
-  userData: []
+  dummyState: false
 }
 
 // Make Actions
 const actions = {
-  userDataAction: reduxUtil.createAction(USER_DATA)
+  dummyAction: reduxUtil.createAction(DUMMY_ACTION)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [USER_DATA]: (state, action) => {
-      let newState = { userData: action.payload }
+    [DUMMY_ACTION]: (state, action) => {
+      let newState = { ...state, ...action.payload }
       newState.dummyState = true
       return newState
     }
