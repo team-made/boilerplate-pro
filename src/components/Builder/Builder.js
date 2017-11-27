@@ -10,7 +10,6 @@ import {
 } from './FileGen.js'
 import { actions } from './index.js'
 import { history } from '../components.js'
-// import GHCloner from './cloner.js'
 
 const mapStateToProps = state => {
   return {
@@ -48,7 +47,7 @@ class Builder extends React.Component {
     props.handleRepoName(name)
 
     this.createRepo = this.createRepo.bind(this)
-    // this.startCloner = this.startCloner.bind(this)
+    this.startCloner = this.startCloner.bind(this)
   }
 
   createRepo () {
@@ -70,20 +69,26 @@ class Builder extends React.Component {
       .then(() => {
         return axios
           .put(
-            `https://api.github.com/repos/${githubUsername}/${repoName}/contents/index.html`,
+            `https://api.github.com/repos/${githubUsername}/${
+              repoName
+            }/contents/index.html`,
             indexHTMLFileCreator(),
             config
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/app.json`,
+              `https://api.github.com/repos/${githubUsername}/${
+                repoName
+              }/contents/app.json`,
               appJSONFileCreator(),
               config
             )
           )
           .then(() =>
             axios.put(
-              `https://api.github.com/repos/${githubUsername}/${repoName}/contents/.travis.yml`,
+              `https://api.github.com/repos/${githubUsername}/${
+                repoName
+              }/contents/.travis.yml`,
               yamlFileCreator(),
               config
             )
@@ -91,32 +96,29 @@ class Builder extends React.Component {
       })
       .then(() => history.push(`/repos/${this.state.repoId}`))
       .catch(
-        err =>
-          console.error(err)
-          // ||
-          // this.setState({
-          //   building: false,
-          //   warningText: `${err.response.data.message}
-          //     ${err.response.data.errors[0].message}`
-          // })
+        err => console.error(err)
+        // ||
+        // this.setState({
+        //   building: false,
+        //   warningText: `${err.response.data.message}
+        //     ${err.response.data.errors[0].message}`
+        // })
       )
   }
 
   async startCloner (e) {
     e.preventDefault()
-    const { githubUsername, githubToken } = this.props.user
+    const githubToken = this.props.user.githubToken
+    const githubUsername = this.props.user.githubUsername
     const { name, owner } = this.props.match.params
     this.setState({ working: true })
-    const result = await axios.post(
-      'https://boilerplate-pro-server.herokuapp.com/github/hyperClone',
-      {
-        repoName: this.props.repoName,
-        githubUsername: githubUsername,
-        githubToken: githubToken,
-        name: name,
-        owner: owner
-      }
-    )
+    const result = await axios.post('http://localhost:9090/github/hyperClone', {
+      repoName: this.props.repoName,
+      githubUsername: githubUsername,
+      githubToken: githubToken,
+      name: name,
+      owner: owner
+    })
     this.setState({ content: `${result}` })
 
     // const clone = new GHCloner(
@@ -139,6 +141,7 @@ class Builder extends React.Component {
   }
 
   render () {
+    console.log('this props', this.props)
     return (
       <div>
         <div className='field' style={{ width: '400px', margin: '0 auto' }}>
