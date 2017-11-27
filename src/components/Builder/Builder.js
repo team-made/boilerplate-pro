@@ -112,32 +112,17 @@ class Builder extends React.Component {
     const githubUsername = this.props.user.githubUsername
     const { name, owner } = this.props.match.params
     this.setState({ working: true })
-    const result = await axios.post('http://localhost:9090/github/hyperClone', {
-      repoName: this.props.repoName,
-      githubUsername: githubUsername,
-      githubToken: githubToken,
-      name: name,
-      owner: owner
-    })
+    const result = await axios.post(
+      'https://boilerplate-pro-server.herokuapp.com/github/hyperClone',
+      {
+        repoName: this.props.repoName,
+        githubUsername: githubUsername,
+        githubToken: githubToken,
+        name: name,
+        owner: owner
+      }
+    )
     this.setState({ content: `${result}` })
-
-    // const clone = new GHCloner(
-    //   this.props.repoName,
-    //   githubUsername,
-    //   githubToken,
-    //   name,
-    //   owner
-    // )
-    // console.log(clone.progress)
-    // this.setState({ status: `${clone.status}` })
-
-    // const newRepo = await clone.createRepo()
-    // console.log("create repo",newRepo)
-    // const dirContent = await clone.readAndWriteFile('gradlew')
-    // console.log("clone file",dirContent)
-
-    // this.setState({ status: `${clone.status}` })
-    // this.setState({ content: dirContent })
   }
 
   render () {
