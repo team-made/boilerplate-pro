@@ -34,8 +34,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 class SingleRepo extends Component {
-<<<<<<< HEAD
-=======
   constructor (props) {
     super(props)
     this.state = {
@@ -46,19 +44,25 @@ class SingleRepo extends Component {
   }
   // make constructor and include a bound version of getReadMe?
   createMarkup () {
-    return {__html: this.state.readMe}
+    return { __html: this.state.readMe }
   }
   getReadMe () {
     const repo = this.props.currentRepo
     if (repo.owner && !this.state.readMe) {
-      axios.get(
-        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/contents/README.md`
-      ).then(result => {
-        this.setState({readMe: converter.makeHtml(window.atob(result.data.content))})
-      }).catch(err => console.error(err))
+      axios
+        .get(
+          `https://api.github.com/repos/${repo.owner.login}/${
+            repo.name
+          }/contents/README.md`
+        )
+        .then(result => {
+          this.setState({
+            readMe: converter.makeHtml(window.atob(result.data.content))
+          })
+        })
+        .catch(err => console.error(err))
     }
   }
->>>>>>> b57079333a7505516043affb0ebee11878b30ba9
   componentDidMount () {
     this.props.setCurrentRepo(
       this.props.match.params.name,
@@ -66,10 +70,7 @@ class SingleRepo extends Component {
     )
   }
   render () {
-<<<<<<< HEAD
-=======
     this.getReadMe()
->>>>>>> b57079333a7505516043affb0ebee11878b30ba9
     const repo = this.props.currentRepo
     const correctRepo = repo.name === this.props.match.params.name
     return !correctRepo ? (
@@ -109,13 +110,12 @@ class SingleRepo extends Component {
             </div>
           </nav>
         </div>
-<<<<<<< HEAD
-        <div className='container'>README GOES HERE</div>
-=======
         <div className='content is-medium'>
-          <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+          <div
+            className='container'
+            dangerouslySetInnerHTML={this.createMarkup()}
+          />
         </div>
->>>>>>> b57079333a7505516043affb0ebee11878b30ba9
       </section>
     )
   }
