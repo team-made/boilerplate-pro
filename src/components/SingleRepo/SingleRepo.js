@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
-
+import axios from 'axios'
+import showdown from 'showdown'
 import { actions } from './index.js'
 import { components } from '../components'
 
+const converter = new showdown.Converter()
 const mapStateToProps = state => {
   return {
     ...state.SingleRepo
@@ -32,6 +34,28 @@ const mapDispatchToProps = dispatch => {
 }
 
 class SingleRepo extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      readMe: null
+    }
+    this.createMarkup = this.createMarkup.bind(this)
+    this.getReadMe = this.getReadMe.bind(this)
+  }
+  // make constructor and include a bound version of getReadMe?
+  createMarkup () {
+    return {__html: this.state.readMe}
+  }
+  getReadMe () {
+    const repo = this.props.currentRepo
+    if (repo.owner && !this.state.readMe) {
+      axios.get(
+        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/contents/README.md`
+      ).then(result => {
+        this.setState({readMe: converter.makeHtml(window.atob(result.data.content))})
+      }).catch(err => console.error(err))
+    }
+  }
   componentDidMount () {
     this.props.setCurrentRepo(
       this.props.match.params.name,
@@ -39,6 +63,7 @@ class SingleRepo extends Component {
     )
   }
   render () {
+    this.getReadMe()
     const repo = this.props.currentRepo
     return !repo.name ? (
       <components.Spinner />
@@ -71,7 +96,7 @@ class SingleRepo extends Component {
             </div>
           </nav>
         </div>
-        <div className='container'>README GOES HERE</div>
+        <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
       </section>
     )
   }
