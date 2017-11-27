@@ -1,29 +1,29 @@
 // Include component
-import component from './List.js'
+import component from './Dashboard.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('List')
+const reduxUtil = reduxHelper('Dashboard')
 
 // Action Definitions
-const ALL_BOILERPLATES = reduxUtil.defineAction('ALL_BOILERPLATES')
+const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
 
 // Initial State
 const initialState = {
-  allBoilerplates: [],
-  selectedBoilerplate: {}
+  dummyState: false
 }
 
 // Make Actions
 const actions = {
-  allBoilerplatesAction: reduxUtil.createAction(ALL_BOILERPLATES)
+  dummyAction: reduxUtil.createAction(DUMMY_ACTION)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [ALL_BOILERPLATES]: (state, action) => {
+    [DUMMY_ACTION]: (state, action) => {
       let newState = { ...state, ...action.payload }
+      newState.dummyState = true
       return newState
     }
   },

@@ -1,7 +1,7 @@
 import React from 'react'
 import firebase from 'firebase'
 import 'firebase/firestore'
-import { history } from '../components.js'
+import { NavLink } from 'react-router-dom'
 
 const provider = new firebase.auth.GithubAuthProvider()
 
@@ -35,54 +35,48 @@ const signOut = () => {
 }
 
 const Navbar = props => {
+  const user = props.user
   return (
     <nav
       className='navbar is-fixed-top'
       style={{ height: '52px', boxShadow: '0px 0px 4px black' }}
     >
       <div className='navbar-brand'>
-        <div
-          className='navbar-item'
-          style={{ cursor: 'pointer' }}
-          onClick={() => history.push('/')}
-        >
-          <span>Boilerplate Pro</span>
-        </div>
+        <NavLink to='/' className='navbar-item'>
+          <h2>Boilerplate Pro</h2>
+        </NavLink>
       </div>
       <div className='navbar-menu'>
         <div className='navbar-end'>
-          <a
-            className='navbar-item'
-            href='https://github.com/team-made/boilerplate-pro'
-          >
-            <span className='icon'>
-              <i className='fa fa-lg fa-github' />
-            </span>
-          </a>
-          <div className='navbar-item'>
-            <div className='field is-grouped'>
-              <p className='control'>
-                {props.user.email ? (
-                  <button className='button' onClick={signOut}>
-                    Sign Out
-                  </button>
-                ) : (
-                  [
-                    <button key='1' className='button' onClick={signIn}>
-                      Sign In
-                    </button>,
-                    <button
-                      key='2'
-                      className='button is-primary'
-                      onClick={signIn}
-                    >
-                      Sign Up
-                    </button>
-                  ]
-                )}
-              </p>
+          {user.email ? (
+            <div className='navbar-item has-dropdown is-hoverable'>
+              <a className='navbar-link'>Account</a>
+              <div className='navbar-dropdown is-right'>
+                <NavLink to='/dashboard' className='navbar-item'>
+                  Dashboard
+                </NavLink>
+                <a className='navbar-item'>Starred Repos</a>
+                <a className='navbar-item'>Past Builds</a>
+                <hr className='navbar-divider' />
+                <a className='navbar-item' onClick={signOut}>
+                  Sign Out
+                </a>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className='navbar-item'>
+              <div className='field is-grouped'>
+                <p className='control'>
+                  <a className='button is-dark is-outlined' onClick={signIn}>
+                    <span className='icon is-medium'>
+                      <i className='fa fa-github' />
+                    </span>
+                    <span>Sign In with Github</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
