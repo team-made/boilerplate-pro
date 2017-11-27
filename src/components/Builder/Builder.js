@@ -9,8 +9,7 @@ import {
   yamlFileCreator
 } from './FileGen.js'
 import { actions } from './index.js'
-import { components, history } from '../components.js'
-// import GHCloner from './cloner.js'
+import { history } from '../components.js'
 
 const mapStateToProps = state => {
   return {
@@ -48,7 +47,7 @@ class Builder extends React.Component {
     props.handleRepoName(name)
 
     this.createRepo = this.createRepo.bind(this)
-    // this.startCloner = this.startCloner.bind(this)
+    this.startCloner = this.startCloner.bind(this)
   }
 
   createRepo () {
@@ -107,28 +106,42 @@ class Builder extends React.Component {
       )
   }
 
-  // async startCloner (e) {
-  //   e.preventDefault()
-  //   const { githubUsername, githubToken } = this.props.user
-  //   const { name, owner } = this.props.match.params
-  //   this.setState({ working: true })
-  //   const clone = new GHCloner(
-  //     this.props.repoName,
-  //     githubUsername,
-  //     githubToken,
-  //     name,
-  //     owner
-  //   )
-  //   // console.log(clone.progress)
-  //   // this.setState({ status: `${clone.status}` })
-  //   // const newRepo = await clone.createRepo()
-  //   // const dirContent = await clone.readAndWriteFile('Gemfile')
-  //   // this.setState({ status: `${clone.status}` })
-  //   // console.log(dirContent)
-  //   // this.setState({ content: dirContent })
-  // }
+  async startCloner (e) {
+    e.preventDefault()
+    const githubToken = this.props.user.githubToken
+    const githubUsername = this.props.user.githubUsername
+    const { name, owner } = this.props.match.params
+    this.setState({ working: true })
+    const result = await axios.post('http://localhost:9090/github/hyperClone', {
+      repoName: this.props.repoName,
+      githubUsername: githubUsername,
+      githubToken: githubToken,
+      name: name,
+      owner: owner
+    })
+    this.setState({ content: `${result}` })
+
+    // const clone = new GHCloner(
+    //   this.props.repoName,
+    //   githubUsername,
+    //   githubToken,
+    //   name,
+    //   owner
+    // )
+    // console.log(clone.progress)
+    // this.setState({ status: `${clone.status}` })
+
+    // const newRepo = await clone.createRepo()
+    // console.log("create repo",newRepo)
+    // const dirContent = await clone.readAndWriteFile('gradlew')
+    // console.log("clone file",dirContent)
+
+    // this.setState({ status: `${clone.status}` })
+    // this.setState({ content: dirContent })
+  }
 
   render () {
+    console.log('this props', this.props)
     return (
       <div>
         <div className='container'>

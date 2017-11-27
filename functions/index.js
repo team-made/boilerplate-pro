@@ -1,5 +1,26 @@
 const functions = require('firebase-functions')
 const axios = require('axios')
+const Cloner = require('./cloner')
+
+exports.hyperClone = functions.http.onRequest((request, response) => {
+  const body = JSON.parse(request.body)
+  console.log('body', body)
+
+  const clone = new Cloner(
+    body.repoName,
+    body.githubUsername,
+    body.githubToken,
+    body.name,
+    body.owner
+  )
+
+  async function start () {
+    console.log('clone file', dirContent)
+    response.send('done!')
+  }
+
+  start()
+})
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
