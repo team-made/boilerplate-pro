@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { actions } from './index.js'
-
+import CreatedRepoView from '../CreatedRepoView/CreatedRepoView.js'
 const mapStateToProps = state => {
   return {
     ...state.Dashboard,
@@ -13,37 +13,33 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getUser: (uid) => {
-      firebase.auth().onAuthStateChanged(user => {
-        firebase.firestore()
-          .collection('users')
-          .doc(user.uid)
-          .collection('repos')
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              console.log('this is the doc', doc.data())
+      firebase.firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('repos')
+        .get()
+        .then(querySnapshot => {
+          let userData = Array.from(querySnapshot.docs).map(doc => doc.data())
+          dispatch(
+            actions.userDataAction({
+              userData
             })
-            // dispatch(
-            //   actions.userDataAction({
-            //     userData: .data()
-            //   })
-            // )
-          })
-      })
+          )
+        })
     }
   }
 }
 
 class Dashboard extends React.Component {
-  // componentDidMount () {
-  //   console.log('updated', this.props.user.uid)
-  //   this.props.getUser(this.props.user.uid)
-  // }
+  componentDidMount () {
+    console.log('updated', this.props.user.uid)
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.getUser(user.uid)
+      }
+    })
+  }
   render () {
-    if (this.props.user && !this.props.userData) {
-      console.log('got it', this.props.user.uid)
-      this.props.getUser(this.props.user.uid)
-    }
     console.log(this.props.userData)
     return (
       <div className='container'>
@@ -63,40 +59,14 @@ class Dashboard extends React.Component {
             </li>
           </ul>
         </div>
-        <div className='box'>
-          <article className='media'>
-            <div className='media-content'>
-              <div className='content'>
-                <p>
-                  <strong>Name of Project</strong> <small>date?</small>
-                  <br />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                efficitur sit amet massa fringilla egestas. Nullam condimentum
-                luctus turpis.
-                </p>
-              </div>
-              <nav className='level is-mobile'>
-                <div className='level-left'>
-                  <a className='level-item'>
-                    <span className='icon is-small'>
-                      <i className='fa fa-github' />
-                    </span>
-                  </a>
-                  <a className='level-item'>
-                    <span className='icon is-small'>
-                      <i className='fa fa-retweet' />
-                    </span>
-                  </a>
-                  <a className='level-item'>
-                    <span className='icon is-small'>
-                      <i className='fa fa-heart' />
-                    </span>
-                  </a>
-                </div>
-              </nav>
-            </div>
-          </article>
+        <div>
+          {this.props.userData.userData && this.props.userData.userData.map(userRepo => {
+            return (
+              <CreatedRepoView userRepo={userRepo} />
+            )
+          })}
         </div>
+
       </div>
     )
   }
