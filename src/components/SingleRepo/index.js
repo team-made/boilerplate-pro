@@ -1,28 +1,27 @@
 // Include component
-import component from './List.js'
+import component from './SingleRepo.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('List')
+const reduxUtil = reduxHelper('SingleRepo')
 
 // Action Definitions
-const ALL_BOILERPLATES = reduxUtil.defineAction('ALL_BOILERPLATES')
+const SET_CURRENT_REPO = reduxUtil.defineAction('SET_CURRENT_REPO')
 
 // Initial State
 const initialState = {
-  allBoilerplates: [],
-  selectedBoilerplate: {}
+  currentRepo: {}
 }
 
 // Make Actions
 const actions = {
-  allBoilerplatesAction: reduxUtil.createAction(ALL_BOILERPLATES)
+  setCurrentRepo: reduxUtil.createAction(SET_CURRENT_REPO)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [ALL_BOILERPLATES]: (state, action) => {
+    [SET_CURRENT_REPO]: (state, action) => {
       let newState = { ...state, ...action.payload }
       return newState
     }

@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
-import { actions } from './index.js'
 
+import { actions } from './index.js'
+import { components } from '../components'
 import './List.css'
 
 const mapStateToProps = state => {
@@ -14,9 +14,6 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    handleSelect: event => {
-      console.log('event', event.target.value)
-    },
     getAllBoilerplates: () => {
       firebase
         .firestore()
@@ -39,61 +36,57 @@ class List extends React.Component {
   }
 
   render () {
-    console.log('props', this.props)
     return (
       <div className='container'>
-        <nav className='panel'>
-          <p className='panel-heading'>repositories</p>
-          <div className='panel-block'>
-            <p className='control has-icons-left'>
-              <input
-                className='input is-small'
-                type='text'
-                placeholder='search'
-              />
-            </p>
-          </div>
-          <p className='panel-tabs'>
-            <a className='is-active'>all</a>
-            <a>Javascript</a>
-            <a>CSS</a>
-            <a>PHP</a>
-            <a>HTML</a>
-            <a>Python</a>
-            <a>TypeScript</a>
-            <a>Ruby</a>
-          </p>
-          <Link to='/builder/test/test' className='panel-block is-active'>
-            <span className='panel-icon'>
-              <i className='fa fa-book' />
-            </span>
-            test: CLICK THIS ONE
-          </Link>
-          {this.props.allBoilerplates.length ? (
-            this.props.allBoilerplates.map(boilerplate => {
-              return (
-                <Link
-                  to={`/builder/${boilerplate.full_name}`}
-                  className='panel-block is-active'
-                  onClick={this.props.handleSelect}
-                  key={boilerplate.id}
-                >
-                  <span className='panel-icon'>
-                    <i className='fa fa-book' />
-                  </span>
-                  {boilerplate.name} (by {boilerplate.owner.login}) [{boilerplate.watchers_count}
-                  watchers] [{boilerplate.stargazers_count} star gazers]
-                </Link>
-              )
-            })
-          ) : (
-            <div className='spinner'>
-              <div className='bounce1' />
-              <div className='bounce2' />
-              <div className='bounce3' />
+        {this.props.allBoilerplates.length ? (
+          <div className='panel'>
+            <p className='panel-heading'>repositories</p>
+            <div className='panel-block'>
+              <p className='control has-icons-left'>
+                <input
+                  className='input is-small'
+                  type='text'
+                  placeholder='search'
+                />
+                <span className='icon is-small is-left'>
+                  <i className='fa fa-search' />
+                </span>
+              </p>
             </div>
-          )}
-        </nav>
+            <p className='panel-tabs'>
+              <a className='is-active'>all</a>
+              <a>Javascript</a>
+              <a>CSS</a>
+              <a>PHP</a>
+              <a>HTML</a>
+              <a>Python</a>
+              <a>TypeScript</a>
+              <a>Ruby</a>
+            </p>
+            <div className='panel-block'>
+              <span>
+                Name <i className='fa fa-sort' />
+              </span>
+              <span style={{ marginLeft: 'auto' }}>
+                <i className='fa fa-sort' /> Stars
+              </span>
+            </div>
+            {this.props.allBoilerplates.map(boilerplate => (
+              <components.ListItem boilerplate={boilerplate} />
+            ))}
+            <br />
+            <components.Pagination />
+          </div>
+        ) : (
+          <section className='hero is-large'>
+            <div className='hero-body'>
+              <div className='container'>
+                <components.Spinner />
+              </div>
+            </div>
+          </section>
+        )}
+        <br />
       </div>
     )
   }

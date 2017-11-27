@@ -1,19 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
 import firebase from 'firebase'
-import 'firebase/firestore'
 
-// Stylesheets
-import 'bulma/css/bulma.css'
-import './index.css'
+import { store } from '../components.js'
+import SingleRepo from './SingleRepo'
 
-// Grab all components dynamically
-import { components, history, store } from './components/components.js'
-import registerServiceWorker from './utils/registerServiceWorker'
-
-// Initialize Firebase Application
 const config = {
   apiKey:
     process.env.FIREBASE_API_KEY || process.env.REACT_APP_FIREBASE_API_KEY,
@@ -27,12 +19,13 @@ const config = {
 }
 firebase.initializeApp(config)
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <components.App />
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('root')
-)
-registerServiceWorker()
+// eslint-disable-next-line
+it('renders without crashing', () => {
+  const div = document.createElement('div')
+  ReactDOM.render(
+    <Provider store={store}>
+      <SingleRepo match={{ params: { name: 'test', owner: 'test' } }} />
+    </Provider>,
+    div
+  )
+})

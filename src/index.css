@@ -1,16 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
 }
 
 button {
   margin: 5px;
 }
 
-/*  Loader */
+/*  Loader Used Throughout Application */
 .spinner {
-  margin: 5px auto;
+  margin: 15px auto;
   width: 70px;
   text-align: center;
 }
