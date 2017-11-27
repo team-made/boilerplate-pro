@@ -10,13 +10,14 @@ const mapStateToProps = state => {
     ...state.UserRepo,
     ...state.Builder,
     ...state.App,
-    ...state.SingleRepo
+    ...state.SingleRepo,
+    ...state.List
   }
 }
 
 class UserRepo extends React.Component {
   componentDidMount () {
-    console.log('firebase', firebase)
+    console.log('firebase', this.props)
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         firebase
@@ -29,7 +30,8 @@ class UserRepo extends React.Component {
             name: this.props.repoName,
             description: this.props.currentRepo.description,
             githubLink: `https://github.com/${this.props.user.githubUsername}/${this
-              .props.repoName}`
+              .props.repoName}`,
+            stars: this.props.currentRepo.stargazers_count
           })
           .then(data => console.log('successful', data))
       }
