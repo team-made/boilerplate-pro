@@ -45,26 +45,36 @@ class SingleRepo extends Component {
   }
   // make constructor and include a bound version of getReadMe?
   createMarkup () {
-    return {__html: this.state.readMe}
+    return { __html: this.state.readMe }
   }
   getReadMe () {
     const repo = this.props.currentRepo
     const { githubToken } = this.props.user
     const config = { headers: { Authorization: `token ${githubToken}` } }
     if (repo.owner && !this.state.readMe) {
-      axios.get(
-        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/readme`, config
-      ).then(result => {
-        console.log('result', result)
-        this.setState({readMe: converter.makeHtml(window.atob(result.data.content))})
-      }).catch(err => console.error(err))
+      axios
+        .get(
+          `https://api.github.com/repos/${repo.owner.login}/${
+            repo.name
+          }/readme`,
+          config
+        )
+        .then(result => {
+          console.log('result', result)
+          this.setState({
+            readMe: converter.makeHtml(window.atob(result.data.content))
+          })
+        })
+        .catch(err => console.error(err))
     }
   }
   componentDidMount () {
-    this.props.setCurrentRepo(
-      this.props.match.params.name,
-      this.props.match.params.owner
-    ).then(() => this.getReadMe())
+    this.props
+      .setCurrentRepo(
+        this.props.match.params.name,
+        this.props.match.params.owner
+      )
+      .then(() => this.getReadMe())
   }
   render () {
     const repo = this.props.currentRepo
@@ -90,12 +100,19 @@ class SingleRepo extends Component {
         >
           <div>
             <h1 className='title'>{repo.name}</h1>
-            <h2 className='subtitle'>{repo.owner.login}</h2>
+            <h2 className='subtitle'>
+              by <a href={repo.owner.html_url}>{repo.owner.login}</a>
+            </h2>
             <p>{repo.description}</p>
           </div>
           <nav className='panel'>
-            <p className='panel-heading'>Build Menu</p>
-            <div className='panel-block'>Settings</div>
+            <p className='panel-heading'>{repo.language}</p>
+            <a href={repo.html_url} className='panel-block'>
+              <span className='icon'>
+                <i className='fa fa-github' />
+              </span>
+              Github
+            </a>
             <div className='panel-block'>
               <Link
                 to={`/builder/${repo.owner.login}/${repo.name}`}
@@ -106,8 +123,16 @@ class SingleRepo extends Component {
             </div>
           </nav>
         </div>
-        <div className='content is-medium'>
-          <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+        <div
+          className='container'
+          style={{ textAlign: 'left', maxWidth: '980px', minWidth: '200px' }}
+        >
+          <h2 className='subtitle'>Readme</h2>
+          <div
+            className='markdown-body'
+            style={{ backgroundColor: '#F7F7F7', padding: '20px' }}
+            dangerouslySetInnerHTML={this.createMarkup()}
+          />
         </div>
       </section>
     )
