@@ -11,13 +11,14 @@ import { components } from '../components'
 const converter = new showdown.Converter()
 const mapStateToProps = state => {
   return {
-    ...state.SingleRepo
+    ...state.SingleRepo,
+    ...state.App
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     setCurrentRepo: (name, owner) => {
-      firebase
+      return firebase
         .firestore()
         .collection('boilerplates')
         .where('name', '==', name)
@@ -47,10 +48,13 @@ class SingleRepo extends Component {
   }
   getReadMe () {
     const repo = this.props.currentRepo
+    const { githubToken } = this.props.user
+    const config = { headers: { Authorization: `token ${githubToken}` } }
     if (repo.owner && !this.state.readMe) {
       axios.get(
-        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/contents/README.md`
+        `https://api.github.com/repos/${repo.owner.login}/${repo.name}/readme`, config
       ).then(result => {
+        console.log('result', result)
         this.setState({readMe: converter.makeHtml(window.atob(result.data.content))})
       }).catch(err => console.error(err))
     }
@@ -64,7 +68,7 @@ class SingleRepo extends Component {
     this.props.setCurrentRepo(
       this.props.match.params.name,
       this.props.match.params.owner
-    )
+    ).then(() => this.getReadMe())
   }
   render () {
     const repo = this.props.currentRepo
