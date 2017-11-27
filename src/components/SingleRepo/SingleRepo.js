@@ -42,7 +42,6 @@ class SingleRepo extends Component {
     this.createMarkup = this.createMarkup.bind(this)
     this.getReadMe = this.getReadMe.bind(this)
   }
-  // make constructor and include a bound version of getReadMe?
   createMarkup () {
     return {__html: this.state.readMe}
   }
@@ -56,6 +55,11 @@ class SingleRepo extends Component {
       }).catch(err => console.error(err))
     }
   }
+
+  componentDidUpdate () {
+    this.getReadMe()
+  }
+
   componentDidMount () {
     this.props.setCurrentRepo(
       this.props.match.params.name,
@@ -63,7 +67,6 @@ class SingleRepo extends Component {
     )
   }
   render () {
-    this.getReadMe()
     const repo = this.props.currentRepo
     const correctRepo = repo.name === this.props.match.params.name
     return !correctRepo ? (
