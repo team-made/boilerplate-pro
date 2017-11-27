@@ -96,7 +96,9 @@ class SingleRepo extends Component {
             </div>
           </nav>
         </div>
-        <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+        <div className='content is-medium'>
+          <div className='container' dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>
       </section>
     )
   }
