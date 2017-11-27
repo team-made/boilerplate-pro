@@ -9,7 +9,7 @@ import {
   yamlFileCreator
 } from './FileGen.js'
 import { actions } from './index.js'
-import { history } from '../components.js'
+import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
