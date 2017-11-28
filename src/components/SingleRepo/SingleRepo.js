@@ -112,7 +112,7 @@ class SingleRepo extends Component {
             </h2>
             <p>{repo.description}</p>
           </div>
-          <nav className='panel'>
+          <nav className='panel' style={{width: '500px'}}>
             <p className='panel-heading'>{repo.language}</p>
             <a href={repo.html_url} className='panel-block'>
               <span className='icon'>
