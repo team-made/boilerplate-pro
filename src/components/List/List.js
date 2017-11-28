@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
-// import algoliasearch from 'algoliasearch/lite'
 
 import { actions } from './index.js'
 import { components } from '../components'
@@ -48,26 +47,8 @@ const mapDispatchToProps = dispatch => {
           console.error(err)
           return
         }
-
-        for (var h in content.hits) {
-          console.log(
-            `Hit(${content.hits[h].objectID}): ${JSON.stringify(
-              content.hits[h]
-            )}`
-          )
-        }
+        dispatch(actions.setBoilerplates({ boilerplates: content.hits }))
       })
-
-      // firebase
-      //   .firestore()
-      //   .collection('boilerplates')
-      //   .where('name', '==', evt.target.search.value)
-      //   .limit(25)
-      //   .get()
-      //   .then(results => {
-      //     let boilerplates = Array.from(results.docs).map(doc => doc.data())
-      //     dispatch(actions.setBoilerplates({ boilerplates: boilerplates }))
-      //   })
     }
   }
 }
@@ -75,32 +56,30 @@ const mapDispatchToProps = dispatch => {
 class List extends React.Component {
   componentDidMount () {
     this.props.getTopBoilerplates()
-    // const client = algoliasearch(
-    //   process.env.REACT_APP_ALGOLIA_APP_ID,
-    //   process.env.REACT_APP_SEARCH_KEY
-    // )
-    // this.index = client.initIndex('getstarted_actors')
   }
 
   render () {
     return (
       <div>
-        {!this.props.user.email && (
-          <section className='hero is-medium is-primary is-bold'>
-            <div className='hero-body'>
-              <div className='container' style={{ textAlign: 'center' }}>
-                <h1 className='title'>
-                  Boilerplate<strong style={{ fontWeight: 'bold' }}>Pro</strong>
-                </h1>
-                <h2 className='subtitle'>Find. Integrate. Deploy.</h2>
-                <h2 className='subtitle'>
-                  A platform for developers to get started with their perfect
-                  boilerplate.
-                </h2>
-              </div>
+        <section
+          className={`hero is-medium is-primary is-bold main-hero ${
+            this.props.user.email ? 'inactive' : 'active'
+          }`}
+        >
+          <div className='hero-body'>
+            <div className='container'>
+              <h1 className='title'>
+                Boilerplate<strong style={{ fontWeight: 'bold' }}>Pro</strong>
+              </h1>
+              <h2 className='subtitle'>Find. Integrate. Deploy.</h2>
+              <h2 className='subtitle'>
+                A platform for developers to get started with their perfect
+                boilerplate.
+              </h2>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+
         <br />
         <div className='container'>
           {this.props.boilerplates.length ? (
@@ -109,7 +88,9 @@ class List extends React.Component {
               <div className='panel-block'>
                 <form
                   style={{ width: '100%' }}
-                  onSubmit={evt => this.props.getBpsByName(evt, this.index)}
+                  onSubmit={evt =>
+                    this.props.getBpsByName(evt, this.props.index)
+                  }
                 >
                   <p className='control has-icons-left'>
                     <input

@@ -4,8 +4,8 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
 import { actions } from './index.js'
-import { history, components } from '../components.js'
-import { Link } from 'react-router-dom'
+// import { history, components } from '../components.js'
+
 const mapStateToProps = state => {
   return {
     ...state.Builder,
@@ -92,20 +92,15 @@ class Builder extends React.Component {
             </div>
             <p className='help'>name must contain no-spaces</p>
             {firebase.auth().currentUser ? (
-              <div>
-                <button
-                  className='button'
-                  type='submit'
-                  disabled={this.state.working}
-                  onClick={this.startCloner}
-                >
-                  Start HyperClone™
-                </button>
+              <button
+                className='button'
+                type='submit'
+                disabled={this.state.working}
+                onClick={this.startCloner}
+              >
+                Start HyperClone™
+              </button>
 
-                <Link to='/repos/userrepo'>
-                user repo
-                </Link>
-              </div>
             ) : (
               <div>Sign in to build!</div>
             )}

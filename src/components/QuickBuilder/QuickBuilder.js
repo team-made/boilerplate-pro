@@ -5,7 +5,7 @@ import 'firebase/firestore'
 import axios from 'axios'
 // import { actions } from './index.js'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ...state.QuickBuilder,
     ...state.SingleRepo,
@@ -13,19 +13,15 @@ const mapStateToProps = (state) => {
     ...state.App
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  }
+const mapDispatchToProps = dispatch => {
+  return {}
 }
 class QuickBuilder extends Component {
   constructor (props) {
     super(props)
     this.state = {
       warningText: '',
-      building: false,
       working: false,
-      status: 'waiting to start',
       progress: '',
       content: '',
       placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
@@ -59,41 +55,50 @@ class QuickBuilder extends Component {
       })
   }
 
+  componentDidMount () {
+    this.props.user.uid &&
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(this.props.user.uid)
+        .collection('repos')
+        .doc('repo1')
+        .onSnapshot(doc =>
+          console.log('USER SNAPSHOT', doc.exists && doc.data())
+        )
+  }
+
   render () {
     return (
-      <div className='field' style={{width: '400px'}}>
-        <form onSubmit={this.startCloner}>
-          <div className='control'>
-            <input
-              className='input'
-              type='text'
-              name='input'
-              // defaultValue={this.props.currentRepo.name}
-              placeholder={this.state.placeholder}
-            />
-          </div>
-          <p className='help'>name must contain no-spaces</p>
-          {firebase.auth().currentUser ? (
-            <button
-              className='button'
-              type='submit'
-              disabled={this.state.working}
-            >
-              Start HyperClone™
-            </button>
-          ) : (
-            <div>Sign in to build!</div>
-          )}
-        </form>
-        {this.state.warningText && (
-          <p className='help'>{this.state.warningText}</p>
-        )}
-
-        {this.state.working && (
+      <div className='field' style={{ width: '400px' }}>
+        {!this.state.working ? (
+          <form onSubmit={this.startCloner}>
+            <div className='control'>
+              <input
+                className='input'
+                type='text'
+                name='input'
+                // defaultValue={this.props.currentRepo.name}
+                placeholder={this.state.placeholder}
+              />
+            </div>
+            <p className='help'>name must contain no-spaces</p>
+            {firebase.auth().currentUser ? (
+              <button className='button' type='submit'>
+                Start HyperClone™
+              </button>
+            ) : (
+              <div>Sign in to build!</div>
+            )}
+          </form>
+        ) : (
           <div style={{ border: 'solid 1px black', padding: '10px' }}>
             <span style={{ fontWeight: 800 }}>{this.state.content}</span>
             <br />
             {this.state.progress}
+            {this.state.warningText && (
+              <p className='help'>{this.state.warningText}</p>
+            )}
             <br />
             <br />
           </div>
@@ -103,6 +108,8 @@ class QuickBuilder extends Component {
   }
 }
 
-const connectedQuickBuilder = connect(mapStateToProps, mapDispatchToProps)(QuickBuilder)
+const connectedQuickBuilder = connect(mapStateToProps, mapDispatchToProps)(
+  QuickBuilder
+)
 
 export default connectedQuickBuilder

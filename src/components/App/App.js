@@ -2,11 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import firebase from 'firebase'
+import algoliasearch from 'algoliasearch/lite'
 
 import './App.css'
 
 import { actions } from './index.js'
 import { components } from '../components.js'
+
+// Initialize Algolia Search
+const client = algoliasearch(
+  process.env.REACT_APP_ALGOLIA_APP_ID,
+  process.env.REACT_APP_SEARCH_KEY
+)
+const index = client.initIndex('boilerplates')
 
 const mapStateToProps = state => ({ ...state.App })
 
@@ -45,7 +53,11 @@ class App extends Component {
         <components.Navbar user={this.props.user} />
         <div className='main-content'>
           <Switch>
-            <Route exact path='/' component={components.List} />
+            <Route
+              exact
+              path='/'
+              render={() => <components.List index={index} />}
+            />
             <Route
               path='/builder/:owner/:name'
               component={components.Builder}
