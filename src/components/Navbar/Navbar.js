@@ -38,18 +38,18 @@ const Navbar = props => {
   const user = props.user
   return (
     <nav
-      className='navbar is-fixed-top'
-      style={{ height: '52px', boxShadow: '0px 0px 4px black' }}
+      className='navbar is-fixed-top is-primary'
+      style={{ height: '100px', boxShadow: '0px 0px 4px black' }}
     >
       <div className='navbar-brand'>
         <NavLink to='/' className='navbar-item'>
-          <h2>Boilerplate Pro</h2>
+          <h2>BoilerplatePro</h2>
         </NavLink>
       </div>
       <div className='navbar-menu'>
         <div className='navbar-end'>
           {user.email ? (
-            <div className='navbar-item has-dropdown is-hoverable'>
+            <div className='account navbar-item has-dropdown is-hoverable'>
               <a className='navbar-link'>Account</a>
               <div className='navbar-dropdown is-right'>
                 <NavLink to='/dashboard' className='navbar-item'>

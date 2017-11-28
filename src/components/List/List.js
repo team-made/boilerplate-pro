@@ -86,7 +86,7 @@ class List extends React.Component {
       <div className='container'>
         {this.props.boilerplates.length ? (
           <div className='panel'>
-            <p className='panel-heading'>repositories</p>
+            <p className='panel-heading'>Repositories</p>
             <div className='panel-block'>
               <form
                 style={{ width: '100%' }}

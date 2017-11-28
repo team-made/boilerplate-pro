@@ -43,6 +43,7 @@ class App extends Component {
     return (
       <div className='App'>
         <components.Navbar user={this.props.user} />
+        <div className='spacing' />
         <div className='main-content'>
           <Switch>
             <Route exact path='/' component={components.List} />
