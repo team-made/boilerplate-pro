@@ -43,7 +43,7 @@ const Navbar = props => {
     >
       <div className='navbar-brand'>
         <NavLink to='/' className='navbar-item'>
-          <h2 className='subtitle' style={{ letterSpacing: '1px' }}>
+          <h2 className='subtitle' style={{ letterSpacing: '0.5px' }}>
             Boilerplate<strong style={{ fontWeight: 'bold' }}>Pro</strong>
           </h2>
         </NavLink>
@@ -52,7 +52,9 @@ const Navbar = props => {
         <div className='navbar-end'>
           {user.email ? (
             <div className='account navbar-item has-dropdown is-hoverable'>
-              <a className='navbar-link'>Account</a>
+              <a className='navbar-link'>
+                Hey{user.githubUsername && `, ${user.githubUsername}`}!
+              </a>
               <div className='navbar-dropdown is-right'>
                 <NavLink to='/dashboard' className='navbar-item'>
                   Dashboard

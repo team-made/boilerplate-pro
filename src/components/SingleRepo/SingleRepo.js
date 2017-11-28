@@ -112,18 +112,17 @@ class SingleRepo extends Component {
             </h2>
             <p>{repo.description}</p>
           </div>
-          <nav className='panel' style={{width: '500px'}}>
-            {/* <div style={{display: 'flex'}}> */}
-            <p className='panel-heading'>Quick Builder
+          <nav className='panel' style={{ width: '500px' }}>
+            <p className='panel-heading'>
+              Quick Builder
               <Link
                 to={`/builder/${repo.owner.login}/${repo.name}`}
-                className='is-link is-outlined' style={{marginLeft: '45%'}}
+                className='is-link is-outlined'
+                style={{ marginLeft: '45%' }}
               >
-               To Full Builder
+                To Full Builder
               </Link>
             </p>
-            {/* </div> */}
-            {/* <p className='panel-heading'>{repo.language}</p> */}
             <a href={repo.html_url} className='panel-block'>
               <span className='icon'>
                 <i className='fa fa-github' />
@@ -131,9 +130,7 @@ class SingleRepo extends Component {
               Github
             </a>
             <div className='panel-block quickbuild'>
-
               <components.QuickBuilder />
-
             </div>
           </nav>
         </div>

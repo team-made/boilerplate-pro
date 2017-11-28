@@ -7,14 +7,17 @@ button {
   margin: 5px;
 }
 
+.has-navbar-fixed-top {
+  padding-top: 70px;
+}
+
 .navbar {
   font-size: 35px;
 }
 
 .navbar-link {
   /* padding-top: 60px; */
-  font-size: 20px
-
+  font-size: 20px;
 }
 
 .account {

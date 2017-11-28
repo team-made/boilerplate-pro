@@ -4,7 +4,7 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
 import { actions } from './index.js'
-import { history, components } from '../components.js'
+// import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
@@ -98,7 +98,7 @@ class Builder extends React.Component {
                 disabled={this.state.working}
                 onClick={this.startCloner}
               >
-                  Start HyperClone™
+                Start HyperClone™
               </button>
 
             ) : (
