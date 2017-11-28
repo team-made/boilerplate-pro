@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './CreatedRepoView.css'
 const CreatedRepoView = (props) => {
   return (
     <div className='box'>
@@ -21,11 +21,9 @@ const CreatedRepoView = (props) => {
                   <i className='fa fa-github' />
                 </span>
               </a>
-              <a className='level-item'>
-                <span className='icon is-small'>
-                  <i className='fa fa-retweet' />
-                </span>
-              </a>
+              <span className='ci-badge'>
+                <img src={`https://travis-ci.org/${props.userName}/${props.userRepo.name}.svg?branch=master`} />
+              </span>
               <a className='level-item'>
                 <span className='icon is-small'>
                   <i className='fa fa-heart' />

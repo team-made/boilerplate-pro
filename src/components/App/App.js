@@ -67,8 +67,13 @@ class App extends Component {
               path='/repo/:owner/:name'
               component={components.SingleRepo}
             />
+<<<<<<< HEAD
             <Route path='/success/:repoName' component={components.Success} />
             <Route path='/deploy/:repoName' component={components.Deploy} />
+=======
+            <Route path='/repos/userrepo' component={components.UserRepo} />
+            <Route path='/deploy' component={components.Deploy} />
+>>>>>>> master
             <Route
               path='/testintegration/:repoName'
               component={components.TestIntegration}

@@ -101,8 +101,15 @@ class Builder extends React.Component {
               <input
                 className='input'
                 type='text'
+<<<<<<< HEAD
                 name='name'
                 defaultValue={this.props.repoName}
+=======
+                name='input'
+                defaultValue={this.props.repoName}
+                // onChange={evt => this.props.handleRepoName(evt.target.value)}
+                placeholder={this.state.placeholder}
+>>>>>>> master
               />
             </div>
             <p className='help'>name must contain no-spaces</p>
@@ -111,6 +118,10 @@ class Builder extends React.Component {
                 className='button'
                 type='submit'
                 disabled={this.state.working}
+<<<<<<< HEAD
+=======
+                // onClick={this.startCloner}
+>>>>>>> master
               >
                 Start HyperClone™
               </button>
