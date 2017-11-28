@@ -79,14 +79,14 @@ class Builder extends React.Component {
         <h1 className='subtitle is-2'>Builder</h1>
         <label className='label'>Repo Name</label>
         <div className='field'>
-          <form>
+          <form onSubmit={this.startCloner}>
             <div className='control'>
               <input
                 className='input'
                 type='text'
-                name='GitHub Repo Name'
+                name='input'
                 defaultValue={this.props.repoName}
-                onChange={evt => this.props.handleRepoName(evt.target.value)}
+                // onChange={evt => this.props.handleRepoName(evt.target.value)}
                 placeholder={this.state.placeholder}
               />
             </div>
@@ -96,7 +96,7 @@ class Builder extends React.Component {
                 className='button'
                 type='submit'
                 disabled={this.state.working}
-                onClick={this.startCloner}
+                // onClick={this.startCloner}
               >
                 Start HyperClone™
               </button>
