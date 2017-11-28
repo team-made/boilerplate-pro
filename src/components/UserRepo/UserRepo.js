@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
-
+import './UserRepo.css'
 // import TestIntegration from '../TestIntegration/TestIntegration.js'
 
 const mapStateToProps = state => {
@@ -49,16 +49,19 @@ class UserRepo extends React.Component {
     return (
       <div>
         <div className='user-title'>
-          <h1 className='title is-3'>User Repository Info</h1>
+          <h1 className='title is-2'>User Repository Info</h1>
           <div />
           <div>
-            <a
-              href={`https://github.com/${this.props.user.githubUsername}/${this
-                .props.repoName}`}
-              className='button'
-            >
+
+            <div className='button-container'>
+              <a
+                href={`https://github.com/${this.props.user.githubUsername}/${this
+                  .props.repoName}`}
+                className='button'
+              >
               Visit created Rpo
-            </a>
+              </a>
+            </div>
           </div>
           <Link to='/testintegration' className='button'>
          To Integration and Deployment!

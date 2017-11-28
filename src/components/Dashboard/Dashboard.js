@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { actions } from './index.js'
+import './Dashboard.css'
 import CreatedRepoView from '../CreatedRepoView/CreatedRepoView.js'
 const mapStateToProps = state => {
   return {
@@ -40,7 +41,7 @@ class Dashboard extends React.Component {
     })
   }
   render () {
-    console.log(this.props.userData)
+    console.log(this.props)
     return (
       <div className='container'>
         <div className='tabs is-centered'>
@@ -62,7 +63,7 @@ class Dashboard extends React.Component {
         <div>
           {this.props.userData.userData && this.props.userData.userData.map(userRepo => {
             return (
-              <CreatedRepoView userRepo={userRepo} />
+              <CreatedRepoView key={userRepo.repoId} userRepo={userRepo} userName={this.props.user.githubUsername} />
             )
           })}
         </div>
