@@ -43,7 +43,6 @@ class App extends Component {
     return (
       <div className='App'>
         <components.Navbar user={this.props.user} />
-        <div className='spacing' />
         <div className='main-content'>
           <Switch>
             <Route exact path='/' component={components.List} />
@@ -57,7 +56,10 @@ class App extends Component {
             />
             <Route path='/repos/:id' component={components.UserRepo} />
             <Route path='/deploy' component={components.Deploy} />
-            <Route path='/testintegration' component={components.TestIntegration} />
+            <Route
+              path='/testintegration'
+              component={components.TestIntegration}
+            />
             <Route path='/dashboard' component={components.Dashboard} />
           </Switch>
         </div>
