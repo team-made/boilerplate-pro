@@ -134,62 +134,49 @@ class Builder extends React.Component {
 
   render () {
     return (
-      <div>
-        <div className='container'>
-          <br />
-          <h1 className='subtitle is-2'>Builder</h1>
-          <label className='label'>Repo Name</label>
-          <div className='field'>
-            <form>
-              <div className='control'>
-                <input
-                  className='input'
-                  type='text'
-                  name='GitHub Repo Name'
-                  value={this.props.repoName}
-                  onChange={evt => this.props.handleRepoName(evt.target.value)}
-                  placeholder='Text input'
-                />
-              </div>
-              <p className='help'>name must contain no-spaces</p>
-              {firebase.auth().currentUser ? (
-                <button
-                  className='button'
-                  type='submit'
-                  disabled={this.state.working}
-                  onClick={this.startCloner}
-                >
+      <div className='container'>
+        <br />
+        <h1 className='subtitle is-2'>Builder</h1>
+        <label className='label'>Repo Name</label>
+        <div className='field'>
+          <form>
+            <div className='control'>
+              <input
+                className='input'
+                type='text'
+                name='GitHub Repo Name'
+                value={this.props.repoName}
+                onChange={evt => this.props.handleRepoName(evt.target.value)}
+                placeholder='Text input'
+              />
+            </div>
+            <p className='help'>name must contain no-spaces</p>
+            {firebase.auth().currentUser ? (
+              <button
+                className='button'
+                type='submit'
+                disabled={this.state.working}
+                onClick={this.startCloner}
+              >
                   Start HyperClone™
-                </button>
-              ) : (
-                <button className='button'>Sign in to build!</button>
-              )}
-            </form>
-
-            {this.state.building ? (
-              <components.Spinner />
-            ) : firebase.auth().currentUser ? (
-              <button className='button' onClick={this.createRepo}>
-                Create Repo
               </button>
             ) : (
-              <button className='button'>Sign in to build!</button>
+              <div>Sign in to build!</div>
             )}
+          </form>
+          {this.state.warningText && (
+            <p className='help'>{this.state.warningText}</p>
+          )}
 
-            {this.state.warningText && (
-              <p className='help'>{this.state.warningText}</p>
-            )}
-
-            {this.state.working && (
-              <div style={{ border: 'solid 1px black', padding: '10px' }}>
-                <span style={{ fontWeight: 800 }}>{this.state.content}</span>
-                <br />
-                {this.state.progress}
-                <br />
-                <br />
-              </div>
-            )}
-          </div>
+          {this.state.working && (
+            <div style={{ border: 'solid 1px black', padding: '10px' }}>
+              <span style={{ fontWeight: 800 }}>{this.state.content}</span>
+              <br />
+              {this.state.progress}
+              <br />
+              <br />
+            </div>
+          )}
         </div>
       </div>
     )

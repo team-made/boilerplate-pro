@@ -122,7 +122,8 @@ class SingleRepo extends Component {
                 to={`/builder/${repo.owner.login}/${repo.name}`}
                 className='button is-link is-outlined is-fullwidth'
               >
-                BUILD
+                QUICK BUILD
+                <components.Builder />
               </Link>
             </div>
           </nav>
