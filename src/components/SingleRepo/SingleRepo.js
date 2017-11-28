@@ -4,11 +4,9 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
-import showdown from 'showdown'
 import { actions } from './index.js'
 import { components } from '../components'
 
-const converter = new showdown.Converter()
 const mapStateToProps = state => {
   return {
     ...state.SingleRepo,
@@ -49,7 +47,7 @@ class SingleRepo extends Component {
   getReadMe () {
     const repo = this.props.currentRepo
     const { githubToken } = this.props.user
-    const config = { headers: { Authorization: `token ${githubToken}` } }
+    const config = { headers: { Authorization: `token ${githubToken}`, Accept: `application/vnd.github.VERSION.html` } }
     if (repo.owner && !this.state.readMe) {
       axios
         .get(
@@ -59,9 +57,9 @@ class SingleRepo extends Component {
           config
         )
         .then(result => {
-          console.log('result', result)
+          console.log('result', result.data)
           this.setState({
-            readMe: converter.makeHtml(window.atob(result.data.content))
+            readMe: result.data
           })
         })
         .catch(err => console.error(err))
