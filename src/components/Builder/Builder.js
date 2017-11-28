@@ -106,14 +106,14 @@ class Builder extends React.Component {
       )
   }
 
-  async startCloner (e) {
+  startCloner (e) {
     e.preventDefault()
     this.setState({ working: true })
     this.setState({ content: `sending request to server` })
     const githubToken = this.props.user.githubToken
     const githubUsername = this.props.user.githubUsername
     const { name, owner } = this.props.match.params
-    const result = await axios
+    axios
       .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
         repoName: this.props.repoName,
         githubUsername: githubUsername,
