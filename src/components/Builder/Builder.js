@@ -152,14 +152,18 @@ class Builder extends React.Component {
                 />
               </div>
               <p className='help'>name must contain no-spaces</p>
-              <button
-                className='button'
-                type='submit'
-                disabled={this.state.working}
-                onClick={this.startCloner}
-              >
-                Start HyperClone™
-              </button>
+              {firebase.auth().currentUser ? (
+                <button
+                  className='button'
+                  type='submit'
+                  disabled={this.state.working}
+                  onClick={this.startCloner}
+                >
+                  Start HyperClone™
+                </button>
+              ) : (
+                <button className='button'>Sign in to build!</button>
+              )}
             </form>
 
             {this.state.building ? (
