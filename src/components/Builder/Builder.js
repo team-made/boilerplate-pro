@@ -108,36 +108,28 @@ class Builder extends React.Component {
 
   async startCloner (e) {
     e.preventDefault()
+    this.setState({ working: true })
+    this.setState({ content: `sending request to server` })
     const githubToken = this.props.user.githubToken
     const githubUsername = this.props.user.githubUsername
     const { name, owner } = this.props.match.params
-    this.setState({ working: true })
-    const result = await axios.post('http://localhost:9090/github/hyperClone', {
-      repoName: this.props.repoName,
-      githubUsername: githubUsername,
-      githubToken: githubToken,
-      name: name,
-      owner: owner
-    })
-    this.setState({ content: `${result}` })
-
-    // const clone = new GHCloner(
-    //   this.props.repoName,
-    //   githubUsername,
-    //   githubToken,
-    //   name,
-    //   owner
-    // )
-    // console.log(clone.progress)
-    // this.setState({ status: `${clone.status}` })
-
-    // const newRepo = await clone.createRepo()
-    // console.log("create repo",newRepo)
-    // const dirContent = await clone.readAndWriteFile('gradlew')
-    // console.log("clone file",dirContent)
-
-    // this.setState({ status: `${clone.status}` })
-    // this.setState({ content: dirContent })
+    const result = await axios
+      .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
+        repoName: this.props.repoName,
+        githubUsername: githubUsername,
+        githubToken: githubToken,
+        name: name,
+        owner: owner
+      })
+      .then(result => {
+        console.log('result:', result)
+        if (result.status === 200) {
+          this.setState({ content: `Server received request to clone repo` })
+        } else {
+          this.setState({ content: `There was an problem - ${result.status}` })
+          this.setState({ warningText: `${result.data}` })
+        }
+      })
   }
 
   render () {
@@ -148,20 +140,27 @@ class Builder extends React.Component {
           <h1 className='subtitle is-2'>Builder</h1>
           <label className='label'>Repo Name</label>
           <div className='field'>
-            <div className='control'>
-              <input
-                className='input'
-                type='text'
-                name='GitHub Repo Name'
-                value={this.props.repoName}
-                onChange={evt => this.props.handleRepoName(evt.target.value)}
-                placeholder='Text input'
-              />
-            </div>
-            <p className='help'>name must contain no-spaces</p>
-            <button type='submit' onClick={this.startCloner}>
-              Start Hyper Clone
-            </button>
+            <form>
+              <div className='control'>
+                <input
+                  className='input'
+                  type='text'
+                  name='GitHub Repo Name'
+                  value={this.props.repoName}
+                  onChange={evt => this.props.handleRepoName(evt.target.value)}
+                  placeholder='Text input'
+                />
+              </div>
+              <p className='help'>name must contain no-spaces</p>
+              <button
+                className='button'
+                type='submit'
+                disabled={this.state.working}
+                onClick={this.startCloner}
+              >
+                Start HyperClone™
+              </button>
+            </form>
 
             {this.state.building ? (
               <components.Spinner />
@@ -179,11 +178,10 @@ class Builder extends React.Component {
 
             {this.state.working && (
               <div style={{ border: 'solid 1px black', padding: '10px' }}>
-                status: {this.state.status}
+                <span style={{ fontWeight: 800 }}>{this.state.content}</span>
                 <br />
-                progress: {this.state.progress}
+                {this.state.progress}
                 <br />
-                content: {JSON.stringify(this.state.content)}
                 <br />
               </div>
             )}
