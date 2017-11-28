@@ -34,7 +34,8 @@ class Builder extends React.Component {
       working: false,
       status: 'waiting to start',
       progress: '',
-      content: ''
+      content: '',
+      placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
     }
 
     const name =
@@ -86,7 +87,7 @@ class Builder extends React.Component {
                 name='GitHub Repo Name'
                 defaultValue={this.props.repoName}
                 onChange={evt => this.props.handleRepoName(evt.target.value)}
-                placeholder='Your Repo Name'
+                placeholder={this.state.placeholder}
               />
             </div>
             <p className='help'>name must contain no-spaces</p>

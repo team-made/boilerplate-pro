@@ -49,7 +49,7 @@ class UserRepo extends React.Component {
     return (
       <div>
         <div className='user-title'>
-          <h1 className='title is-3'> User Repository Info</h1>
+          <h1 className='title is-3'>User Repository Info</h1>
           <div />
           <div>
             <a
