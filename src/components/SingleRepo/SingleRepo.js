@@ -110,7 +110,9 @@ class SingleRepo extends Component {
             <h2 className='subtitle'>
               by <a href={repo.owner.html_url}>{repo.owner.login}</a>
             </h2>
-            <p>{repo.description}</p>
+            <div className='description-container'>
+              <p>{repo.description}</p>
+            </div>
           </div>
           <nav className='panel' style={{ width: '500px' }}>
             <p className='panel-heading'>
@@ -118,7 +120,7 @@ class SingleRepo extends Component {
               <Link
                 to={`/builder/${repo.owner.login}/${repo.name}`}
                 className='is-link is-outlined'
-                style={{ marginLeft: '45%' }}
+                style={{ marginLeft: '53%' }}
               >
                 To Full Builder
               </Link>
