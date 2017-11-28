@@ -100,6 +100,7 @@ class Builder extends React.Component {
               >
                   Start HyperClone™
               </button>
+
             ) : (
               <div>Sign in to build!</div>
             )}

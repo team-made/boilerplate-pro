@@ -115,12 +115,12 @@ class SingleRepo extends Component {
           <nav className='panel' style={{width: '500px'}}>
             {/* <div style={{display: 'flex'}}> */}
             <p className='panel-heading'>Quick Builder
-              {/* <Link
+              <Link
                 to={`/builder/${repo.owner.login}/${repo.name}`}
                 className='is-link is-outlined' style={{marginLeft: '45%'}}
               >
                To Full Builder
-              </Link> */}
+              </Link>
             </p>
             {/* </div> */}
             {/* <p className='panel-heading'>{repo.language}</p> */}
