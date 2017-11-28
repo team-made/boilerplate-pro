@@ -58,6 +58,7 @@ class App extends Component {
               path='/'
               render={() => <components.List index={index} />}
             />
+            <Route path='/dashboard' component={components.Dashboard} />
             <Route
               path='/builder/:owner/:name'
               component={components.Builder}
@@ -66,13 +67,12 @@ class App extends Component {
               path='/repo/:owner/:name'
               component={components.SingleRepo}
             />
-            <Route path='/repos/userrepo' component={components.UserRepo} />
-            <Route path='/deploy' component={components.Deploy} />
+            <Route path='/success/:repoName' component={components.Success} />
+            <Route path='/deploy/:repoName' component={components.Deploy} />
             <Route
-              path='/testintegration'
+              path='/testintegration/:repoName'
               component={components.TestIntegration}
             />
-            <Route path='/dashboard' component={components.Dashboard} />
           </Switch>
         </div>
         <components.Footer />

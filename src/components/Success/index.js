@@ -1,9 +1,9 @@
 // Include component
-import component from './UserRepo.js'
+import component from './Success.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('UserRepo')
+const reduxUtil = reduxHelper('Success')
 
 // Action Definitions
 const REPO_DATA = reduxUtil.defineAction('REPO_DATA')
