@@ -47,26 +47,8 @@ const mapDispatchToProps = dispatch => {
           console.error(err)
           return
         }
-
-        for (var h in content.hits) {
-          console.log(
-            `Hit(${content.hits[h].objectID}): ${JSON.stringify(
-              content.hits[h]
-            )}`
-          )
-        }
+        dispatch(actions.setBoilerplates({ boilerplates: content.hits }))
       })
-
-      // firebase
-      //   .firestore()
-      //   .collection('boilerplates')
-      //   .where('name', '==', evt.target.search.value)
-      //   .limit(25)
-      //   .get()
-      //   .then(results => {
-      //     let boilerplates = Array.from(results.docs).map(doc => doc.data())
-      //     dispatch(actions.setBoilerplates({ boilerplates: boilerplates }))
-      //   })
     }
   }
 }
