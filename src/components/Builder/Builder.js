@@ -3,18 +3,14 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
-import {
-  appJSONFileCreator,
-  indexHTMLFileCreator,
-  yamlFileCreator
-} from './FileGen.js'
 import { actions } from './index.js'
 import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
     ...state.Builder,
-    ...state.App
+    ...state.App,
+    ...state.List
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -46,64 +42,7 @@ class Builder extends React.Component {
       'teach-me-how-to-boilerplate'
     props.handleRepoName(name)
 
-    this.createRepo = this.createRepo.bind(this)
     this.startCloner = this.startCloner.bind(this)
-  }
-
-  createRepo () {
-    const repoName = this.props.repoName
-    const { githubUsername, githubToken } = this.props.user
-    const config = { headers: { Authorization: `token ${githubToken}` } }
-    const data = {
-      name: repoName,
-      description: 'Test for boilerplate-pro',
-      homepage: 'https://github.com',
-      private: false,
-      has_issues: true,
-      has_projects: true,
-      has_wiki: true
-    }
-    this.setState({ building: true })
-    axios
-      .post(`https://api.github.com/user/repos`, data, config)
-      .then(() => {
-        return axios
-          .put(
-            `https://api.github.com/repos/${githubUsername}/${
-              repoName
-            }/contents/index.html`,
-            indexHTMLFileCreator(),
-            config
-          )
-          .then(() =>
-            axios.put(
-              `https://api.github.com/repos/${githubUsername}/${
-                repoName
-              }/contents/app.json`,
-              appJSONFileCreator(),
-              config
-            )
-          )
-          .then(() =>
-            axios.put(
-              `https://api.github.com/repos/${githubUsername}/${
-                repoName
-              }/contents/.travis.yml`,
-              yamlFileCreator(),
-              config
-            )
-          )
-      })
-      .then(() => history.push(`/repos/${this.state.repoId}`))
-      .catch(
-        err => console.error(err)
-        // ||
-        // this.setState({
-        //   building: false,
-        //   warningText: `${err.response.data.message}
-        //     ${err.response.data.errors[0].message}`
-        // })
-      )
   }
 
   startCloner (e) {
@@ -122,7 +61,6 @@ class Builder extends React.Component {
         owner: owner
       })
       .then(result => {
-        console.log('result:', result)
         if (result.status === 200) {
           this.setState({ content: `Server received request to clone repo` })
         } else {
@@ -133,6 +71,7 @@ class Builder extends React.Component {
   }
 
   render () {
+    console.log('props', this.props)
     return (
       <div className='container'>
         <br />
@@ -145,9 +84,9 @@ class Builder extends React.Component {
                 className='input'
                 type='text'
                 name='GitHub Repo Name'
-                value={this.props.repoName}
+                defaultValue={this.props.repoName}
                 onChange={evt => this.props.handleRepoName(evt.target.value)}
-                placeholder='Text input'
+                placeholder='Your Repo Name'
               />
             </div>
             <p className='help'>name must contain no-spaces</p>

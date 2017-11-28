@@ -63,7 +63,6 @@ class SingleRepo extends Component {
           config
         )
         .then(result => {
-          console.log('result', result.data)
           this.setState({
             readMe: result.data
           })
@@ -122,23 +121,17 @@ class SingleRepo extends Component {
               Github
             </a>
             <div className='panel-block quickbuild'>
-              <input
-                className='input'
-                type='text'
-                name='GitHub Repo Name'
-                value={this.props.repoName}
-                onChange={evt => this.props.handleRepoName(evt.target.value)}
-                placeholder='Your Repo Name'
-              />
-              <Link
-                to={`/builder/${repo.owner.login}/${repo.name}`}
-                className='button is-link is-outlined is-fullwidth'
-              >
-                QUICK BUILD
 
-              </Link>
+              <components.QuickBuilder />
 
             </div>
+            <Link
+              to={`/builder/${repo.owner.login}/${repo.name}`}
+              className='button is-link is-outlined is-fullwidth'
+            >
+               Go To Full Builder
+
+            </Link>
           </nav>
         </div>
         <div
