@@ -38,12 +38,14 @@ const Navbar = props => {
   const user = props.user
   return (
     <nav
-      className='navbar is-fixed-top is-primary'
-      style={{ height: '100px', boxShadow: '0px 0px 4px black' }}
+      className='navbar is-fixed-top'
+      style={{ height: '70px', boxShadow: '0px 0px 4px black' }}
     >
       <div className='navbar-brand'>
         <NavLink to='/' className='navbar-item'>
-          <h2>BoilerplatePro</h2>
+          <h2 className='subtitle' style={{ letterSpacing: '1px' }}>
+            Boilerplate<strong style={{ fontWeight: 'bold' }}>Pro</strong>
+          </h2>
         </NavLink>
       </div>
       <div className='navbar-menu'>
