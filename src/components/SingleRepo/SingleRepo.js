@@ -6,6 +6,7 @@ import 'firebase/firestore'
 import axios from 'axios'
 import { actions } from './index.js'
 import { components } from '../components'
+import './SingleRepo.css'
 
 const mapStateToProps = state => {
   return {
@@ -62,7 +63,6 @@ class SingleRepo extends Component {
           config
         )
         .then(result => {
-          console.log('result', result.data)
           this.setState({
             readMe: result.data
           })
@@ -112,7 +112,7 @@ class SingleRepo extends Component {
             </h2>
             <p>{repo.description}</p>
           </div>
-          <nav className='panel'>
+          <nav className='panel' style={{width: '500px'}}>
             <p className='panel-heading'>{repo.language}</p>
             <a href={repo.html_url} className='panel-block'>
               <span className='icon'>
@@ -120,14 +120,18 @@ class SingleRepo extends Component {
               </span>
               Github
             </a>
-            <div className='panel-block'>
-              <Link
-                to={`/builder/${repo.owner.login}/${repo.name}`}
-                className='button is-link is-outlined is-fullwidth'
-              >
-                BUILD
-              </Link>
+            <div className='panel-block quickbuild'>
+
+              <components.QuickBuilder />
+
             </div>
+            <Link
+              to={`/builder/${repo.owner.login}/${repo.name}`}
+              className='button is-link is-outlined is-fullwidth'
+            >
+               Go To Full Builder
+
+            </Link>
           </nav>
         </div>
         <div
