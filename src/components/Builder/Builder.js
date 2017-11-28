@@ -4,7 +4,7 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
 import { actions } from './index.js'
-// import { history, components } from '../components.js'
+import { components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
@@ -15,12 +15,19 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    handleRepoName: value => {
-      dispatch(
-        actions.repoNameAction({
-          repoName: value
+    setCurrentRepo: (name, owner) => {
+      return firebase
+        .firestore()
+        .collection('boilerplates')
+        .where('name', '==', name)
+        .where('owner.login', '==', owner)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc =>
+            dispatch(actions.setCurrentRepo({ currentRepo: doc.data() }))
+          )
         })
-      )
+        .catch(console.error)
     }
   }
 }
@@ -38,11 +45,6 @@ class Builder extends React.Component {
       placeholder: `Repo Name (ex. '${this.props.repoName}')`
     }
 
-    const name =
-      (this.props.match && this.props.match.params.name) ||
-      'teach-me-how-to-boilerplate'
-    props.handleRepoName(name)
-
     this.startCloner = this.startCloner.bind(this)
   }
 
@@ -50,16 +52,15 @@ class Builder extends React.Component {
     e.preventDefault()
     this.setState({ working: true })
     this.setState({ content: `sending request to server` })
-    const githubToken = this.props.user.githubToken
-    const githubUsername = this.props.user.githubUsername
-    const { name, owner } = this.props.match.params
+    const { githubToken, githubUsername } = this.props.user
+    const { name, owner } = this.props.currentRepo
     axios
       .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
-        repoName: this.props.repoName,
+        repoName: e.target.name.value,
         githubUsername: githubUsername,
         githubToken: githubToken,
         name: name,
-        owner: owner
+        owner: owner.login
       })
       .then(result => {
         if (result.status === 200) {
@@ -71,23 +72,37 @@ class Builder extends React.Component {
       })
   }
 
+  componentDidMount () {
+    this.props.setCurrentRepo(
+      this.props.match.params.name,
+      this.props.match.params.owner
+    )
+  }
+
   render () {
-    console.log('props', this.props)
-    return (
+    const repo = this.props.currentRepo
+    const correctRepo = repo.name === this.props.match.params.name
+    return !correctRepo ? (
+      <section className='hero is-large'>
+        <div className='hero-body'>
+          <div className='container'>
+            <components.Spinner />
+          </div>
+        </div>
+      </section>
+    ) : (
       <div className='container'>
         <br />
         <h1 className='subtitle is-2'>Builder</h1>
         <label className='label'>Repo Name</label>
         <div className='field'>
-          <form>
+          <form onSubmit={this.startCloner}>
             <div className='control'>
               <input
                 className='input'
                 type='text'
-                name='GitHub Repo Name'
+                name='name'
                 defaultValue={this.props.repoName}
-                onChange={evt => this.props.handleRepoName(evt.target.value)}
-                placeholder={this.state.placeholder}
               />
             </div>
             <p className='help'>name must contain no-spaces</p>
@@ -96,11 +111,9 @@ class Builder extends React.Component {
                 className='button'
                 type='submit'
                 disabled={this.state.working}
-                onClick={this.startCloner}
               >
                 Start HyperClone™
               </button>
-
             ) : (
               <div>Sign in to build!</div>
             )}
