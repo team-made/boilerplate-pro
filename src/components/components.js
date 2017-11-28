@@ -11,6 +11,7 @@ import * as App from './App'
 import * as Navbar from './Navbar'
 import * as List from './List'
 import * as Builder from './Builder'
+import * as QuickBuilder from './QuickBuilder'
 import * as UserRepo from './UserRepo'
 import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
@@ -26,6 +27,7 @@ const containers = {
   Navbar,
   List,
   Builder,
+  QuickBuilder,
   UserRepo,
   TestIntegration,
   Deploy,

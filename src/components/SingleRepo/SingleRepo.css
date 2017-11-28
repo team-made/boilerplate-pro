@@ -1,0 +1,4 @@
+.quickbuild {
+    display: flex;
+    flex-direction: column;
+}

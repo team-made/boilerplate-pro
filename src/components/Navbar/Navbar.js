@@ -71,7 +71,7 @@ const Navbar = props => {
             <div className='navbar-item'>
               <div className='field is-grouped'>
                 <p className='control'>
-                  <a className='button is-dark is-outlined' onClick={signIn}>
+                  <a className='button is-light is-outlined' onClick={signIn}>
                     <span className='icon is-medium'>
                       <i className='fa fa-github' />
                     </span>
