@@ -47,7 +47,12 @@ class SingleRepo extends Component {
   getReadMe () {
     const repo = this.props.currentRepo
     const { githubToken } = this.props.user
-    const config = { headers: { Authorization: `token ${githubToken}`, Accept: `application/vnd.github.VERSION.html` } }
+    const config = {
+      headers: {
+        Authorization: `token ${githubToken}`,
+        Accept: `application/vnd.github.VERSION.html`
+      }
+    }
     if (repo.owner && !this.state.readMe) {
       axios
         .get(
@@ -132,7 +137,10 @@ class SingleRepo extends Component {
           <h2 className='subtitle'>Readme</h2>
           <div
             className='markdown-body'
-            style={{ backgroundColor: '#F7F7F7', padding: '20px' }}
+            style={{
+              padding: '40px',
+              border: '1px solid #e3dde4'
+            }}
             dangerouslySetInnerHTML={this.createMarkup()}
           />
         </div>

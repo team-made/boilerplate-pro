@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { actions } from './index.js'
 import { Link } from 'react-router-dom'
 import { history } from '../components.js'
 
@@ -10,13 +9,6 @@ const mapStateToProps = state => {
     ...state.TestIntegration,
     ...state.App,
     ...state.Builder
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    dummyAction: () => {
-      dispatch(actions.dummyAction())
-    }
   }
 }
 
@@ -56,7 +48,7 @@ class TestIntegration extends React.Component {
       repo: repoName,
       username: githubUsername
     }
-    console.log('github', githubToken)
+    // console.log('github', githubToken)
     this.setState({
       btnMessage: 'Loading...',
       enableBtn: false,
@@ -66,7 +58,7 @@ class TestIntegration extends React.Component {
       .post(`https://boilerplate-pro-server.herokuapp.com/travis`, data)
       // .post(`http://localhost:9090/travis`, data) //FOR LOCAL TESTING
       .then(travis => {
-        console.log('Success: ', JSON.stringify(travis))
+        // console.log('Success: ', JSON.stringify(travis))
         this.setState({
           successMessage: 'Successful Integration!',
           btnMessage: 'Complete',
@@ -110,8 +102,6 @@ class TestIntegration extends React.Component {
   }
 }
 
-const connectedTestIntegration = connect(mapStateToProps, mapDispatchToProps)(
-  TestIntegration
-)
+const connectedTestIntegration = connect(mapStateToProps)(TestIntegration)
 
 export default connectedTestIntegration
