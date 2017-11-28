@@ -27,7 +27,8 @@ class QuickBuilder extends Component {
       working: false,
       status: 'waiting to start',
       progress: '',
-      content: ''
+      content: '',
+      placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
     }
     this.startCloner = this.startCloner.bind(this)
   }
@@ -60,15 +61,15 @@ class QuickBuilder extends Component {
 
   render () {
     return (
-      <div className='field'>
+      <div className='field' style={{width: '400px'}}>
         <form onSubmit={this.startCloner}>
           <div className='control'>
             <input
               className='input'
               type='text'
               name='input'
-              defaultValue={this.props.currentRepo.name}
-              placeholder='Your Repo Name'
+              // defaultValue={this.props.currentRepo.name}
+              placeholder={this.state.placeholder}
             />
           </div>
           <p className='help'>name must contain no-spaces</p>
