@@ -35,7 +35,7 @@ class Builder extends React.Component {
       status: 'waiting to start',
       progress: '',
       content: '',
-      placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
+      placeholder: `Repo Name (ex. '${this.props.repoName}')`
     }
 
     const name =
