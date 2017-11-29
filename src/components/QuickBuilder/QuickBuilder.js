@@ -104,15 +104,16 @@ class QuickBuilder extends Component {
             <div
               style={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100%'
+                height: '50px'
               }}
             >
               <components.Spinner />
+              {this.state.content}
             </div>
             <br />
-            {this.state.content}
             {this.state.warningText && (
               <p className='help'>{this.state.warningText}</p>
             )}

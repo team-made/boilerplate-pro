@@ -56,11 +56,10 @@ const Navbar = props => {
                 Hey{user.githubUsername && `, ${user.githubUsername}`}!
               </a>
               <div className='navbar-dropdown is-right'>
-                <NavLink to='/dashboard' className='navbar-item'>
-                  Dashboard
+                <NavLink to='/dashboard/' className='navbar-item'>
+                  User Dashboard
                 </NavLink>
-                <a className='navbar-item'>Starred Repos</a>
-                <a className='navbar-item'>Past Builds</a>
+
                 <hr className='navbar-divider' />
                 <a className='navbar-item' onClick={signOut}>
                   Sign Out

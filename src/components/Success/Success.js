@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+import { NavLink, Route } from 'react-router-dom'
 import firebase from 'firebase'
 import { actions } from './index.js'
 import { components } from '../components'
@@ -45,28 +45,29 @@ class Success extends React.Component {
   }
 
   render () {
+    const { repoName, stage } = this.props.match.params
     return (
       <div className='user-title'>
         <h1 className='title is-3'>Success!!</h1>
-        <p>Your app: {this.props.match.params.repoName} has been built!</p>
+        <p>Your app: {repoName} has been built!</p>
         <a
           target='_blank'
           href={`https://www.github.com/${this.props.user.githubUsername}/${
-            this.props.match.params.repoName
+            repoName
           }`}
         >
-          www.github.com/{this.props.user.githubUsername}/{
-            this.props.match.params.repoName
-          }
+          www.github.com/{this.props.user.githubUsername}/{repoName}
         </a>
         <br />
         <ul className='progressbar'>
           <li className='active'>Github Repo Created</li>
-          <li>Integration</li>
-          <li>Deployment</li>
+          <li className={stage !== 'integration' ? 'active' : ''}>
+            Integration
+          </li>
+          <li className={stage === 'profit' ? 'active' : ''}>Deployment</li>
           <li>Profit</li>
         </ul>
-        <h3 className='subtitle'>{this.props.match.params.stage}</h3>
+        <h3 className='subtitle'>{stage}</h3>
         <Route
           path='/success/integration/:repoName'
           component={components.Integration}
@@ -75,6 +76,7 @@ class Success extends React.Component {
           path='/success/deployment/:repoName'
           component={components.Deployment}
         />
+        <Route path='/success/profit/:repoName' component={components.Profit} />
       </div>
     )
   }

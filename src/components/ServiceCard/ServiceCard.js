@@ -1,7 +1,13 @@
 import React from 'react'
 import './ServiceCard.css'
 
-const ServiceCard = ({ name, logo, handleSwitchState, description }) => {
+const ServiceCard = ({
+  name,
+  logo,
+  handleSwitchState,
+  description,
+  active
+}) => {
   return (
     <article className='media'>
       <figure className='media-left'>
@@ -12,7 +18,7 @@ const ServiceCard = ({ name, logo, handleSwitchState, description }) => {
       <div className='media-content'>
         <div className='content'>
           <p>
-            <strong>{name}</strong>
+            <strong>{name}</strong> {!active && '(coming soon)'}
             <br />
             {description}
           </p>
@@ -20,7 +26,11 @@ const ServiceCard = ({ name, logo, handleSwitchState, description }) => {
       </div>
       <div className='media-right'>
         <label className='switch'>
-          <input type='checkbox' onChange={handleSwitchState} />
+          <input
+            type='checkbox'
+            disabled={!active}
+            onChange={handleSwitchState}
+          />
           <span className='slider round' />
         </label>
       </div>
