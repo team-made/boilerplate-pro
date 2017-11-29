@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
-import {components, history} from '../components'
+import { components, history } from '../components'
 // import { actions } from './index.js'
 
 const mapStateToProps = state => {
@@ -36,23 +36,25 @@ class QuickBuilder extends Component {
   startCloner (e) {
     console.log('owner', this.props.currentRepo)
     e.preventDefault()
-    this.setState({ working: true, content: `sending request to server`, repoName: e.target.input.value })
-    const githubToken = this.props.user.githubToken
-    const githubUsername = this.props.user.githubUsername
-    const {name, owner} = this.props.currentRepo
+    this.setState({
+      working: true,
+      content: `sending request to server`,
+      repoName: e.target.input.value
+    })
+    const { githubToken, githubUsername } = this.props.user
+    const { name, owner } = this.props.currentRepo
 
     this.props.user.uid &&
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(this.props.user.uid)
-      .collection('repos')
-      .doc(e.target.input.value)
-      .onSnapshot(doc => {
-        console.log('USER SNAPSHOT', doc.exists && doc.data())
-        this.setState({content: doc.exists && doc.data().status})
-      })
-
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(this.props.user.uid)
+        .collection('repos')
+        .doc(e.target.input.value)
+        .onSnapshot(doc => {
+          console.log('USER SNAPSHOT', doc.exists && doc.data())
+          this.setState({ content: doc.exists && doc.data().status })
+        })
     axios
       .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
         repoName: e.target.input.value,
@@ -73,7 +75,7 @@ class QuickBuilder extends Component {
 
   render () {
     if (this.state.content === 'DONE') {
-      history.push(`/success/${this.state.repoName}`)
+      history.push(`/success/integration/${this.state.repoName}`)
     }
     return (
       <div className='field' style={{ width: '400px' }}>
@@ -97,9 +99,17 @@ class QuickBuilder extends Component {
             )}
           </form>
         ) : (
-
-          <div >
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}><components.Spinner /></div>
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+              }}
+            >
+              <components.Spinner />
+            </div>
             <br />
             {this.state.content}
             {this.state.warningText && (

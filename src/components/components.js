@@ -13,8 +13,8 @@ import * as List from './List'
 import * as Builder from './Builder'
 import * as QuickBuilder from './QuickBuilder'
 import * as Success from './Success'
-import * as TestIntegration from './TestIntegration'
-import * as Deploy from './Deploy'
+import * as Integration from './Integration'
+import * as Deployment from './Deployment'
 import * as Dashboard from './Dashboard'
 import * as Footer from './Footer'
 import * as ListItem from './ListItem'
@@ -22,10 +22,14 @@ import * as Spinner from './Spinner'
 import * as Pagination from './Pagination'
 import * as SingleRepo from './SingleRepo'
 import * as CreatedRepoView from './CreatedRepoView'
+<<<<<<< HEAD
 import * as Bookmark from './Bookmark'
 import * as BookmarkedBuilds from './BookmarkedBuilds'
 import * as Account from './Account'
 import * as PreviousBuilds from './PreviousBuilds'
+=======
+import * as ServiceCard from './ServiceCard'
+>>>>>>> c3dd0090175fbd087e4f11f085a5ff85be384fe7
 const containers = {
   App,
   Navbar,
@@ -33,8 +37,8 @@ const containers = {
   Builder,
   QuickBuilder,
   Success,
-  TestIntegration,
-  Deploy,
+  Integration,
+  Deployment,
   Dashboard,
   Footer,
   ListItem,
@@ -42,10 +46,14 @@ const containers = {
   Pagination,
   SingleRepo,
   CreatedRepoView,
+<<<<<<< HEAD
   Bookmark,
   BookmarkedBuilds,
   PreviousBuilds,
   Account
+=======
+  ServiceCard
+>>>>>>> c3dd0090175fbd087e4f11f085a5ff85be384fe7
 }
 
 // Grab the reducer and component from each container
