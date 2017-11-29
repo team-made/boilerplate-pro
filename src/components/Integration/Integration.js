@@ -72,6 +72,7 @@ class Integration extends React.Component {
     return (
       <div className='container' style={{ maxWidth: '600px' }}>
         <components.ServiceCard
+          active
           name='Travis CI'
           logo='https://cdn1.itcentralstation.com/vendors/logos/original/7d9825fd0e38f5e05831d226afc41d9c_400x400.jpeg?1424349510'
           handleSwitchState={event =>

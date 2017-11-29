@@ -35,6 +35,7 @@ class Deployment extends React.Component {
         <div className='container' style={{ maxWidth: '600px' }}>
           <br />
           <components.ServiceCard
+            active
             name='Heroku'
             logo='https://ludu-assets.s3.amazonaws.com/lesson-icons/KOLuHYOrXW8T324wQ4OM'
             handleSwitchState={event =>
@@ -65,15 +66,16 @@ class Deployment extends React.Component {
             description='DigitalOcean is a simple and robust cloud computing platform, designed for developers.'
           />
           {this.state.heroku ? (
-            <a
-              href={`https://www.heroku.com/deploy/?template=https://github.com/${
+            <form
+              target='_blank'
+              action={`https://www.heroku.com/deploy/?template=https://github.com/${
                 this.props.user.githubUsername
               }/${this.props.match.params.repoName}`}
-              className='button is-primary'
-              style={{ padding: '5px' }}
             >
-              <span>Deploy</span>
-            </a>
+              <button type='submit' className='button is-primary'>
+                <span>Deploy</span>
+              </button>
+            </form>
           ) : (
             <button
               className='button'
