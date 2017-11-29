@@ -22,6 +22,10 @@ import * as Spinner from './Spinner'
 import * as Pagination from './Pagination'
 import * as SingleRepo from './SingleRepo'
 import * as CreatedRepoView from './CreatedRepoView'
+import * as Bookmark from './Bookmark'
+import * as BookmarkedBuilds from './BookmarkedBuilds'
+import * as Account from './Account'
+import * as PreviousBuilds from './PreviousBuilds'
 import * as ServiceCard from './ServiceCard'
 import * as Profit from './Profit'
 const containers = {
@@ -40,6 +44,10 @@ const containers = {
   Pagination,
   SingleRepo,
   CreatedRepoView,
+  Bookmark,
+  BookmarkedBuilds,
+  PreviousBuilds,
+  Account,
   ServiceCard,
   Profit
 }
