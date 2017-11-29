@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
+import {components, history} from '../components'
 // import { actions } from './index.js'
 
 const mapStateToProps = state => {
@@ -23,21 +24,23 @@ class QuickBuilder extends Component {
       warningText: '',
       working: false,
       progress: '',
+      progBarValue: 0,
       content: '',
+      status: '',
+      repoName: '',
       placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
     }
     this.startCloner = this.startCloner.bind(this)
   }
 
   startCloner (e) {
+    console.log('owner', this.props.currentRepo)
     e.preventDefault()
-    console.log('input', e.target.input.value)
-    this.setState({ working: true })
-    this.setState({ content: `sending request to server` })
+    this.setState({ working: true, content: `sending request to server`, repoName: e.target.input.value })
     const githubToken = this.props.user.githubToken
     const githubUsername = this.props.user.githubUsername
-    const name = this.props.currentRepo.name
-    const owner = this.props.currentRepo.owner.login
+    const {name, owner} = this.props.currentRepo
+
     this.props.user.uid &&
     firebase
       .firestore()
@@ -45,16 +48,18 @@ class QuickBuilder extends Component {
       .doc(this.props.user.uid)
       .collection('repos')
       .doc(e.target.input.value)
-      .onSnapshot(doc =>
+      .onSnapshot(doc => {
         console.log('USER SNAPSHOT', doc.exists && doc.data())
-      )
+        this.setState({content: doc.exists && doc.data().status})
+      })
+
     axios
       .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
         repoName: e.target.input.value,
         githubUsername: githubUsername,
         githubToken: githubToken,
         name: name,
-        owner: owner
+        owner: owner.login
       })
       .then(result => {
         if (result.status === 200) {
@@ -66,11 +71,10 @@ class QuickBuilder extends Component {
       })
   }
 
-  componentDidMount () {
-    console.log(this.props.repoName)
-  }
-
   render () {
+    if (this.state.content === 'DONE') {
+      history.push(`/success/${this.state.repoName}`)
+    }
     return (
       <div className='field' style={{ width: '400px' }}>
         {!this.state.working ? (
@@ -80,7 +84,6 @@ class QuickBuilder extends Component {
                 className='input'
                 type='text'
                 name='input'
-                // defaultValue={this.props.currentRepo.name}
                 placeholder={this.state.placeholder}
               />
             </div>
@@ -94,10 +97,11 @@ class QuickBuilder extends Component {
             )}
           </form>
         ) : (
-          <div style={{ border: 'solid 1px black', padding: '10px' }}>
-            <span style={{ fontWeight: 800 }}>{this.state.content}</span>
+
+          <div >
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}><components.Spinner /></div>
             <br />
-            {this.state.progress}
+            {this.state.content}
             {this.state.warningText && (
               <p className='help'>{this.state.warningText}</p>
             )}

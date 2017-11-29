@@ -12,7 +12,7 @@ import * as Navbar from './Navbar'
 import * as List from './List'
 import * as Builder from './Builder'
 import * as QuickBuilder from './QuickBuilder'
-import * as UserRepo from './UserRepo'
+import * as Success from './Success'
 import * as TestIntegration from './TestIntegration'
 import * as Deploy from './Deploy'
 import * as Dashboard from './Dashboard'
@@ -29,7 +29,7 @@ const containers = {
   List,
   Builder,
   QuickBuilder,
-  UserRepo,
+  Success,
   TestIntegration,
   Deploy,
   Dashboard,
