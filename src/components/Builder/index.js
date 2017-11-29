@@ -10,7 +10,7 @@ const SET_CURRENT_REPO = reduxUtil.defineAction('SET_CURRENT_REPO')
 
 // Initial State
 const initialState = {
-  currentRepo: {}
+  builderRepo: {}
 }
 
 // Make Actions
