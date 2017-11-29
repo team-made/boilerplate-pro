@@ -34,27 +34,25 @@ class QuickBuilder extends Component {
     console.log('input', e.target.input.value)
     this.setState({ working: true })
     this.setState({ content: `sending request to server` })
-    const githubToken = this.props.user.githubToken
-    const githubUsername = this.props.user.githubUsername
-    const name = this.props.currentRepo.name
-    const owner = this.props.currentRepo.owner.login
+    const { githubToken, githubUsername } = this.props.user
+    const { name, owner } = this.props.currentRepo
     this.props.user.uid &&
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(this.props.user.uid)
-      .collection('repos')
-      .doc(e.target.input.value)
-      .onSnapshot(doc =>
-        console.log('USER SNAPSHOT', doc.exists && doc.data())
-      )
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(this.props.user.uid)
+        .collection('repos')
+        .doc(e.target.input.value)
+        .onSnapshot(doc =>
+          console.log('USER SNAPSHOT', doc.exists && doc.data())
+        )
     axios
       .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
         repoName: e.target.input.value,
         githubUsername: githubUsername,
         githubToken: githubToken,
         name: name,
-        owner: owner
+        owner: owner.login
       })
       .then(result => {
         if (result.status === 200) {
