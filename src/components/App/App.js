@@ -73,6 +73,7 @@ class App extends Component {
               component={components.TestIntegration}
             />
             <Route path='/dashboard' component={components.Dashboard} />
+            <Route exact path='/dashboard/account' component={components.Account} />
           </Switch>
         </div>
         <components.Footer />
