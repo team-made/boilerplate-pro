@@ -24,9 +24,10 @@ const mapDispatchToProps = dispatch => {
         .where('owner.login', '==', owner)
         .get()
         .then(snapshot => {
-          snapshot.forEach(doc =>
+          snapshot.forEach(doc => {
             dispatch(actions.setCurrentRepo({ currentRepo: doc.data() }))
-          )
+            console.log('doc', doc.data())
+          })
         })
         .catch(console.error)
     }
