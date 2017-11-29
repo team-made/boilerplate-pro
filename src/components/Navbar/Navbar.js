@@ -57,10 +57,9 @@ const Navbar = props => {
               </a>
               <div className='navbar-dropdown is-right'>
                 <NavLink to='/dashboard/' className='navbar-item'>
-                  Account
+                  User Dashboard
                 </NavLink>
-                <a className='navbar-item'>Bookmarked Repos</a>
-                <a className='navbar-item'>Previous Builds</a>
+
                 <hr className='navbar-divider' />
                 <a className='navbar-item' onClick={signOut}>
                   Sign Out
