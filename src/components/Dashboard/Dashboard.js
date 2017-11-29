@@ -103,11 +103,3 @@ const connectedDashboard = connect(mapStateToProps, mapDispatchToProps)(
 )
 
 export default connectedDashboard
-
-// (this.state.active === 'Account' || this.props.active === 'Account')
-// ? (<Account />)
-// : this.props.userData.userData && this.props.userData.userData.map(userRepo => {
-//   return (
-//     <CreatedRepoView key={userRepo.repoId} userRepo={userRepo} userName={this.props.user.githubUsername} />
-//   )
-// })

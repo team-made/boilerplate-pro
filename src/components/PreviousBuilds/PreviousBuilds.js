@@ -1,27 +1,54 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import firebase from 'firebase'
 import { actions } from './index.js'
-
-const mapStateToProps = (state) => { return {
-  ...state.PreviousBuilds
-} }
-const mapDispatchToProps = (dispatch) => { return {
-  dummyAction: () => {
-    dispatch( actions.dummyAction() )
+import { components } from '../components.js'
+const mapStateToProps = (state) => {
+  return {
+    ...state.PreviousBuilds,
+    ...state.App
   }
-} }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: (uid) => {
+      firebase.firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('repos')
+        .get()
+        .then(querySnapshot => {
+          let userData = Array.from(querySnapshot.docs).map(doc => doc.data())
+          dispatch(
+            actions.userDataAction({
+              userData
+            })
+          )
+        })
+    }
+  }
+}
 class PreviousBuilds extends Component {
-  constructor( props ) {
-    super( props )
+  constructor (props) {
+    super(props)
+    this.state = {
+
+    }
   }
-  render() {
+  render () {
     return (
-      <div>PreviousBuilds -- Stateful w/ Redux</div>
+      <div>
+        {this.props.userData.userData && this.props.userData.userData.map(userRepo => {
+          return (
+            <components.CreatedRepoView key={userRepo.repoId} userRepo={userRepo} userName={this.props.user.githubUsername} />
+          )
+        })}
+
+      </div>
     )
   }
 }
 
-PreviousBuilds = connect(mapStateToProps, mapDispatchToProps)(PreviousBuilds)
+const connectedPreviousBuilds = connect(mapStateToProps, mapDispatchToProps)(PreviousBuilds)
 
-export default PreviousBuilds
+export default connectedPreviousBuilds
