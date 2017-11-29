@@ -23,6 +23,9 @@ import * as Pagination from './Pagination'
 import * as SingleRepo from './SingleRepo'
 import * as CreatedRepoView from './CreatedRepoView'
 import * as Bookmark from './Bookmark'
+import * as BookmarkedBuilds from './BookmarkedBuilds'
+import * as Account from './Account'
+import * as PreviousBuilds from './PreviousBuilds'
 const containers = {
   App,
   Navbar,
@@ -39,7 +42,10 @@ const containers = {
   Pagination,
   SingleRepo,
   CreatedRepoView,
-  Bookmark
+  Bookmark,
+  BookmarkedBuilds,
+  PreviousBuilds,
+  Account
 }
 
 // Grab the reducer and component from each container

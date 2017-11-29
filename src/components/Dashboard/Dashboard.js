@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { actions } from './index.js'
 import './Dashboard.css'
+import Account from '../Account/Account.js'
+import { components } from '../components.js'
 import CreatedRepoView from '../CreatedRepoView/CreatedRepoView.js'
+// import { component } from '../Footer/index';
+
 const mapStateToProps = state => {
   return {
     ...state.Dashboard,
@@ -32,37 +36,61 @@ const mapDispatchToProps = dispatch => {
 }
 
 class Dashboard extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      active: ''
+    }
+    this.handleClick = this.handleClick.bind(this)
+    this.renderContent = this.renderContent.bind(this)
+  }
+  handleClick (e) {
+    this.setState({
+      active: e.target.innerHTML
+    })
+  }
+
   componentDidMount () {
-    console.log('updated', this.props.user.uid)
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.getUser(user.uid)
       }
     })
   }
+  renderContent () {
+    if (this.state.active === 'Bookmarked Boilerplates') {
+      return <components.BookmarkedBuilds />
+    } else if (this.state.active === 'Previous Builds') {
+      return <components.PreviousBuilds />
+    } else {
+      return <components.Account />
+    }
+  }
   render () {
-    console.log(this.props)
+    // after dash nav check state to render components
     return (
       <div className='container'>
         <div className='tabs is-centered'>
           <ul>
-            <li>
-              <a>Account</a>
-            </li>
-            <li className='is-active'>
-              <a>Previous Builds</a>
-            </li>
-            <li>
-              <a>Bookmarked Boilerplates</a>
-            </li>
+            <div className='Account' onClick={this.handleClick}>
+              <li>
+                <a>Account</a>
+              </li>
+            </div>
+            <div className='Prev' onClick={this.handleClick}>
+              <li>
+                <a>Previous Builds</a>
+              </li>
+            </div>
+            <div className='Bookmarks' onClick={this.handleClick}>
+              <li>
+                <a>Bookmarked Boilerplates</a>
+              </li>
+            </div>
           </ul>
         </div>
         <div>
-          {this.props.userData.userData && this.props.userData.userData.map(userRepo => {
-            return (
-              <CreatedRepoView key={userRepo.repoId} userRepo={userRepo} userName={this.props.user.githubUsername} />
-            )
-          })}
+          { this.renderContent() }
         </div>
 
       </div>
@@ -75,3 +103,11 @@ const connectedDashboard = connect(mapStateToProps, mapDispatchToProps)(
 )
 
 export default connectedDashboard
+
+// (this.state.active === 'Account' || this.props.active === 'Account')
+// ? (<Account />)
+// : this.props.userData.userData && this.props.userData.userData.map(userRepo => {
+//   return (
+//     <CreatedRepoView key={userRepo.repoId} userRepo={userRepo} userName={this.props.user.githubUsername} />
+//   )
+// })
