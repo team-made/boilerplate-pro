@@ -73,11 +73,8 @@ class App extends Component {
               path='/testintegration/:repoName'
               component={components.TestIntegration}
             />
-<<<<<<< HEAD
             <Route path='/dashboard' component={components.Dashboard} />
-            <Route exact path='/dashboard/account' component={components.Account} />
-=======
->>>>>>> e517a51ebb912281a198683b8d42b7a5a756af16
+
           </Switch>
         </div>
         <components.Footer />
