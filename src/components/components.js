@@ -22,6 +22,7 @@ import * as Spinner from './Spinner'
 import * as Pagination from './Pagination'
 import * as SingleRepo from './SingleRepo'
 import * as CreatedRepoView from './CreatedRepoView'
+import * as Bookmark from './Bookmark'
 const containers = {
   App,
   Navbar,
@@ -37,7 +38,8 @@ const containers = {
   Spinner,
   Pagination,
   SingleRepo,
-  CreatedRepoView
+  CreatedRepoView,
+  Bookmark
 }
 
 // Grab the reducer and component from each container

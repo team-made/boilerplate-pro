@@ -53,10 +53,7 @@ class Dashboard extends React.Component {
               <a>Previous Builds</a>
             </li>
             <li>
-              <a>Starred Boilerplates</a>
-            </li>
-            <li>
-              <a>Saved Configurations</a>
+              <a>Bookmarked Boilerplates</a>
             </li>
           </ul>
         </div>

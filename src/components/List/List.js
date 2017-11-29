@@ -28,6 +28,9 @@ const mapDispatchToProps = dispatch => {
         })
     },
     getBpsByLang: language => {
+      // this.setState({
+      //   'is-active': language
+      // })
       firebase
         .firestore()
         .collection('boilerplates')
@@ -55,7 +58,14 @@ const mapDispatchToProps = dispatch => {
 
 class List extends React.Component {
   componentDidMount () {
+    console.log(this.props)
     this.props.getTopBoilerplates()
+  }
+  constructor (props) {
+    super(props)
+    this.state = {
+      'is-active': ''
+    }
   }
 
   render () {
@@ -115,7 +125,7 @@ class List extends React.Component {
                 <a onClick={() => this.props.getBpsByLang('JavaScript')}>
                   JavaScript
                 </a>
-                <a onClick={() => this.props.getBpsByLang('CSS')}>CSS</a>
+                <a className={this.state.active === 'CSS' ? 'is-active' : ''} onClick={() => this.props.getBpsByLang('CSS')}>CSS</a>
                 <a onClick={() => this.props.getBpsByLang('PHP')}>PHP</a>
                 <a onClick={() => this.props.getBpsByLang('HTML')}>HTML</a>
                 <a onClick={() => this.props.getBpsByLang('Python')}>Python</a>

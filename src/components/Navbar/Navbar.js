@@ -59,8 +59,8 @@ const Navbar = props => {
                 <NavLink to='/dashboard' className='navbar-item'>
                   Dashboard
                 </NavLink>
-                <a className='navbar-item'>Starred Repos</a>
-                <a className='navbar-item'>Past Builds</a>
+                <a className='navbar-item'>Bookmarked Repos</a>
+                <a className='navbar-item'>Previous Builds</a>
                 <hr className='navbar-divider' />
                 <a className='navbar-item' onClick={signOut}>
                   Sign Out
