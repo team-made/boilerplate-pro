@@ -6,24 +6,23 @@ import reduxHelper from '../../utils/reduxHelper.js'
 const reduxUtil = reduxHelper('Success')
 
 // Action Definitions
-const REPO_DATA = reduxUtil.defineAction('REPO_DATA')
+const SET_CURRENT_REPO = reduxUtil.defineAction('SET_CURRENT_REPO')
 
 // Initial State
 const initialState = {
-  repoData: {}
+  currentRepo: {}
 }
 
 // Make Actions
 const actions = {
-  userRepoAction: reduxUtil.createAction(REPO_DATA)
+  setCurrentRepo: reduxUtil.createAction(SET_CURRENT_REPO)
 }
 
 // Make reducer
 const reducer = reduxUtil.createReducer(
   {
-    [REPO_DATA]: (state, action) => {
+    [SET_CURRENT_REPO]: (state, action) => {
       let newState = { ...state, ...action.payload }
-      newState.dummyState = true
       return newState
     }
   },
