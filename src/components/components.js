@@ -23,6 +23,7 @@ import * as Pagination from './Pagination'
 import * as SingleRepo from './SingleRepo'
 import * as CreatedRepoView from './CreatedRepoView'
 import * as ServiceCard from './ServiceCard'
+import * as Profit from './Profit'
 const containers = {
   App,
   Navbar,
@@ -39,7 +40,8 @@ const containers = {
   Pagination,
   SingleRepo,
   CreatedRepoView,
-  ServiceCard
+  ServiceCard,
+  Profit
 }
 
 // Grab the reducer and component from each container

@@ -76,6 +76,7 @@ class Success extends React.Component {
           path='/success/deployment/:repoName'
           component={components.Deployment}
         />
+        <Route path='/success/profit/:repoName' component={components.Profit} />
       </div>
     )
   }
