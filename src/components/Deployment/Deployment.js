@@ -5,7 +5,7 @@ import { actions } from './index.js'
 
 const mapStateToProps = state => {
   return {
-    ...state.Deploy,
+    ...state.Deployment,
     ...state.Builder,
     ...state.App
   }
@@ -18,12 +18,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const Deploy = props => {
+const Deployment = props => {
   return (
     <div>
       <div className='container'>
         <br />
-        <h1 className='subtitle is-2'>Deploy</h1>
+        <h1 className='subtitle is-2'>Deployment</h1>
         <p>
           Github Link: https://github.com/{props.user.githubUsername}/{
             props.repoName
@@ -43,6 +43,8 @@ const Deploy = props => {
   )
 }
 
-const connectedDeploy = connect(mapStateToProps, mapDispatchToProps)(Deploy)
+const connectedDeployment = connect(mapStateToProps, mapDispatchToProps)(
+  Deployment
+)
 
-export default connectedDeploy
+export default connectedDeployment

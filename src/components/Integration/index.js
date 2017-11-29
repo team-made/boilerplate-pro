@@ -1,5 +1,5 @@
 // Include component
-import component from './TestIntegration.js'
+import component from './Integration.js'
 
 // Export
 export { component }

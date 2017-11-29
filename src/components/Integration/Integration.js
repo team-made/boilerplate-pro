@@ -2,19 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { history } from '../components.js'
+import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
   return {
-    ...state.TestIntegration,
+    ...state.Integration,
     ...state.App,
     ...state.Builder
   }
 }
 
-class TestIntegration extends React.Component {
+class Integration extends React.Component {
   componentDidMount () {
-    if (!this.props.repoName) {
+    if (!this.props.match.params.repoName) {
       history.push('/')
     }
 
@@ -42,7 +42,7 @@ class TestIntegration extends React.Component {
 
   async handleTestInit () {
     const { githubUsername, githubToken } = this.props.user
-    const repoName = this.props.repoName
+    const repoName = this.props.match.params.repoName
     const data = {
       token: githubToken,
       repo: repoName,
@@ -64,6 +64,7 @@ class TestIntegration extends React.Component {
           btnMessage: 'Complete',
           enableBtn: false
         })
+        history.push(`/success/deployment/${repoName}`)
       })
       .catch(err => {
         this.setState({
@@ -84,7 +85,25 @@ class TestIntegration extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className='container' style={{ maxWidth: '600px' }}>
+        <components.ServiceCard
+          name='Travis CI'
+          logo='url'
+          handleSwitchState={state => console.log('state', state)}
+          description='something here'
+        />
+        <components.ServiceCard
+          name='Codeship'
+          logo='url'
+          handleSwitchState={state => console.log('state', state)}
+          description='something here'
+        />
+        <components.ServiceCard
+          name='Slack'
+          logo='url'
+          handleSwitchState={state => console.log('state', state)}
+          description='something here'
+        />
         <button
           type='button'
           disabled={!this.state.enableBtn}
@@ -94,14 +113,11 @@ class TestIntegration extends React.Component {
           {this.state.btnMessage}
         </button>
         <div>{this.state.successMessage}</div>
-        <Link to='/deploy' className='button'>
-          To Deploy Page!
-        </Link>
       </div>
     )
   }
 }
 
-const connectedTestIntegration = connect(mapStateToProps)(TestIntegration)
+const connectedIntegration = connect(mapStateToProps)(Integration)
 
-export default connectedTestIntegration
+export default connectedIntegration

@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import firebase from 'firebase'
 import { actions } from './index.js'
+import { components } from '../components'
 import './Success.css'
 
 // import TestIntegration from '../TestIntegration/TestIntegration.js'
@@ -45,23 +46,19 @@ class Success extends React.Component {
 
   render () {
     return (
-      <div>
-        <div className='user-title'>
-          <h1 className='title is-3'>Success!!</h1>
-          <p>Your app: {this.props.match.params.repoName} has been built!</p>
-          <br />
-          <div>
-            <Link to='/testintegration' className='button'>
-              Would you like to integrate your app with Travis CI?
-            </Link>
-          </div>
-          <br />
-          <div>
-            <Link to='/testintegration' className='button'>
-              or just skip straight to deployment?
-            </Link>
-          </div>
-        </div>
+      <div className='user-title'>
+        <h1 className='title is-3'>Success!!</h1>
+        <p>Your app: {this.props.match.params.repoName} has been built!</p>
+        <br />
+        <p>{this.props.match.params.stage}</p>
+        <Route
+          path='/success/integration/:repoName'
+          component={components.Integration}
+        />
+        <Route
+          path='/success/deployment/:repoName'
+          component={components.Deploy}
+        />
       </div>
     )
   }

@@ -1,9 +1,9 @@
 // Include component
-import component from './Deploy.js'
+import component from './Deployment.js'
 
 // Init reduxHelper
 import reduxHelper from '../../utils/reduxHelper.js'
-const reduxUtil = reduxHelper('Deploy')
+const reduxUtil = reduxHelper('Deployment')
 
 // Action Definitions
 const DUMMY_ACTION = reduxUtil.defineAction('DUMMY_ACTION')
