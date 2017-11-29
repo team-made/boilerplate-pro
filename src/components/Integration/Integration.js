@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
@@ -16,7 +15,7 @@ class Integration extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      btnMessage: 'Skip to Deployment',
+      btnMessage: 'Skip',
       successMessage: '',
       enableBtn: true,
       travis: false,
@@ -72,6 +71,7 @@ class Integration extends React.Component {
     return (
       <div className='container' style={{ maxWidth: '600px' }}>
         <components.ServiceCard
+          active
           name='Travis CI'
           logo='https://cdn1.itcentralstation.com/vendors/logos/original/7d9825fd0e38f5e05831d226afc41d9c_400x400.jpeg?1424349510'
           handleSwitchState={event =>
@@ -98,6 +98,7 @@ class Integration extends React.Component {
         <button
           type='button'
           disabled={!this.state.enableBtn}
+          style={{ margin: '20px' }}
           onClick={
             this.state.travis
               ? this.handleTestInit
@@ -106,7 +107,7 @@ class Integration extends React.Component {
                   `/success/deployment/${this.props.match.params.repoName}`
                 )
           }
-          className='button'
+          className={`button ${this.state.travis ? 'is-primary' : ''}`}
         >
           {this.state.travis ? 'Integrate' : this.state.btnMessage}
         </button>

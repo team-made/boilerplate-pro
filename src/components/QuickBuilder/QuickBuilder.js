@@ -75,7 +75,7 @@ class QuickBuilder extends Component {
 
   render () {
     if (this.state.content === 'DONE') {
-      history.push(`/success/${this.state.repoName}`)
+      history.push(`/success/integration/${this.state.repoName}`)
     }
     return (
       <div className='field' style={{ width: '400px' }}>

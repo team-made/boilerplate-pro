@@ -49,11 +49,14 @@ class SingleRepo extends Component {
   getReadMe () {
     const repo = this.props.currentRepo
     const { githubToken } = this.props.user
-    const config = {
+    let config = {
       headers: {
         Authorization: `token ${githubToken}`,
         Accept: `application/vnd.github.VERSION.html`
       }
+    }
+    if (!githubToken) {
+      config = null
     }
     if (repo.owner && !this.state.readMe) {
       axios
@@ -118,19 +121,19 @@ class SingleRepo extends Component {
           <nav className='panel' style={{ width: '500px' }}>
             <p className='panel-heading'>
               Quick Builder
-              <Link
+              {/* <Link
                 to={`/builder/${repo.owner.login}/${repo.name}`}
                 className='is-link is-outlined'
                 style={{ marginLeft: '53%' }}
               >
                 To Full Builder
-              </Link>
+              </Link> */}
             </p>
             <a href={repo.html_url} className='panel-block'>
               <span className='icon'>
                 <i className='fa fa-github' />
               </span>
-              Github
+              Checkout this project on Github!
             </a>
             <div className='panel-block quickbuild'>
               <components.QuickBuilder />
