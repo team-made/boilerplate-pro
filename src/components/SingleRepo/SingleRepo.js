@@ -110,10 +110,32 @@ class SingleRepo extends Component {
           }}
         >
           <div>
-            <h1 className='title'>{repo.name}</h1>
+            <h1 className='title'>
+              <a
+                href={repo.html_url}
+                style={{ color: 'black', height: '0.5em' }}
+                target='_blank'
+              >
+                <span className='icon'>
+                  <i className='fa fa-github' />
+                </span>
+              </a>{' '}
+              {repo.name}
+            </h1>
             <h2 className='subtitle'>
               by <a href={repo.owner.html_url}>{repo.owner.login}</a>
             </h2>
+            <div style={{ marginBottom: '1em' }}>
+              <span className='tag'>{repo.language}</span>
+              <span className='icon has-text-warning'>
+                <i className='fa fa-star' />
+              </span>
+              {repo.stargazers_count}
+              <span className='icon'>
+                <i className='fa fa-code-fork' />
+              </span>
+              {repo.forks}
+            </div>
             <div className='description-container'>
               <p>{repo.description}</p>
             </div>
@@ -129,12 +151,6 @@ class SingleRepo extends Component {
                 To Full Builder
               </Link> */}
             </p>
-            <a href={repo.html_url} className='panel-block'>
-              <span className='icon'>
-                <i className='fa fa-github' />
-              </span>
-              Checkout this project on Github!
-            </a>
             <div className='panel-block quickbuild'>
               <components.QuickBuilder />
             </div>
@@ -144,6 +160,7 @@ class SingleRepo extends Component {
           className='container'
           style={{ textAlign: 'left', maxWidth: '980px', minWidth: '200px' }}
         >
+          <br />
           <h2 className='subtitle'>Readme</h2>
           <div
             className='markdown-body'

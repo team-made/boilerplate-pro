@@ -27,6 +27,7 @@ import * as BookmarkedBuilds from './BookmarkedBuilds'
 import * as Account from './Account'
 import * as PreviousBuilds from './PreviousBuilds'
 import * as ServiceCard from './ServiceCard'
+import * as Profit from './Profit'
 const containers = {
   App,
   Navbar,
@@ -47,7 +48,8 @@ const containers = {
   BookmarkedBuilds,
   PreviousBuilds,
   Account,
-  ServiceCard
+  ServiceCard,
+  Profit
 }
 
 // Grab the reducer and component from each container
