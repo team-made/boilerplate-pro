@@ -56,7 +56,8 @@ class QuickBuilder extends Component {
           this.setState({ content: doc.exists && doc.data().status })
         })
     axios
-      .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
+      // .post('https://boilerplate-pro-server.herokuapp.com/github/hyperClone', {
+      .post('http://localhost:9090/github/hyperClone', {
         repoName: e.target.input.value,
         githubUsername: githubUsername,
         githubToken: githubToken,
@@ -75,7 +76,7 @@ class QuickBuilder extends Component {
 
   render () {
     if (this.state.content === 'DONE') {
-      history.push(`/success/${this.state.repoName}`)
+      history.push(`/success/integration/${this.state.repoName}`)
     }
     return (
       <div className='field' style={{ width: '400px' }}>
