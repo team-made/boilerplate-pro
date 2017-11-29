@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
+import { components, history } from '../components'
 // import { actions } from './index.js'
 
 const mapStateToProps = state => {
@@ -23,8 +24,10 @@ class QuickBuilder extends Component {
       warningText: '',
       working: false,
       progress: '',
+      progBarValue: 0,
       content: '',
       status: '',
+      repoName: '',
       placeholder: `Repo Name (ex. '${this.props.currentRepo.name}')`
     }
     this.startCloner = this.startCloner.bind(this)
@@ -33,10 +36,14 @@ class QuickBuilder extends Component {
   startCloner (e) {
     console.log('owner', this.props.currentRepo)
     e.preventDefault()
-    this.setState({ working: true })
-    this.setState({ content: `sending request to server` })
+    this.setState({
+      working: true,
+      content: `sending request to server`,
+      repoName: e.target.input.value
+    })
     const { githubToken, githubUsername } = this.props.user
     const { name, owner } = this.props.currentRepo
+
     this.props.user.uid &&
       firebase
         .firestore()
@@ -66,11 +73,10 @@ class QuickBuilder extends Component {
       })
   }
 
-  componentDidMount () {
-    console.log('props', this.props)
-  }
-
   render () {
+    if (this.state.content === 'DONE') {
+      history.push(`/success/${this.state.repoName}`)
+    }
     return (
       <div className='field' style={{ width: '400px' }}>
         {!this.state.working ? (
@@ -93,8 +99,17 @@ class QuickBuilder extends Component {
             )}
           </form>
         ) : (
-          <div style={{ border: 'solid 1px black', padding: '10px' }}>
-            <span style={{ fontWeight: 800 }}>{this.state.content}</span>
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+              }}
+            >
+              <components.Spinner />
+            </div>
             <br />
             {this.state.content}
             {this.state.warningText && (
