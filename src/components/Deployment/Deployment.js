@@ -80,16 +80,15 @@ class Deployment extends React.Component {
               Back to Integration
             </Link>
             {this.state.heroku ? (
-              <form
+              <a
                 target='_blank'
-                action={`https://www.heroku.com/deploy/?template=https://github.com/${
+                href={`https://www.heroku.com/deploy/?template=https://github.com/${
                   this.props.user.githubUsername
                 }/${this.props.match.params.repoName}`}
+                className='button is-primary'
               >
-                <button type='submit' className='button is-primary'>
-                  <span>Deploy</span>
-                </button>
-              </form>
+                <span>Deploy</span>
+              </a>
             ) : (
               <button
                 className='button'
