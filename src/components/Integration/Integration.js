@@ -16,7 +16,7 @@ class Integration extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      btnMessage: 'Skip to Deployment',
+      btnMessage: 'Skip',
       successMessage: '',
       enableBtn: true,
       travis: false,
@@ -106,7 +106,7 @@ class Integration extends React.Component {
                   `/success/deployment/${this.props.match.params.repoName}`
                 )
           }
-          className='button'
+          className={`button ${this.state.travis ? 'is-primary' : ''}`}
         >
           {this.state.travis ? 'Integrate' : this.state.btnMessage}
         </button>
