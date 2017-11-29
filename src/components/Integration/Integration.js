@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import { history, components } from '../components.js'
 
 const mapStateToProps = state => {
@@ -99,6 +98,7 @@ class Integration extends React.Component {
         <button
           type='button'
           disabled={!this.state.enableBtn}
+          style={{ margin: '20px' }}
           onClick={
             this.state.travis
               ? this.handleTestInit

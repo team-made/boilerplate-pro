@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { history, components } from '../components'
 import { actions } from './index.js'
 
@@ -65,29 +66,43 @@ class Deployment extends React.Component {
             }
             description='DigitalOcean is a simple and robust cloud computing platform, designed for developers.'
           />
-          {this.state.heroku ? (
-            <form
-              target='_blank'
-              action={`https://www.heroku.com/deploy/?template=https://github.com/${
-                this.props.user.githubUsername
-              }/${this.props.match.params.repoName}`}
-            >
-              <button type='submit' className='button is-primary'>
-                <span>Deploy</span>
-              </button>
-            </form>
-          ) : (
-            <button
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              margin: '20px'
+            }}
+          >
+            <Link
+              to={`/success/integration/${this.props.match.params.repoName}`}
               className='button'
-              onClick={() =>
-                history.push(
-                  `/success/profit/${this.props.match.params.repoName}`
-                )
-              }
             >
-              Skip
-            </button>
-          )}
+              Back to Integration
+            </Link>
+            {this.state.heroku ? (
+              <form
+                target='_blank'
+                action={`https://www.heroku.com/deploy/?template=https://github.com/${
+                  this.props.user.githubUsername
+                }/${this.props.match.params.repoName}`}
+              >
+                <button type='submit' className='button is-primary'>
+                  <span>Deploy</span>
+                </button>
+              </form>
+            ) : (
+              <button
+                className='button'
+                onClick={() =>
+                  history.push(
+                    `/success/profit/${this.props.match.params.repoName}`
+                  )
+                }
+              >
+                Skip
+              </button>
+            )}
+          </div>
         </div>
       </div>
     )
