@@ -71,6 +71,7 @@ class App extends Component {
               path='/success/:stage/:repoName'
               component={components.Success}
             />
+            <Route path='/dashboard' component={components.Dashboard} />
           </Switch>
         </div>
         <components.Footer />
