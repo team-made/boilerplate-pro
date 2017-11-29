@@ -49,15 +49,31 @@ class Success extends React.Component {
       <div className='user-title'>
         <h1 className='title is-3'>Success!!</h1>
         <p>Your app: {this.props.match.params.repoName} has been built!</p>
+        <a
+          target='_blank'
+          href={`https://www.github.com/${this.props.user.githubUsername}/${
+            this.props.match.params.repoName
+          }`}
+        >
+          www.github.com/{this.props.user.githubUsername}/{
+            this.props.match.params.repoName
+          }
+        </a>
         <br />
-        <p>{this.props.match.params.stage}</p>
+        <ul className='progressbar'>
+          <li className='active'>Github Repo Created</li>
+          <li>Integration</li>
+          <li>Deployment</li>
+          <li>Profit</li>
+        </ul>
+        <h3 className='subtitle'>{this.props.match.params.stage}</h3>
         <Route
           path='/success/integration/:repoName'
           component={components.Integration}
         />
         <Route
           path='/success/deployment/:repoName'
-          component={components.Deploy}
+          component={components.Deployment}
         />
       </div>
     )
