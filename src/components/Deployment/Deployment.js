@@ -85,6 +85,11 @@ class Deployment extends React.Component {
                 href={`https://www.heroku.com/deploy/?template=https://github.com/${
                   this.props.user.githubUsername
                 }/${this.props.match.params.repoName}`}
+                onClick={() =>
+                  history.push(
+                    `/success/profit/${this.props.match.params.repoName}`
+                  )
+                }
                 className='button is-primary'
               >
                 <span>Deploy</span>

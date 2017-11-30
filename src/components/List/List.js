@@ -41,11 +41,19 @@ const mapDispatchToProps = dispatch => {
     },
     getBpsByName: (evt, index) => {
       evt.preventDefault()
-      console.log(evt.target.search.value)
       index.search({ query: evt.target.search.value }, (err, content) => {
         if (err) {
           console.error(err)
           return
+        }
+        if (content.hits.length === 0) {
+          content.hits[0] = {
+            name: 'no results',
+            stargazers_count: 1337,
+            owner: {
+              login: '...but we are adding more boilerplates every day!'
+            }
+          }
         }
         dispatch(actions.setBoilerplates({ boilerplates: content.hits }))
       })
