@@ -95,7 +95,8 @@ class Integration extends React.Component {
           }
           description={`Slack is where work flows. It's where the people you need, the information you share, and the tools you use come together to get things done.`}
         />
-        <button
+
+        {!this.state.enableBtn ? (<div style={{margin: '30px 0'}}><components.Spinner /></div>) : (<button
           type='button'
           disabled={!this.state.enableBtn}
           style={{ margin: '20px' }}
@@ -110,7 +111,8 @@ class Integration extends React.Component {
           className={`button ${this.state.travis ? 'is-primary' : ''}`}
         >
           {this.state.travis ? 'Integrate' : this.state.btnMessage}
-        </button>
+        </button>)}
+
         <div>{this.state.successMessage}</div>
       </div>
     )
