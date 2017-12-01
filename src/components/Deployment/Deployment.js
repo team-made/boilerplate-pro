@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import { history, components } from '../components'
 import { actions } from './index.js'
 
+import heroku from '../../assets/heroku.png'
+import firebase from '../../assets/firebase.png'
+import aws from '../../assets/aws.png'
+import digitalOcean from '../../assets/digitalOcean.png'
+
 const mapStateToProps = state => {
   return {
     ...state.Deployment,
@@ -38,7 +43,7 @@ class Deployment extends React.Component {
           <components.ServiceCard
             active
             name='Heroku'
-            logo='https://ludu-assets.s3.amazonaws.com/lesson-icons/KOLuHYOrXW8T324wQ4OM'
+            logo={heroku}
             handleSwitchState={event =>
               this.setState({ heroku: !this.state.heroku })
             }
@@ -46,7 +51,7 @@ class Deployment extends React.Component {
           />
           <components.ServiceCard
             name='Firebase'
-            logo='https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png'
+            logo={firebase}
             handleSwitchState={event =>
               this.setState({ firebase: !this.state.firebase })
             }
@@ -54,13 +59,13 @@ class Deployment extends React.Component {
           />
           <components.ServiceCard
             name='AWS'
-            logo='https://pbs.twimg.com/profile_images/907652118688829440/FrshWMKt.jpg'
+            logo={aws}
             handleSwitchState={event => this.setState({ aws: !this.state.aws })}
             description='Amazon Web Services offers reliable, scalable, and inexpensive cloud computing services. Free to join, pay only for what you use.'
           />
           <components.ServiceCard
             name='Digital Ocean'
-            logo='https://www.digitalocean.com/assets/media/logos-badges/png/DO_Logo_Vertical_Blue-6321464d.png'
+            logo={digitalOcean}
             handleSwitchState={event =>
               this.setState({ digitalOcean: !this.state.digitalOcean })
             }
