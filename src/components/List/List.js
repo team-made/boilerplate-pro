@@ -62,11 +62,21 @@ const mapDispatchToProps = dispatch => {
 }
 
 class List extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {currentActive: 'all'}
+    this.handleClass = this.handleClass.bind(this)
+  }
   componentDidMount () {
     this.props.getTopBoilerplates()
   }
 
+  handleClass (e) {
+    this.setState({currentActive: e.target.name})
+  }
+
   render () {
+    this.state.currentActive === 'all' ? this.props.getTopBoilerplates() : this.props.getBpsByLang(this.state.currentActive)
     return (
       <div>
         <section
@@ -115,22 +125,22 @@ class List extends React.Component {
               </div>
               <p className='panel-tabs'>
                 <a
-                  className='is-active'
-                  onClick={() => this.props.getTopBoilerplates()}
-                >
+                  className={this.state.currentActive === 'all' ? 'is-active' : ''}
+                  name='all'
+                  onClick={this.handleClass}>
                   all
                 </a>
-                <a onClick={() => this.props.getBpsByLang('JavaScript')}>
+                <a name='JavaScript' className={this.state.currentActive === 'JavaScript' ? 'is-active' : ''} onClick={this.handleClass}>
                   JavaScript
                 </a>
-                <a onClick={() => this.props.getBpsByLang('CSS')}>CSS</a>
-                <a onClick={() => this.props.getBpsByLang('PHP')}>PHP</a>
-                <a onClick={() => this.props.getBpsByLang('HTML')}>HTML</a>
-                <a onClick={() => this.props.getBpsByLang('Python')}>Python</a>
-                <a onClick={() => this.props.getBpsByLang('TypeScript')}>
+                <a name='CSS' className={this.state.currentActive === 'CSS' ? 'is-active' : ''} onClick={this.handleClass}>CSS</a>
+                <a name='PHP' className={this.state.currentActive === 'PHP' ? 'is-active' : ''} onClick={this.handleClass}>PHP</a>
+                <a name='HTML' className={this.state.currentActive === 'HTML' ? 'is-active' : ''} onClick={this.handleClass}>HTML</a>
+                <a name='Python' className={this.state.currentActive === 'Python' ? 'is-active' : ''} onClick={this.handleClass}>Python</a>
+                <a name='TypeScript' className={this.state.currentActive === 'TypeScript' ? 'is-active' : ''} onClick={this.handleClass}>
                   TypeScript
                 </a>
-                <a onClick={() => this.props.getBpsByLang('Ruby')}>Ruby</a>
+                <a name='Ruby' className={this.state.currentActive === 'Ruby' ? 'is-active' : ''} onClick={this.handleClass}>Ruby</a>
               </p>
               <div className='panel-block'>
                 <span>
