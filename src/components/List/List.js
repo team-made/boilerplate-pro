@@ -64,9 +64,7 @@ const mapDispatchToProps = dispatch => {
 class List extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      currentActive: 'all'
-    }
+    this.state = {currentActive: 'all'}
     this.handleClass = this.handleClass.bind(this)
   }
   componentDidMount () {
@@ -75,8 +73,6 @@ class List extends React.Component {
 
   handleClass (e) {
     this.setState({currentActive: e.target.name})
-
-    // console.log('props', this.props)
   }
 
   render () {
