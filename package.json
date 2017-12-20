@@ -4,6 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@firebase/webchannel-wrapper": "^0.2.5",
     "algoliasearch": "^3.24.6",
     "axios": "^0.17.1",
     "bulma": "^0.6.1",

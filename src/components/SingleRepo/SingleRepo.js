@@ -135,6 +135,7 @@ class SingleRepo extends Component {
                 <i className='fa fa-code-fork' />
               </span>
               {repo.forks}
+              <components.Bookmark />
             </div>
             <div className='description-container'>
               <p>{repo.description}</p>
