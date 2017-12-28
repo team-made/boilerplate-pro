@@ -18,33 +18,39 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    makeBookmark: () => {
-      dispatch(actions.userBookmarkAction())
-    },
+    // makeBookmark: () => {
+    //   dispatch(actions.userBookmarkAction())
+    // },
     getBookmark: (userName, currentRepo) => {
+      // dispatch(actions.findBookmark({
+      //   isBookmarked: true
+      // }))
       return firebase
         .firestore()
         .collection('users')
         .where('githubUsername', '==', userName)
         .collection('bookmarkedRepos')
-        .where('name', '==', currentRepo.name)
+        .then(console.log('got here'))
+        .doc(currentRepo.name)
         .get()
-        .then(snapshot => {
-          console.log(snapshot)
-          snapshot.forEach(doc => {
-            if (doc) {
-              dispatch(actions.getBookmark({
+        // get the document that is named after a repo
+        .then(
+          doc => {
+            if (doc.exists) {
+              console.log('it exists')
+              dispatch(actions.findBookmark({
                 isBookmarked: true
               }))
             } else {
-              dispatch(actions.getBookmark({
+              console.log('nope')
+              dispatch(actions.findBookmark({
                 isBookmarked: false
               }))
             }
-          })
-        })
+          }
+        )
         .catch(console.error)
-        // currentRepo and userName are passed in.
+      // currentRepo and userName are passed in.
     }
   }
 }
@@ -62,7 +68,7 @@ class Bookmark extends Component {
     )
   }
   render () {
-    console.log(this.state)
+    console.log(this.props)
     return (
       <i className='fa fa-bookmark' style={{ padding: '7px' }} />
     )

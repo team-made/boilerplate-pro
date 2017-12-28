@@ -12,7 +12,7 @@ const FIND_BOOKMARK = reduxUtil.defineAction('FIND_BOOKMARK')
 // Initial State
 const initialState = {
   bookmark: null,
-  isBookmarked: false
+  isBookmarked: null
 }
 
 // Make Actions
@@ -30,8 +30,7 @@ const reducer = reduxUtil.createReducer(
       return newState
     },
     [FIND_BOOKMARK]: (state, action) => {
-      let newState = { isBookmarked: action.payload }
-      newState.dummyState = true
+      let newState = { ...state, ...action.payload }
       return newState
     }
   },
