@@ -13,6 +13,7 @@
     "github-markdown-css": "^2.9.0",
     "grpc": "^1.7.1",
     "history": "^4.7.2",
+    "marked": "^0.3.12",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-firebaseui": "^1.0.6",
@@ -23,7 +24,6 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "showdown": "^1.8.2",
     "travis-ci": "^2.1.1"
   },
   "scripts": {

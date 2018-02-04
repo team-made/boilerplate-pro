@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import axios from 'axios'
+import marked from 'marked'
+
 import { actions } from './index.js'
 import { components } from '../components'
 import './SingleRepo.css'
@@ -25,8 +27,10 @@ const mapDispatchToProps = dispatch => {
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            dispatch(actions.setCurrentRepo({ currentRepo: doc.data() }))
-            console.log('doc', doc.data())
+            const data = doc.data()
+            dispatch(
+              actions.setCurrentRepo({ currentRepo: data, readMe: data.readMe })
+            )
           })
         })
         .catch(console.error)
@@ -35,57 +39,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 class SingleRepo extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      readMe: null
-    }
-    this.createMarkup = this.createMarkup.bind(this)
-    this.getReadMe = this.getReadMe.bind(this)
-  }
-  createMarkup () {
-    return { __html: this.state.readMe }
-  }
-  getReadMe () {
-    const repo = this.props.currentRepo
-    const { githubToken } = this.props.user
-    let config = {
-      headers: {
-        Authorization: `token ${githubToken}`,
-        Accept: `application/vnd.github.VERSION.html`
-      }
-    }
-    if (!githubToken) {
-      config = null
-    }
-    if (repo.owner && !this.state.readMe) {
-      axios
-        .get(
-          `https://api.github.com/repos/${repo.owner.login}/${
-            repo.name
-          }/readme`,
-          config
-        )
-        .then(result => {
-          this.setState({
-            readMe: result.data
-          })
-        })
-        .catch(err => console.error(err))
-    }
-  }
-
-  componentDidUpdate () {
-    this.getReadMe()
-  }
-
   componentDidMount () {
-    this.props
-      .setCurrentRepo(
-        this.props.match.params.name,
-        this.props.match.params.owner
-      )
-      .then(() => this.getReadMe())
+    this.props.setCurrentRepo(
+      this.props.match.params.name,
+      this.props.match.params.owner
+    )
   }
   render () {
     const repo = this.props.currentRepo
@@ -142,16 +100,7 @@ class SingleRepo extends Component {
             </div>
           </div>
           <nav className='panel' style={{ width: '500px' }}>
-            <p className='panel-heading'>
-              Quick Builder
-              {/* <Link
-                to={`/builder/${repo.owner.login}/${repo.name}`}
-                className='is-link is-outlined'
-                style={{ marginLeft: '53%' }}
-              >
-                To Full Builder
-              </Link> */}
-            </p>
+            <p className='panel-heading'>Quick Builder</p>
             <div className='panel-block quickbuild'>
               <components.QuickBuilder />
             </div>
@@ -169,7 +118,9 @@ class SingleRepo extends Component {
               padding: '40px',
               border: '1px solid #e3dde4'
             }}
-            dangerouslySetInnerHTML={this.createMarkup()}
+            dangerouslySetInnerHTML={{
+              __html: marked(this.props.currentRepo.readMe)
+            }}
           />
         </div>
       </section>
