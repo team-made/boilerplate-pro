@@ -3,19 +3,23 @@ import { connect } from 'react-redux'
 
 import { actions } from './index.js'
 
-const mapStateToProps = (state) => { return {
-  ...state.BookmarkedBuilds
-} }
-const mapDispatchToProps = (dispatch) => { return {
-  dummyAction: () => {
-    dispatch( actions.dummyAction() )
+const mapStateToProps = (state) => {
+  return {
+    ...state.BookmarkedBuilds
   }
-} }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dummyAction: () => {
+      dispatch(actions.dummyAction())
+    }
+  }
+}
 class BookmarkedBuilds extends Component {
-  constructor( props ) {
-    super( props )
+  constructor (props) {
+    super(props)
   }
-  render() {
+  render () {
     return (
       <div>BookmarkedBuilds -- Stateful w/ Redux</div>
     )

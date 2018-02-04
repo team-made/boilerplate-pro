@@ -22,35 +22,27 @@ const mapDispatchToProps = dispatch => {
     //   dispatch(actions.userBookmarkAction())
     // },
     getBookmark: (userName, currentRepo) => {
-      // dispatch(actions.findBookmark({
-      //   isBookmarked: true
-      // }))
       return firebase
         .firestore()
         .collection('users')
-        .where('githubUsername', '==', userName)
-        .collection('bookmarkedRepos')
-        .then(console.log('got here'))
-        .doc(currentRepo.name)
+        .doc(userName)
         .get()
-        // get the document that is named after a repo
-        .then(
-          doc => {
-            if (doc.exists) {
-              console.log('it exists')
-              dispatch(actions.findBookmark({
-                isBookmarked: true
-              }))
-            } else {
-              console.log('nope')
-              dispatch(actions.findBookmark({
-                isBookmarked: false
-              }))
-            }
-          }
-        )
-        .catch(console.error)
-      // currentRepo and userName are passed in.
+        .then(doc => {
+          console.log(doc.exists)
+        })
+        // .collection('bookmarkedRepos')
+        // .doc(currentRepo.name)
+        // .get()
+        // .then(
+        //   doc => {
+        //     if (doc.exists) {
+        //       console.log(doc.data, 'it exists')
+        //     } else {
+        //       console.log('dont exist', currentRepo.name)
+        //     }
+        //   })
+
+        .catch(err => { console.log(err) })
     }
   }
 }
@@ -61,9 +53,10 @@ class Bookmark extends Component {
       repo: null
     }
   }
-  componentDidMount () {
+
+  componentDidUpdate () {
     this.props.getBookmark(
-      this.props.user,
+      this.props.user.githubUsername,
       this.props.currentRepo
     )
   }
