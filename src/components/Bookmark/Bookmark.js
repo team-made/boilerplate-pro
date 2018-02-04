@@ -9,6 +9,7 @@ import { actions } from './index.js'
 // 2. if currentRepo does exist on the user's list, render fa-bookmark else render fa-bookmark-o
 // 3. onClick the bookmark button should add currentRepo reference to user's db/firestore/whatever or remove it, depending
 // 4. this should also set the state which will cause a re-render.
+
 const mapStateToProps = (state) => {
   return {
     ...state.Bookmark,
@@ -21,26 +22,24 @@ const mapDispatchToProps = dispatch => {
     // makeBookmark: () => {
     //   dispatch(actions.userBookmarkAction())
     // },
-    getBookmark: (userName, currentRepo) => {
-      return firebase
+    getBookmark: (uid, currentRepo) => {
+      firebase
         .firestore()
         .collection('users')
-        .doc(userName)
+        .doc(uid)
+        .collection('bookmarkedRepos')
+        .doc(currentRepo.name)
         .get()
-        .then(doc => {
-          console.log(doc.exists)
-        })
-        // .collection('bookmarkedRepos')
-        // .doc(currentRepo.name)
-        // .get()
-        // .then(
-        //   doc => {
-        //     if (doc.exists) {
-        //       console.log(doc.data, 'it exists')
-        //     } else {
-        //       console.log('dont exist', currentRepo.name)
-        //     }
-        //   })
+        .then(
+          doc => {
+            if (doc.exists) {
+              dispatch(
+                actions.findBookmark({isBookmarked: true})
+              )
+            } else {
+              actions.findBookmark({isBookmarked: false})
+            }
+          })
 
         .catch(err => { console.log(err) })
     }
@@ -54,13 +53,10 @@ class Bookmark extends Component {
     }
   }
 
-  componentDidUpdate () {
-    this.props.getBookmark(
-      this.props.user.githubUsername,
-      this.props.currentRepo
-    )
-  }
   render () {
+    if (this.props.user.uid && this.props.isBookmarked === null) {
+      this.props.getBookmark(this.props.user.uid, this.props.currentRepo)
+    }
     console.log(this.props)
     return (
       <i className='fa fa-bookmark' style={{ padding: '7px' }} />

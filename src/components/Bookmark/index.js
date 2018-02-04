@@ -31,6 +31,7 @@ const reducer = reduxUtil.createReducer(
     },
     [FIND_BOOKMARK]: (state, action) => {
       let newState = { ...state, ...action.payload }
+      newState.dummyState = true
       return newState
     }
   },
