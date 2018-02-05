@@ -19,47 +19,51 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    // makeBookmark: () => {
-    //   dispatch(actions.userBookmarkAction())
-    // },
-    getBookmark: (uid, currentRepo) => {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(uid)
-        .collection('bookmarkedRepos')
-        .doc(currentRepo.name)
-        .get()
-        .then(
-          doc => {
-            if (doc.exists) {
-              dispatch(
-                actions.findBookmark({isBookmarked: true})
-              )
-            } else {
-              actions.findBookmark({isBookmarked: false})
-            }
-          })
 
-        .catch(err => { console.log(err) })
-    }
   }
 }
 class Bookmark extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      repo: null
+      repo: null,
+      isBookmarked: null
+    }
+    this.bookMarkCheck = this.bookMarkCheck.bind(this)
+    this.isBookmarked = this.isBookmarked.bind(this)
+  }
+  bookMarkCheck (doc) {
+    console.log(doc)
+    if (doc.exists) {
+      this.setState({isBookmarked: true})
+    } else {
+      this.setState({isBookmarked: false})
     }
   }
 
+  isBookmarked () {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(this.props.user.uid)
+      .collection('bookmarkedRepos')
+      .doc(this.props.currentRepo.name)
+      .get()
+      .then(
+        doc => {
+          this.bookMarkCheck(doc)
+        }
+      )
+  }
+
   render () {
-    if (this.props.user.uid && this.props.isBookmarked === null) {
-      this.props.getBookmark(this.props.user.uid, this.props.currentRepo)
+    if (this.props.user.uid && this.state.isBookmarked === null) {
+      this.isBookmarked()
     }
-    console.log(this.props)
+    console.log(this.state)
     return (
-      <i className='fa fa-bookmark' style={{ padding: '7px' }} />
+      this.state.isBookmarked
+        ? <i className='fa fa-bookmark' style={{ padding: '7px' }} /> : <i className='fa fa-bookmark-o' style={{ padding: '7px' }} />
     )
   }
 }
