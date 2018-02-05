@@ -51,6 +51,7 @@ class Bookmark extends Component {
       .get()
       .then(
         doc => {
+          console.log('hey')
           this.bookMarkCheck(doc)
         }
       )
@@ -60,7 +61,6 @@ class Bookmark extends Component {
     if (this.props.user.uid && this.state.isBookmarked === null) {
       this.isBookmarked()
     }
-    console.log(this.state)
     return (
       this.state.isBookmarked
         ? <i className='fa fa-bookmark' style={{ padding: '7px' }} /> : <i className='fa fa-bookmark-o' style={{ padding: '7px' }} />
