@@ -71,12 +71,16 @@ class List extends React.Component {
     this.props.getTopBoilerplates()
   }
 
-  handleClass (e) {
-    this.setState({currentActive: e.target.name})
+  async handleClass (e) {
+    await this.setState({currentActive: e.target.name})
+    if (this.state.currentActive === 'all') {
+      this.props.getTopBoilerplates()
+    } else {
+      this.props.getBpsByLang(this.state.currentActive)
+    }
   }
 
   render () {
-    this.state.currentActive === 'all' ? this.props.getTopBoilerplates() : this.props.getBpsByLang(this.state.currentActive)
     return (
       <div>
         <section
