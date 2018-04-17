@@ -12,7 +12,7 @@ const ServiceCard = ({
     <article className='media'>
       <figure className='media-left'>
         <p className='image is-64x64'>
-          <img src={logo} />
+          <img alt='' src={logo} />
         </p>
       </figure>
       <div className='media-content'>

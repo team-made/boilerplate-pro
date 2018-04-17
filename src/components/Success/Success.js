@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import firebase from 'firebase'
 import { actions } from './index.js'
 import { components } from '../components'
@@ -52,9 +52,9 @@ class Success extends React.Component {
         <p>Your app: {repoName} has been built!</p>
         <a
           target='_blank'
-          href={`https://www.github.com/${this.props.user.githubUsername}/${
-            repoName
-          }`}
+          href={`https://www.github.com/${
+            this.props.user.githubUsername
+          }/${repoName}`}
         >
           www.github.com/{this.props.user.githubUsername}/{repoName}
         </a>

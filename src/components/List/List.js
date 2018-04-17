@@ -64,20 +64,22 @@ const mapDispatchToProps = dispatch => {
 class List extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {currentActive: 'all'}
-    this.handleClass = this.handleClass.bind(this)
+    this.state = {
+      filter: 'all'
+    }
+    this.changeActiveCategory = this.changeActiveCategory.bind(this)
   }
   componentDidMount () {
     this.props.getTopBoilerplates()
   }
 
-  async handleClass (e) {
-    await this.setState({currentActive: e.target.name})
-    if (this.state.currentActive === 'all') {
+  changeActiveCategory (e) {
+    if (e.target.name === 'all') {
       this.props.getTopBoilerplates()
     } else {
-      this.props.getBpsByLang(this.state.currentActive)
+      this.props.getBpsByLang(e.target.name)
     }
+    this.setState({ filter: e.target.name })
   }
 
   render () {
@@ -129,22 +131,65 @@ class List extends React.Component {
               </div>
               <p className='panel-tabs'>
                 <a
-                  className={this.state.currentActive === 'all' ? 'is-active' : ''}
                   name='all'
-                  onClick={this.handleClass}>
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'all' ? 'is-active' : ''}
+                >
                   all
                 </a>
-                <a name='JavaScript' className={this.state.currentActive === 'JavaScript' ? 'is-active' : ''} onClick={this.handleClass}>
+                <a
+                  name='JavaScript'
+                  onClick={this.changeActiveCategory}
+                  className={
+                    this.state.filter === 'JavaScript' ? 'is-active' : ''
+                  }
+                >
                   JavaScript
                 </a>
-                <a name='CSS' className={this.state.currentActive === 'CSS' ? 'is-active' : ''} onClick={this.handleClass}>CSS</a>
-                <a name='PHP' className={this.state.currentActive === 'PHP' ? 'is-active' : ''} onClick={this.handleClass}>PHP</a>
-                <a name='HTML' className={this.state.currentActive === 'HTML' ? 'is-active' : ''} onClick={this.handleClass}>HTML</a>
-                <a name='Python' className={this.state.currentActive === 'Python' ? 'is-active' : ''} onClick={this.handleClass}>Python</a>
-                <a name='TypeScript' className={this.state.currentActive === 'TypeScript' ? 'is-active' : ''} onClick={this.handleClass}>
+                <a
+                  name='CSS'
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'CSS' ? 'is-active' : ''}
+                >
+                  CSS
+                </a>
+                <a
+                  name='PHP'
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'PHP' ? 'is-active' : ''}
+                >
+                  PHP
+                </a>
+                <a
+                  name='HTML'
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'HTML' ? 'is-active' : ''}
+                >
+                  HTML
+                </a>
+                <a
+                  name='Python'
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'Python' ? 'is-active' : ''}
+                >
+                  Python
+                </a>
+                <a
+                  name='TypeScript'
+                  onClick={this.changeActiveCategory}
+                  className={
+                    this.state.filter === 'TypeScript' ? 'is-active' : ''
+                  }
+                >
                   TypeScript
                 </a>
-                <a name='Ruby' className={this.state.currentActive === 'Ruby' ? 'is-active' : ''} onClick={this.handleClass}>Ruby</a>
+                <a
+                  name='Ruby'
+                  onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'Ruby' ? 'is-active' : ''}
+                >
+                  Ruby
+                </a>
               </p>
               <div className='panel-block'>
                 <span>
