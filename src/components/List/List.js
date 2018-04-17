@@ -73,6 +73,7 @@ class List extends React.Component {
     this.props.getTopBoilerplates()
   }
 
+<<<<<<< HEAD
   changeActiveCategory (e) {
     if (e.target.name === 'all') {
       this.props.getTopBoilerplates()
@@ -80,6 +81,15 @@ class List extends React.Component {
       this.props.getBpsByLang(e.target.name)
     }
     this.setState({ currentActive: e.target.name })
+=======
+  async handleClass (e) {
+    await this.setState({currentActive: e.target.name})
+    if (this.state.currentActive === 'all') {
+      this.props.getTopBoilerplates()
+    } else {
+      this.props.getBpsByLang(this.state.currentActive)
+    }
+>>>>>>> master
   }
 
   render () {
