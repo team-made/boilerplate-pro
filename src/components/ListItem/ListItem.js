@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ListItem = ({ boilerplate }) => {
+  console.log('boilerplate', boilerplate)
   return (
     <Link to={`/repo/${boilerplate.full_name}`} className='panel-block'>
       <span className='panel-icon'>
@@ -17,10 +18,15 @@ const ListItem = ({ boilerplate }) => {
           <i className='fa fa-star' />
         </span>
         <span className='tags'>
-          <span className='tag is-light'>React</span>
-          <span className='tag is-light'>Redux</span>
-          <span className='tag is-light'>Other</span>
-          <span className='tag is-light'>Etc</span>
+          <span className='tag is-light'>...</span>
+          {boilerplate.uses &&
+            boilerplate.uses.dependencies &&
+            Object.keys(boilerplate.uses.dependencies)
+              .slice(0, 3)
+              .map(dep => <span className='tag is-light'>{dep}</span>)}
+          {boilerplate.license && (
+            <span className='tag is-info'>{boilerplate.license.name}</span>
+          )}
           {boilerplate.language && (
             <span className='tag is-primary'>{boilerplate.language}</span>
           )}
