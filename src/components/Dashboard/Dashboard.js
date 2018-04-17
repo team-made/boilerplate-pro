@@ -3,10 +3,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { actions } from './index.js'
 import './Dashboard.css'
-import Account from '../Account/Account.js'
 import { components } from '../components.js'
-import CreatedRepoView from '../CreatedRepoView/CreatedRepoView.js'
-// import { component } from '../Footer/index';
 
 const mapStateToProps = state => {
   return {
@@ -17,8 +14,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getUser: (uid) => {
-      firebase.firestore()
+    getUser: uid => {
+      firebase
+        .firestore()
         .collection('users')
         .doc(uid)
         .collection('repos')
@@ -89,10 +87,7 @@ class Dashboard extends React.Component {
             </div>
           </ul>
         </div>
-        <div>
-          { this.renderContent() }
-        </div>
-
+        <div>{this.renderContent()}</div>
       </div>
     )
   }

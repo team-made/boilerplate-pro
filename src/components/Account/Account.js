@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { components } from '../components'
 import { actions } from './index.js'
 
 const mapStateToProps = state => {
@@ -16,7 +15,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-class Account extends React.Component {
+class Account extends Component {
   constructor (props) {
     super(props)
     this.state = {}

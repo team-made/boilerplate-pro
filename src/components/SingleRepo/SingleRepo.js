@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import 'firebase/firestore'
-import axios from 'axios'
 import marked from 'marked'
 
 import { actions } from './index.js'

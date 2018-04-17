@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 import { actions } from './index.js'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ...state.BookmarkedBuilds
   }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     dummyAction: () => {
       dispatch(actions.dummyAction())
@@ -16,16 +16,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 class BookmarkedBuilds extends Component {
-  constructor (props) {
-    super(props)
-  }
   render () {
-    return (
-      <div>BookmarkedBuilds -- Stateful w/ Redux</div>
-    )
+    return <div>BookmarkedBuilds</div>
   }
 }
 
-BookmarkedBuilds = connect(mapStateToProps, mapDispatchToProps)(BookmarkedBuilds)
-
-export default BookmarkedBuilds
+export default connect(mapStateToProps, mapDispatchToProps)(BookmarkedBuilds)

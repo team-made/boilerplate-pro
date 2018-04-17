@@ -65,7 +65,7 @@ class List extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentActive: 'all'
+      filter: 'all'
     }
     this.changeActiveCategory = this.changeActiveCategory.bind(this)
   }
@@ -79,7 +79,7 @@ class List extends React.Component {
     } else {
       this.props.getBpsByLang(e.target.name)
     }
-    this.setState({ currentActive: e.target.name })
+    this.setState({ filter: e.target.name })
   }
 
   render () {
@@ -131,74 +131,62 @@ class List extends React.Component {
               </div>
               <p className='panel-tabs'>
                 <a
-                  className={
-                    this.state.currentActive === 'all' ? 'is-active' : ''
-                  }
                   name='all'
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'all' ? 'is-active' : ''}
                 >
                   all
                 </a>
                 <a
                   name='JavaScript'
-                  className={
-                    this.state.currentActive === 'JavaScript' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={
+                    this.state.filter === 'JavaScript' ? 'is-active' : ''
+                  }
                 >
                   JavaScript
                 </a>
                 <a
                   name='CSS'
-                  className={
-                    this.state.currentActive === 'CSS' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'CSS' ? 'is-active' : ''}
                 >
                   CSS
                 </a>
                 <a
                   name='PHP'
-                  className={
-                    this.state.currentActive === 'PHP' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'PHP' ? 'is-active' : ''}
                 >
                   PHP
                 </a>
                 <a
                   name='HTML'
-                  className={
-                    this.state.currentActive === 'HTML' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'HTML' ? 'is-active' : ''}
                 >
                   HTML
                 </a>
                 <a
                   name='Python'
-                  className={
-                    this.state.currentActive === 'Python' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'Python' ? 'is-active' : ''}
                 >
                   Python
                 </a>
                 <a
                   name='TypeScript'
-                  className={
-                    this.state.currentActive === 'TypeScript' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={
+                    this.state.filter === 'TypeScript' ? 'is-active' : ''
+                  }
                 >
                   TypeScript
                 </a>
                 <a
                   name='Ruby'
-                  className={
-                    this.state.currentActive === 'Ruby' ? 'is-active' : ''
-                  }
                   onClick={this.changeActiveCategory}
+                  className={this.state.filter === 'Ruby' ? 'is-active' : ''}
                 >
                   Ruby
                 </a>

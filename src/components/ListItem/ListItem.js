@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ListItem = ({ boilerplate }) => {
-  console.log('boilerplate', boilerplate)
   return (
     <Link to={`/repo/${boilerplate.full_name}`} className='panel-block'>
       <span className='panel-icon'>

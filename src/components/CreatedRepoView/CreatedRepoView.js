@@ -30,6 +30,7 @@ const CreatedRepoView = props => {
               </a>
               <span className='ci-badge'>
                 <img
+                  alt='travis tag'
                   src={`https://travis-ci.org/${props.userName}/${
                     props.userRepo.name
                   }.svg?branch=master`}
